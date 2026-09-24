@@ -1,0 +1,1566 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/examples/camels-us/">
+      
+      
+        <link rel="prev" href="../../usage/">
+      
+      
+        <link rel="next" href="../../drainage-areas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>CAMELS-US Example - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#recent-streamflow-for-camels-us-gauges" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CAMELS-US Example
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interactive Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../usage/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../providers/fr_hubeau/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Developer Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart & Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAMELS-US Example
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAMELS-US Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#request-2025-daily-discharge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request 2025 daily discharge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect-source-series-and-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect source series and coverage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-the-observations-and-their-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save the observations and their context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-camels-and-usgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing CAMELS and USGS
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../drainage-areas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drainage Areas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hub'Eau (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HydroPortail (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLIT (Japan)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOEN (Switzerland)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product_dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product Dictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Store Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#request-2025-daily-discharge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request 2025 daily discharge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspect-source-series-and-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect source series and coverage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-the-observations-and-their-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save the observations and their context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-camels-and-usgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing CAMELS and USGS
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Recent streamflow for CAMELS-US gauges
+
+[Documentation index](../index.md) · [Usage](../usage.md)
+
+The CAMELS-US version 1.2 record lists time-series coverage through 31 December
+2014. This example retrieves 2025 daily discharge from USGS for three CAMELS
+gauges, as a starting point for extending a streamflow study beyond that period.
+
+The identifiers and names come from the
+[CAMELS gauge list](https://zenodo.org/records/15529996/files/camels_name.txt).
+
+| Station ID | Name in CAMELS |
+|---|---|
+| `01013500` | Fish River near Fort Kent, Maine |
+| `01022500` | Narraguagus River at Cherryfield, Maine |
+| `01030500` | Mattawamkeag River near Mattawamkeag, Maine |
+
+## Request 2025 daily discharge
+
+Install RivRetrieve with `uv add rivretrieve`. Run the Python blocks below in
+order in the same session. Retrieval needs network access but no credentials.
+Keep gauge identifiers as strings so their leading zeros survive.
+
+`find` filters established physical facts in the packaged catalogue. `pick` keeps
+these three gauges. `fetch` requests the inclusive 2025 calendar window and retains
+all matching source identities, including identities first published in the response.
+
+```python
+import rivretrieve as rr
+
+selection = rr.find(
+    provider=&#34;usgs_nwis&#34;, quantity=&#34;discharge&#34;, frequency=&#34;daily&#34;, statistic=&#34;mean&#34;
+)
+selection = rr.pick(selection, station=[&#34;01013500&#34;, &#34;01022500&#34;, &#34;01030500&#34;])
+result = rr.fetch(selection, start=&#34;2025-01-01&#34;, end=&#34;2025-12-31&#34;)
+
+print(result.issues)
+
+# Output:
+# ()
+```
+
+USGS publishes these daily means; RivRetrieve does not calculate them from
+instantaneous observations. Values are converted from ft³/s to m³/s. Daily labels
+retain source calendar dates with `time_zone=&#34;unknown&#34;` in these responses.
+Do not treat them as UTC instants or infer which 24 hours each daily mean represents.
+
+## Inspect source series and coverage
+
+`series` shows the opaque USGS series identifiers. These are available from the
+packaged catalogue before retrieval. A series identifier is a source identity,
+not a harmonised quality rating.
+
+```python
+source_series = rr.series(result)
+print(source_series.select(&#34;station_id&#34;, &#34;identity_namespace&#34;, &#34;published_id&#34;).sort(&#34;station_id&#34;).rows())
+
+# Output:
+# [(&#39;01013500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;aa8ac20eb72d4fa58ea9c0eaf61e10ee&#39;), (&#39;01022500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;02fec7bdbbe64d49a3d5414cabfa7ea8&#39;), (&#39;01030500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;b997d85e35254d278725c7506bf74fab&#39;)]
+```
+
+Keep `series_id` in grouping and joins. A gauge can publish multiple matching
+series; selecting daily mean discharge does not choose a preferred one.
+This summary checks each series separately, including null values and returned dates.
+
+```python
+import polars as pl
+
+coverage = (
+    result.data.group_by(&#34;station_id&#34;, &#34;series_id&#34;)
+    .agg(
+        pl.len().alias(&#34;rows&#34;),
+        pl.col(&#34;time&#34;).min().dt.date().cast(pl.String).alias(&#34;first&#34;),
+        pl.col(&#34;time&#34;).max().dt.date().cast(pl.String).alias(&#34;last&#34;),
+        pl.col(&#34;value&#34;).null_count().alias(&#34;nulls&#34;),
+    )
+    .sort(&#34;station_id&#34;, &#34;series_id&#34;)
+)
+print(coverage.select(&#34;station_id&#34;, &#34;rows&#34;, &#34;first&#34;, &#34;last&#34;, &#34;nulls&#34;).rows())
+
+# Output:
+# [(&#39;01013500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0), (&#39;01022500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0), (&#39;01030500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0)]
+```
+
+These outputs come from USGS responses retrieved on 22 September 2026. Automated
+tests execute every block against those exact saved responses without contacting
+USGS. A later live request can differ.
+
+Before combining observations with CAMELS records, check:
+
+- Units and daily time definitions on both sides.
+- Returned dates and gaps for each source series, not only its first and last date.
+- Null values, missing rows and request issues separately. A failed request is not
+  evidence that a gauge has no observations.
+- Whether the source series are suitable for the study. Matching physical filters
+  do not establish scientific interchangeability. Source quality flags are not
+  added to harmonised observations.
+
+For a larger study, pass more gauge identifiers to `pick` and change the dates
+in `fetch`. Check each returned source series and its issues before combining
+results. The packaged catalogue is a snapshot, not a guarantee of historical or
+current data availability.
+
+The [usage guide](../usage.md) explains issues, time handling and cache reuse.
+
+## Save the observations and their context
+
+Parquet saves the observation table, including `series_id`, `facts_id` and time zones.
+A versioned bundle also retains the source definitions, inventory, outcomes,
+provenance and issues needed to interpret it.
+
+```python
+from pathlib import Path
+
+result.data.write_parquet(&#34;usgs_daily_2025.parquet&#34;)
+bundle_path = Path(&#34;usgs_daily_2025.rrbundle&#34;)
+bundle_path.write_bytes(rr.to_bundle(result))
+restored = rr.from_bundle(bundle_path.read_bytes())
+print(restored.data.height)
+
+# Output:
+# 1095
+```
+
+## Citing CAMELS and USGS
+
+The [CAMELS version 1.2 record](https://zenodo.org/records/15529996) gives separate
+citations for the time series and catchment attributes. Cite the parts you use.
+
+For streamflow and forcing time series:
+
+- Newman et al. (2014). *A large-sample watershed-scale hydrometeorological dataset
+  for the contiguous USA*. UCAR/NCAR.
+  [doi:10.5065/D6MW2F4D](https://doi.org/10.5065/D6MW2F4D)
+- Newman et al. (2015). *Development of a large-sample watershed-scale
+  hydrometeorological dataset for the contiguous USA: dataset characteristics and
+  assessment of regional variability in hydrologic model performance*.
+  [doi:10.5194/hess-19-209-2015](https://doi.org/10.5194/hess-19-209-2015)
+
+For catchment attributes:
+
+- Addor et al. (2017). *Catchment attributes for large-sample studies*. UCAR/NCAR.
+  [doi:10.5065/D6G73C3Q](https://doi.org/10.5065/D6G73C3Q)
+- Addor et al. (2017). *The CAMELS data set: catchment attributes and meteorology
+  for large-sample studies*.
+  [doi:10.5194/hess-21-5293-2017](https://doi.org/10.5194/hess-21-5293-2017)
+
+The observations retrieved here come from USGS, not from the CAMELS archive.
+Cite USGS and RivRetrieve as well, and retain the result provenance.
+</textarea>
+
+<h1 id="recent-streamflow-for-camels-us-gauges">Recent streamflow for CAMELS-US gauges</h1>
+<p><a href="../../">Documentation index</a> · <a href="../../usage/">Usage</a></p>
+<p>The CAMELS-US version 1.2 record lists time-series coverage through 31 December
+2014. This example retrieves 2025 daily discharge from USGS for three CAMELS
+gauges, as a starting point for extending a streamflow study beyond that period.</p>
+<p>The identifiers and names come from the
+<a href="https://zenodo.org/records/15529996/files/camels_name.txt">CAMELS gauge list</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Station ID</th>
+<th>Name in CAMELS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>01013500</code></td>
+<td>Fish River near Fort Kent, Maine</td>
+</tr>
+<tr>
+<td><code>01022500</code></td>
+<td>Narraguagus River at Cherryfield, Maine</td>
+</tr>
+<tr>
+<td><code>01030500</code></td>
+<td>Mattawamkeag River near Mattawamkeag, Maine</td>
+</tr>
+</tbody>
+</table>
+<h2 id="request-2025-daily-discharge">Request 2025 daily discharge</h2>
+<p>Install RivRetrieve with <code>uv add rivretrieve</code>. Run the Python blocks below in
+order in the same session. Retrieval needs network access but no credentials.
+Keep gauge identifiers as strings so their leading zeros survive.</p>
+<p><code>find</code> filters established physical facts in the packaged catalogue. <code>pick</code> keeps
+these three gauges. <code>fetch</code> requests the inclusive 2025 calendar window and retains
+all matching source identities, including identities first published in the response.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;01013500&quot;</span><span class="p">,</span> <span class="s2">&quot;01022500&quot;</span><span class="p">,</span> <span class="s2">&quot;01030500&quot;</span><span class="p">])</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2025-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2025-12-31&quot;</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Output:</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># ()</span>
+</span></code></pre></div>
+<p>USGS publishes these daily means; RivRetrieve does not calculate them from
+instantaneous observations. Values are converted from ft³/s to m³/s. Daily labels
+retain source calendar dates with <code>time_zone="unknown"</code> in these responses.
+Do not treat them as UTC instants or infer which 24 hours each daily mean represents.</p>
+<h2 id="inspect-source-series-and-coverage">Inspect source series and coverage</h2>
+<p><code>series</code> shows the opaque USGS series identifiers. These are available from the
+packaged catalogue before retrieval. A series identifier is a source identity,
+not a harmonised quality rating.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">source_series</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">source_series</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;identity_namespace&quot;</span><span class="p">,</span> <span class="s2">&quot;published_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Output:</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># [(&#39;01013500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;aa8ac20eb72d4fa58ea9c0eaf61e10ee&#39;), (&#39;01022500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;02fec7bdbbe64d49a3d5414cabfa7ea8&#39;), (&#39;01030500&#39;, &#39;USGS.WaterData.time_series_id&#39;, &#39;b997d85e35254d278725c7506bf74fab&#39;)]</span>
+</span></code></pre></div>
+<p>Keep <code>series_id</code> in grouping and joins. A gauge can publish multiple matching
+series; selecting daily mean discharge does not choose a preferred one.
+This summary checks each series separately, including null values and returned dates.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">coverage</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;series_id&quot;</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">len</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;rows&quot;</span><span class="p">),</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">String</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">),</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">String</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;last&quot;</span><span class="p">),</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">null_count</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;nulls&quot;</span><span class="p">),</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="p">)</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;series_id&quot;</span><span class="p">)</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">)</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">coverage</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="s2">&quot;nulls&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># Output:</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1"># [(&#39;01013500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0), (&#39;01022500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0), (&#39;01030500&#39;, 365, &#39;2025-01-01&#39;, &#39;2025-12-31&#39;, 0)]</span>
+</span></code></pre></div>
+<p>These outputs come from USGS responses retrieved on 22 September 2026. Automated
+tests execute every block against those exact saved responses without contacting
+USGS. A later live request can differ.</p>
+<p>Before combining observations with CAMELS records, check:</p>
+<ul>
+<li>Units and daily time definitions on both sides.</li>
+<li>Returned dates and gaps for each source series, not only its first and last date.</li>
+<li>Null values, missing rows and request issues separately. A failed request is not
+  evidence that a gauge has no observations.</li>
+<li>Whether the source series are suitable for the study. Matching physical filters
+  do not establish scientific interchangeability. Source quality flags are not
+  added to harmonised observations.</li>
+</ul>
+<p>For a larger study, pass more gauge identifiers to <code>pick</code> and change the dates
+in <code>fetch</code>. Check each returned source series and its issues before combining
+results. The packaged catalogue is a snapshot, not a guarantee of historical or
+current data availability.</p>
+<p>The <a href="../../usage/">usage guide</a> explains issues, time handling and cache reuse.</p>
+<h2 id="save-the-observations-and-their-context">Save the observations and their context</h2>
+<p>Parquet saves the observation table, including <code>series_id</code>, <code>facts_id</code> and time zones.
+A versioned bundle also retains the source definitions, inventory, outcomes,
+provenance and issues needed to interpret it.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">write_parquet</span><span class="p">(</span><span class="s2">&quot;usgs_daily_2025.parquet&quot;</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;usgs_daily_2025.rrbundle&quot;</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">bundle_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">restored</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">bundle_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">restored</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Output:</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># 1095</span>
+</span></code></pre></div>
+<h2 id="citing-camels-and-usgs">Citing CAMELS and USGS</h2>
+<p>The <a href="https://zenodo.org/records/15529996">CAMELS version 1.2 record</a> gives separate
+citations for the time series and catchment attributes. Cite the parts you use.</p>
+<p>For streamflow and forcing time series:</p>
+<ul>
+<li>Newman et al. (2014). <em>A large-sample watershed-scale hydrometeorological dataset
+  for the contiguous USA</em>. UCAR/NCAR.
+  <a href="https://doi.org/10.5065/D6MW2F4D">doi:10.5065/D6MW2F4D</a></li>
+<li>Newman et al. (2015). <em>Development of a large-sample watershed-scale
+  hydrometeorological dataset for the contiguous USA: dataset characteristics and
+  assessment of regional variability in hydrologic model performance</em>.
+  <a href="https://doi.org/10.5194/hess-19-209-2015">doi:10.5194/hess-19-209-2015</a></li>
+</ul>
+<p>For catchment attributes:</p>
+<ul>
+<li>Addor et al. (2017). <em>Catchment attributes for large-sample studies</em>. UCAR/NCAR.
+  <a href="https://doi.org/10.5065/D6G73C3Q">doi:10.5065/D6G73C3Q</a></li>
+<li>Addor et al. (2017). <em>The CAMELS data set: catchment attributes and meteorology
+  for large-sample studies</em>.
+  <a href="https://doi.org/10.5194/hess-21-5293-2017">doi:10.5194/hess-21-5293-2017</a></li>
+</ul>
+<p>The observations retrieved here come from USGS, not from the CAMELS archive.
+Cite USGS and RivRetrieve as well, and retain the result provenance.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

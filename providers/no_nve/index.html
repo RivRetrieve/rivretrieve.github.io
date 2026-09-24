@@ -1,0 +1,1750 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/providers/no_nve/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Norway: NVE - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#norway-nve" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Norway: NVE
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interactive Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../usage/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../fr_hubeau/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Developer Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart & Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAMELS-US Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../drainage-areas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drainage Areas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hub'Eau (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HydroPortail (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLIT (Japan)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOEN (Switzerland)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product_dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product Dictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Store Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-measures-and-who-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who measures, and who publishes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credentials-and-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credentials and requests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can retrieve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source versions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-and-data-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time and data status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terms-and-citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terms and citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Norway: NVE
+
+[Documentation index](../index.md) · [Usage](../usage.md)
+
+| | |
+|---|---|
+| Provider | `no_nve` |
+| Country | Norway |
+| Published by | Norges vassdrags- og energidirektorat (NVE), the Norwegian Water Resources and Energy Directorate |
+| Quantities | Discharge, stage, water temperature |
+| Stations in the catalogue | 4,902 locations; 3,804 have catalogued series for the supported quantities and resolutions |
+| Credentials | Required for retrieval: `NVE_API_KEY`; see [Credentials and requests](#credentials-and-requests) |
+| Licence stated by NVE | Norwegian Licence for Open Government Data (NLOD) |
+| Agency documentation | [HydAPI documentation](https://hydapi.nve.no/UserDocumentation/) |
+
+Set `NVE_API_KEY` in the process environment or a private `.env` file in the
+directory from which Python runs, using a key obtained from NVE. Catalogue browsing
+works without it. Retrieve one week of published
+daily mean discharge at station `2.605.0`:
+
+```python
+import rivretrieve as rr
+
+selection = rr.find(
+    provider=&#34;no_nve&#34;,
+    station=&#34;2.605.0&#34;,
+    quantity=&#34;discharge&#34;,
+    frequency=&#34;daily&#34;,
+    statistic=&#34;mean&#34;,
+)
+
+result = rr.fetch(selection, start=&#34;2024-01-01&#34;, end=&#34;2024-01-07&#34;, cache=&#34;bypass&#34;)
+
+preview = result.data.select(&#34;time&#34;, &#34;time_zone&#34;, &#34;value&#34;, &#34;unit&#34;).head(3)
+print(preview.write_csv(float_precision=3), end=&#34;&#34;)
+
+print(result.data.height)
+for issue in result.issues:
+    print(f&#34;{issue.severity}: {issue.message}&#34;)
+```
+
+Output:
+
+```text
+time,time_zone,value,unit
+2024-01-01T11:00:00.000000,+00:00,401.750,m3/s
+2024-01-02T11:00:00.000000,+00:00,415.396,m3/s
+2024-01-03T11:00:00.000000,+00:00,444.500,m3/s
+7
+info: no_nve published source quality code 2 without RivRetrieve interpretation
+info: no_nve published source correction code 0 without RivRetrieve interpretation
+```
+
+The request returned seven daily means in m³/s. The preview shows three values
+rounded to three decimal places. Both endpoint dates are included. RivRetrieve
+reads the published means; it does not calculate them from more frequent observations.
+The two informational messages report source metadata, not retrieval problems.
+NVE calls quality code `2` **PrimaryControlled** and correction code `0` **No changes**.
+These are NVE’s descriptions of the observations, not a RivRetrieve quality
+judgement. They are separate from the series version, which is `1` in this example.
+
+`cache=&#34;bypass&#34;` requests HydAPI rather than a local cache. This output was checked
+on 2026-09-23. NVE can revise historical observations, so later retrievals may
+return different values. Run the examples in order in the same Python session.
+See [Usage](../usage.md) for general selection and result handling.
+
+## Who measures, and who publishes
+
+NVE is responsible for Norway&#39;s national hydrological observation networks and
+databases. It operates monitoring stations and publishes historical and current
+observations through HydAPI, its programming interface for hydrological data.
+RivRetrieve reads HydAPI.
+
+NVE does not own or produce every measurement in that archive. The network also
+includes stations owned by river-regulation operators. Owners of regulation
+facilities carry out and fund hydrological investigations required by NVE; NVE
+checks and archives the mandated data. Keep that distinction when describing
+the origin of a station&#39;s record.
+
+NVE may withhold recent observations from public access, including in regulated
+catchments and at hydropower installations. Its publication guidelines specify
+a 14-day withholding period for stage and discharge where those restrictions
+apply. The station owner may permit earlier publication. Owners of privately collected data that
+are not required by a public authority can decide what to publish. HydAPI access
+does not promise an unrestricted real-time record at every station.
+
+## Credentials and requests
+
+NVE describes HydAPI as a free service. Request a key at
+[hydapi.nve.no/Users](https://hydapi.nve.no/Users), entering an email address and
+accepting the terms. Store the key securely: NVE says it cannot be retrieved later.
+Set `NVE_API_KEY` in the process environment or a private `.env` file in the
+directory from which Python runs. Process variables take precedence, including
+blank values. Keep credentials out of code, version control, logs and shared files.
+See [credential configuration](../usage.md#supplied-credentials) for details.
+`rr.providers()` reports `ready` when the credential is present locally; it does
+not authenticate with NVE or prove that the key is accepted.
+
+NVE limits requests per key and the number of observations in a response. Its
+user documentation does not give numeric limits. RivRetrieve sends separate
+observation requests for each station, quantity, resolution and version. It
+requests a slightly wider period than selected, then clips the returned rows.
+For Norway, it does not automatically subdivide that period to meet the source&#39;s
+observation-count limit. If NVE reports that a response is too large, request
+shorter periods, as its documentation advises. Check the returned issues rather
+than treating a failed request as missing observations.
+
+## What you can retrieve
+
+| Quantity filter | Published resolutions | Published statistics | Source and returned unit |
+|---|---|---|---|
+| `discharge` | Raw, hourly, daily | Mean or instantaneous, depending on series | m³/s |
+| `stage` | Raw, hourly, daily | Mean or instantaneous, depending on series | m |
+| `temperature` | Raw, hourly, daily | Mean or instantaneous, depending on series | °C |
+
+These units require no numerical scaling. Stage is water level; RivRetrieve has
+not established its vertical reference or datum.
+
+HydAPI publishes raw, hourly and daily resolutions. RivRetrieve establishes
+`frequency=&#34;hourly&#34;` or `frequency=&#34;daily&#34;` from the published resolution.
+For raw resolution, frequency remains unknown. The source method establishes
+`statistic=&#34;mean&#34;` or `statistic=&#34;instantaneous&#34;` separately. An hourly or daily
+series can contain instantaneous values; its resolution alone does not establish
+an averaging operation. Use both frequency and statistic filters for daily means,
+as in the example. RivRetrieve does not derive additional statistics.
+
+Of the 4,902 catalogue locations, 3,804 list series for the supported quantities
+and resolutions. The other 1,098 list other parameters, such as groundwater level
+and temperature, air temperature, precipitation or snow. Their presence in the
+catalogue does not make those parameters retrievable through RivRetrieve.
+
+The catalogue contains daily mean discharge at 1,620 stations, daily mean stage
+at 2,790, and daily mean temperature at 1,153. These counts can overlap and describe
+the packaged snapshot, not an exhaustive current inventory. A station being listed
+does not guarantee observations for every quantity or requested period. A successful
+short request does not establish continuous historical coverage.
+
+## Source versions
+
+HydAPI can publish several versions of a station&#39;s series. `variant` is the
+published version number, represented as a string. Version numbers identify
+records at a particular station and quantity; they are not global quality codes.
+RivRetrieve keeps those records separate. A larger number is not a quality ranking,
+and no universal meaning for each version number has been established.
+Without an explicit version choice, retrieval checks current source metadata and
+requests all versions matching the selection&#39;s physical filters. Each version can
+return values, an empty record, or a separate failure.
+
+The example returned version `1` at station `2.605.0`. Another station,
+`109.42.0`, has three catalogued versions of daily mean discharge:
+
+| Station | Quantity | `variant` | Frequency | Statistic |
+|---|---|---|---|---|
+| `109.42.0` | Discharge | `1` | Daily | Mean |
+| `109.42.0` | Discharge | `2` | Daily | Mean |
+| `109.42.0` | Discharge | `3` | Daily | Mean |
+
+These numbers identify versions at this station, not quality levels. Inspect them
+before making a version-specific request:
+
+```python
+print(rr.series(result).select(&#34;station_id&#34;, &#34;variant&#34;).rows())
+
+other_station = rr.find(
+    provider=&#34;no_nve&#34;, station=&#34;109.42.0&#34;, quantity=&#34;discharge&#34;,
+    frequency=&#34;daily&#34;, statistic=&#34;mean&#34;,
+)
+print(rr.series(other_station).select(&#34;station_id&#34;, &#34;variant&#34;).sort(&#34;variant&#34;).rows())
+
+version_two = rr.pick(other_station, variant=&#34;2&#34;)
+print(rr.series(version_two).select(&#34;station_id&#34;, &#34;variant&#34;).rows())
+```
+
+Output:
+
+```text
+[(&#39;2.605.0&#39;, &#39;1&#39;)]
+[(&#39;109.42.0&#39;, &#39;1&#39;), (&#39;109.42.0&#39;, &#39;2&#39;), (&#39;109.42.0&#39;, &#39;3&#39;)]
+[(&#39;109.42.0&#39;, &#39;2&#39;)]
+```
+
+The second and third lines describe catalogue candidates, not newly retrieved
+observations. `pick` narrows the selection; it does not make an observation request.
+Passing `version_two` to `fetch` requests only that station&#39;s version `2`, without
+substituting another version when observations are unavailable. This choice does
+not select quality code `2` or assert that this version is preferable.
+
+## Time and data status
+
+HydAPI timestamps carry explicit UTC labels. RivRetrieve returns their wall-clock
+values in `time`, paired with `time_zone=&#34;+00:00&#34;`. Read both columns together:
+the datetime column itself is timezone-naive. The daily values above are labelled
+at 11:00 UTC. That clock label does not establish the averaging interval or its
+start and end. NVE&#39;s documentation gives conflicting wording for the daily time
+basis; RivRetrieve leaves exact daily boundaries and interval anchors unknown.
+
+HydAPI observations carry `quality` and `correction` codes. RivRetrieve does not
+filter observations by those codes, interpret them as a quality ranking, or add
+per-row quality columns to `result.data`. Informational issues summarize the
+published codes, their counts and first and last source timestamps. Those summaries
+can include the extra dates requested around the selected period, so their counts
+need not equal the returned row count. Optional [receipts](../usage.md#receipts-optional)
+retain the observation response bytes when the original per-row codes are needed.
+
+A published null remains a row with `value=null`. An absent observation supplies
+no row. A failed request remains an issue and an identified outcome alongside
+independent successful records. Check [issues](../usage.md#issues) before interpreting
+gaps or empty results. Neither a returned number nor the absence of retrieval errors
+establishes the source&#39;s approval of its quality.
+
+## Terms and citation
+
+NVE&#39;s [HydAPI documentation](https://hydapi.nve.no/UserDocumentation/) licenses
+the data under the [Norwegian Licence for Open Government Data (NLOD)](https://data.norge.no/nlod/en).
+It states that the data are provided &#34;as is&#34; and may contain errors or omissions.
+The verified observation response includes the licence URL in its JSON metadata.
+
+NVE asks:
+
+&gt; When using data from this service, if possible, please refer to this service as origin of data.
+
+The linked [NLOD 2.0 terms](https://data.norge.no/nlod/en/2.0) permit reuse, including
+commercial reuse, subject to their conditions. They require attribution and a
+licence reference, links to the source and licence where practical, and a clear
+indication of changes. Where the licensor has not specified attribution wording,
+the licence gives:
+
+&gt; Contains data under the Norwegian licence for Open Government data (NLOD) distributed by [name of licensor].
+
+Identify NVE HydAPI as the publication service, and retain the station, quantity,
+version, requested period and access date to make the retrieved record traceable.
+These record details are practical citation guidance, not an official NVE citation
+template. NLOD&#39;s compatibility provisions distinguish databases from other material;
+do not assume an unqualified equivalence with CC BY 3.0.
+
+## Sources
+
+Publisher pages checked on 2026-09-23:
+
+- [NVE Hydrology](https://www.nve.no/hydrology/), [station network](https://www.nve.no/vann-og-vassdrag/hydrologiske-data/vannstand-og-vannforing/stasjonsnettet/), [mandated hydrological investigations](https://www.nve.no/vann-og-vassdrag/hydrologiske-data/hydrologiske-paalegg/): responsibilities and measurement producers.
+- [Publication guidelines](https://www.nve.no/vann-og-vassdrag/hydrologiske-data/retningslinjer-for-publisering-av-hydrologiske-data-i-nve/): restrictions on historical and recent data.
+- [HydAPI documentation](https://hydapi.nve.no/UserDocumentation/), [key registration](https://hydapi.nve.no/Users): access, source versions, timestamps, codes, limits and terms.
+- [NLOD](https://data.norge.no/nlod/en), [NLOD 2.0](https://data.norge.no/nlod/en/2.0): reuse and attribution conditions.
+
+The station counts describe the packaged catalogue. Live public retrieval and the
+recording path were checked on 2026-09-23. The
+[verification record](../verification/norway-provider/README.md) retains commands,
+source checks, exact output and the limits of these checks.
+</textarea>
+
+<h1 id="norway-nve">Norway: NVE</h1>
+<p><a href="../../">Documentation index</a> · <a href="../../usage/">Usage</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider</td>
+<td><code>no_nve</code></td>
+</tr>
+<tr>
+<td>Country</td>
+<td>Norway</td>
+</tr>
+<tr>
+<td>Published by</td>
+<td>Norges vassdrags- og energidirektorat (NVE), the Norwegian Water Resources and Energy Directorate</td>
+</tr>
+<tr>
+<td>Quantities</td>
+<td>Discharge, stage, water temperature</td>
+</tr>
+<tr>
+<td>Stations in the catalogue</td>
+<td>4,902 locations; 3,804 have catalogued series for the supported quantities and resolutions</td>
+</tr>
+<tr>
+<td>Credentials</td>
+<td>Required for retrieval: <code>NVE_API_KEY</code>; see <a href="#credentials-and-requests">Credentials and requests</a></td>
+</tr>
+<tr>
+<td>Licence stated by NVE</td>
+<td>Norwegian Licence for Open Government Data (NLOD)</td>
+</tr>
+<tr>
+<td>Agency documentation</td>
+<td><a href="https://hydapi.nve.no/UserDocumentation/">HydAPI documentation</a></td>
+</tr>
+</tbody>
+</table>
+<p>Set <code>NVE_API_KEY</code> in the process environment or a private <code>.env</code> file in the
+directory from which Python runs, using a key obtained from NVE. Catalogue browsing
+works without it. Retrieve one week of published
+daily mean discharge at station <code>2.605.0</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;no_nve&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2.605.0&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2024-01-07&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;bypass&quot;</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">preview</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">preview</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(</span><span class="n">float_precision</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">:</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2024-01-01T11:00:00.000000,+00:00,401.750,m3/s
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2024-01-02T11:00:00.000000,+00:00,415.396,m3/s
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2024-01-03T11:00:00.000000,+00:00,444.500,m3/s
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>7
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>info: no_nve published source quality code 2 without RivRetrieve interpretation
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>info: no_nve published source correction code 0 without RivRetrieve interpretation
+</span></code></pre></div>
+<p>The request returned seven daily means in m³/s. The preview shows three values
+rounded to three decimal places. Both endpoint dates are included. RivRetrieve
+reads the published means; it does not calculate them from more frequent observations.
+The two informational messages report source metadata, not retrieval problems.
+NVE calls quality code <code>2</code> <strong>PrimaryControlled</strong> and correction code <code>0</code> <strong>No changes</strong>.
+These are NVE’s descriptions of the observations, not a RivRetrieve quality
+judgement. They are separate from the series version, which is <code>1</code> in this example.</p>
+<p><code>cache="bypass"</code> requests HydAPI rather than a local cache. This output was checked
+on 2026-09-23. NVE can revise historical observations, so later retrievals may
+return different values. Run the examples in order in the same Python session.
+See <a href="../../usage/">Usage</a> for general selection and result handling.</p>
+<h2 id="who-measures-and-who-publishes">Who measures, and who publishes</h2>
+<p>NVE is responsible for Norway's national hydrological observation networks and
+databases. It operates monitoring stations and publishes historical and current
+observations through HydAPI, its programming interface for hydrological data.
+RivRetrieve reads HydAPI.</p>
+<p>NVE does not own or produce every measurement in that archive. The network also
+includes stations owned by river-regulation operators. Owners of regulation
+facilities carry out and fund hydrological investigations required by NVE; NVE
+checks and archives the mandated data. Keep that distinction when describing
+the origin of a station's record.</p>
+<p>NVE may withhold recent observations from public access, including in regulated
+catchments and at hydropower installations. Its publication guidelines specify
+a 14-day withholding period for stage and discharge where those restrictions
+apply. The station owner may permit earlier publication. Owners of privately collected data that
+are not required by a public authority can decide what to publish. HydAPI access
+does not promise an unrestricted real-time record at every station.</p>
+<h2 id="credentials-and-requests">Credentials and requests</h2>
+<p>NVE describes HydAPI as a free service. Request a key at
+<a href="https://hydapi.nve.no/Users">hydapi.nve.no/Users</a>, entering an email address and
+accepting the terms. Store the key securely: NVE says it cannot be retrieved later.
+Set <code>NVE_API_KEY</code> in the process environment or a private <code>.env</code> file in the
+directory from which Python runs. Process variables take precedence, including
+blank values. Keep credentials out of code, version control, logs and shared files.
+See <a href="../../usage/#supplied-credentials">credential configuration</a> for details.
+<code>rr.providers()</code> reports <code>ready</code> when the credential is present locally; it does
+not authenticate with NVE or prove that the key is accepted.</p>
+<p>NVE limits requests per key and the number of observations in a response. Its
+user documentation does not give numeric limits. RivRetrieve sends separate
+observation requests for each station, quantity, resolution and version. It
+requests a slightly wider period than selected, then clips the returned rows.
+For Norway, it does not automatically subdivide that period to meet the source's
+observation-count limit. If NVE reports that a response is too large, request
+shorter periods, as its documentation advises. Check the returned issues rather
+than treating a failed request as missing observations.</p>
+<h2 id="what-you-can-retrieve">What you can retrieve</h2>
+<table>
+<thead>
+<tr>
+<th>Quantity filter</th>
+<th>Published resolutions</th>
+<th>Published statistics</th>
+<th>Source and returned unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>discharge</code></td>
+<td>Raw, hourly, daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>Raw, hourly, daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>Raw, hourly, daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>°C</td>
+</tr>
+</tbody>
+</table>
+<p>These units require no numerical scaling. Stage is water level; RivRetrieve has
+not established its vertical reference or datum.</p>
+<p>HydAPI publishes raw, hourly and daily resolutions. RivRetrieve establishes
+<code>frequency="hourly"</code> or <code>frequency="daily"</code> from the published resolution.
+For raw resolution, frequency remains unknown. The source method establishes
+<code>statistic="mean"</code> or <code>statistic="instantaneous"</code> separately. An hourly or daily
+series can contain instantaneous values; its resolution alone does not establish
+an averaging operation. Use both frequency and statistic filters for daily means,
+as in the example. RivRetrieve does not derive additional statistics.</p>
+<p>Of the 4,902 catalogue locations, 3,804 list series for the supported quantities
+and resolutions. The other 1,098 list other parameters, such as groundwater level
+and temperature, air temperature, precipitation or snow. Their presence in the
+catalogue does not make those parameters retrievable through RivRetrieve.</p>
+<p>The catalogue contains daily mean discharge at 1,620 stations, daily mean stage
+at 2,790, and daily mean temperature at 1,153. These counts can overlap and describe
+the packaged snapshot, not an exhaustive current inventory. A station being listed
+does not guarantee observations for every quantity or requested period. A successful
+short request does not establish continuous historical coverage.</p>
+<h2 id="source-versions">Source versions</h2>
+<p>HydAPI can publish several versions of a station's series. <code>variant</code> is the
+published version number, represented as a string. Version numbers identify
+records at a particular station and quantity; they are not global quality codes.
+RivRetrieve keeps those records separate. A larger number is not a quality ranking,
+and no universal meaning for each version number has been established.
+Without an explicit version choice, retrieval checks current source metadata and
+requests all versions matching the selection's physical filters. Each version can
+return values, an empty record, or a separate failure.</p>
+<p>The example returned version <code>1</code> at station <code>2.605.0</code>. Another station,
+<code>109.42.0</code>, has three catalogued versions of daily mean discharge:</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Quantity</th>
+<th><code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>109.42.0</code></td>
+<td>Discharge</td>
+<td><code>1</code></td>
+<td>Daily</td>
+<td>Mean</td>
+</tr>
+<tr>
+<td><code>109.42.0</code></td>
+<td>Discharge</td>
+<td><code>2</code></td>
+<td>Daily</td>
+<td>Mean</td>
+</tr>
+<tr>
+<td><code>109.42.0</code></td>
+<td>Discharge</td>
+<td><code>3</code></td>
+<td>Daily</td>
+<td>Mean</td>
+</tr>
+</tbody>
+</table>
+<p>These numbers identify versions at this station, not quality levels. Inspect them
+before making a version-specific request:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;variant&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">other_station</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;no_nve&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;109.42.0&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">other_station</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;variant&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;variant&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">version_two</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">other_station</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">version_two</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;variant&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[(&#39;2.605.0&#39;, &#39;1&#39;)]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[(&#39;109.42.0&#39;, &#39;1&#39;), (&#39;109.42.0&#39;, &#39;2&#39;), (&#39;109.42.0&#39;, &#39;3&#39;)]
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>[(&#39;109.42.0&#39;, &#39;2&#39;)]
+</span></code></pre></div>
+<p>The second and third lines describe catalogue candidates, not newly retrieved
+observations. <code>pick</code> narrows the selection; it does not make an observation request.
+Passing <code>version_two</code> to <code>fetch</code> requests only that station's version <code>2</code>, without
+substituting another version when observations are unavailable. This choice does
+not select quality code <code>2</code> or assert that this version is preferable.</p>
+<h2 id="time-and-data-status">Time and data status</h2>
+<p>HydAPI timestamps carry explicit UTC labels. RivRetrieve returns their wall-clock
+values in <code>time</code>, paired with <code>time_zone="+00:00"</code>. Read both columns together:
+the datetime column itself is timezone-naive. The daily values above are labelled
+at 11:00 UTC. That clock label does not establish the averaging interval or its
+start and end. NVE's documentation gives conflicting wording for the daily time
+basis; RivRetrieve leaves exact daily boundaries and interval anchors unknown.</p>
+<p>HydAPI observations carry <code>quality</code> and <code>correction</code> codes. RivRetrieve does not
+filter observations by those codes, interpret them as a quality ranking, or add
+per-row quality columns to <code>result.data</code>. Informational issues summarize the
+published codes, their counts and first and last source timestamps. Those summaries
+can include the extra dates requested around the selected period, so their counts
+need not equal the returned row count. Optional <a href="../../usage/#receipts-optional">receipts</a>
+retain the observation response bytes when the original per-row codes are needed.</p>
+<p>A published null remains a row with <code>value=null</code>. An absent observation supplies
+no row. A failed request remains an issue and an identified outcome alongside
+independent successful records. Check <a href="../../usage/#issues">issues</a> before interpreting
+gaps or empty results. Neither a returned number nor the absence of retrieval errors
+establishes the source's approval of its quality.</p>
+<h2 id="terms-and-citation">Terms and citation</h2>
+<p>NVE's <a href="https://hydapi.nve.no/UserDocumentation/">HydAPI documentation</a> licenses
+the data under the <a href="https://data.norge.no/nlod/en">Norwegian Licence for Open Government Data (NLOD)</a>.
+It states that the data are provided "as is" and may contain errors or omissions.
+The verified observation response includes the licence URL in its JSON metadata.</p>
+<p>NVE asks:</p>
+<blockquote>
+<p>When using data from this service, if possible, please refer to this service as origin of data.</p>
+</blockquote>
+<p>The linked <a href="https://data.norge.no/nlod/en/2.0">NLOD 2.0 terms</a> permit reuse, including
+commercial reuse, subject to their conditions. They require attribution and a
+licence reference, links to the source and licence where practical, and a clear
+indication of changes. Where the licensor has not specified attribution wording,
+the licence gives:</p>
+<blockquote>
+<p>Contains data under the Norwegian licence for Open Government data (NLOD) distributed by [name of licensor].</p>
+</blockquote>
+<p>Identify NVE HydAPI as the publication service, and retain the station, quantity,
+version, requested period and access date to make the retrieved record traceable.
+These record details are practical citation guidance, not an official NVE citation
+template. NLOD's compatibility provisions distinguish databases from other material;
+do not assume an unqualified equivalence with CC BY 3.0.</p>
+<h2 id="sources">Sources</h2>
+<p>Publisher pages checked on 2026-09-23:</p>
+<ul>
+<li><a href="https://www.nve.no/hydrology/">NVE Hydrology</a>, <a href="https://www.nve.no/vann-og-vassdrag/hydrologiske-data/vannstand-og-vannforing/stasjonsnettet/">station network</a>, <a href="https://www.nve.no/vann-og-vassdrag/hydrologiske-data/hydrologiske-paalegg/">mandated hydrological investigations</a>: responsibilities and measurement producers.</li>
+<li><a href="https://www.nve.no/vann-og-vassdrag/hydrologiske-data/retningslinjer-for-publisering-av-hydrologiske-data-i-nve/">Publication guidelines</a>: restrictions on historical and recent data.</li>
+<li><a href="https://hydapi.nve.no/UserDocumentation/">HydAPI documentation</a>, <a href="https://hydapi.nve.no/Users">key registration</a>: access, source versions, timestamps, codes, limits and terms.</li>
+<li><a href="https://data.norge.no/nlod/en">NLOD</a>, <a href="https://data.norge.no/nlod/en/2.0">NLOD 2.0</a>: reuse and attribution conditions.</li>
+</ul>
+<p>The station counts describe the packaged catalogue. Live public retrieval and the
+recording path were checked on 2026-09-23. The
+<a href="../../verification/norway-provider/">verification record</a> retains commands,
+source checks, exact output and the limits of these checks.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

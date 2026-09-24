@@ -1,0 +1,2555 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/usage/">
+      
+      
+        <link rel="prev" href="../map/">
+      
+      
+        <link rel="next" href="../examples/camels-us/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Quickstart & Usage - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quickstart & Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interactive Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/fr_hubeau/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  Developer Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart & Usage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart & Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#find-stations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find stations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Find stations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#narrow-and-save-selections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Narrow and save selections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieve-and-inspect-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieve and inspect results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieve and inspect results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-you-get-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you get back
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-inspection-and-result-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Series inspection and result views
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-time-step-is-unknown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the time step is unknown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-an-agency-publishes-more-than-one-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When an agency publishes more than one version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-only-one-series-is-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When only one series is available
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-a-requested-variant-is-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When a requested variant is not found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-windows-and-utc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request windows and UTC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supplied-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supplied credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-and-bulk-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cache and bulk downloads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receipts-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receipts (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAMELS-US Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drainage-areas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drainage Areas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hub'Eau (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HydroPortail (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLIT (Japan)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOEN (Switzerland)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../product_dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product Dictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Store Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#find-stations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find stations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Find stations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#narrow-and-save-selections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Narrow and save selections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieve-and-inspect-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieve and inspect results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieve and inspect results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-you-get-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you get back
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-inspection-and-result-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Series inspection and result views
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-time-step-is-unknown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the time step is unknown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-an-agency-publishes-more-than-one-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When an agency publishes more than one version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-only-one-series-is-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When only one series is available
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-a-requested-variant-is-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When a requested variant is not found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-windows-and-utc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request windows and UTC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supplied-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supplied credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-and-bulk-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cache and bulk downloads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receipts-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Receipts (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Usage
+
+[Documentation index](index.md) · [API reference](reference.md)
+
+Working with RivRetrieve has three main steps: find source series by physical facts, retrieve
+their observations, then inspect the data and issues. This page follows that order, then introduces
+credentials, caching, provenance and maps.
+
+Run the Python examples in page order in one session. They build on earlier variables.
+The first retrieval uses the same USGS gauge and one-day window as the README. Later examples
+save selections and results, and convert established time zones to UTC. The Brazil download
+example needs ANA credentials; the USGS and Lithuanian examples do not.
+
+## Find stations
+
+A **provider** supplies observations, such as the US Geological Survey (`usgs_nwis`).
+A **station** is a monitoring site, such as USGS gauge `07374000`.
+A **quantity** is discharge, stage or water temperature (`temperature`). A **source series**
+is a separately published record at a station. Several source series can share quantity,
+frequency and statistic. Finding daily mean discharge can therefore select more than one record.
+Two records that match these filters can still differ in ways that matter for your study.
+
+`find` searches packaged evidence without contacting observation services. Keep station identifiers
+as strings so leading zeros survive. Start broadly, then narrow by established facts:
+
+```python
+import rivretrieve as rr
+
+# Start with discharge, then ask for established daily means.
+discharge = rr.find(provider=&#34;usgs_nwis&#34;, quantity=&#34;discharge&#34;)
+
+daily_gauges = rr.pick(discharge, frequency=&#34;daily&#34;, statistic=&#34;mean&#34;)
+
+chosen_gauges = rr.pick(daily_gauges, station=[&#34;07374000&#34;])
+
+print(rr.series(chosen_gauges).select(&#34;station_id&#34;).unique().rows())
+
+# Output:
+# [(&#39;07374000&#39;,)]
+
+print(rr.series(chosen_gauges).select(&#34;variant&#34;, &#34;description&#34;).rows())
+
+# Output:
+# [(&#39;c9d823a2491f4b639656a11b35a7625d&#39;, None)]
+```
+
+USGS variants use publisher time-series identifiers. A `None` description means the source
+publishes no description; RivRetrieve does not replace it with parameter prose.
+
+The same physical filters work directly in `find`. Quantity says **what** was measured;
+frequency and statistic describe **how it was published**, such as a daily mean. RivRetrieve
+uses published daily means rather than calculating them from sub-daily observations.
+A service&#39;s update cadence does not establish the time span represented by a value.
+
+For example, RivRetrieve knows the units of the Swiss discharge values, but not whether they
+represent a daily mean. In other words, you can find those values by asking for discharge,
+but not by asking specifically for daily mean discharge. A value updated every ten minutes
+is not necessarily an average over ten minutes.
+
+`rr.series(selection)` shows the source records known before retrieval. `rr.series(result)`
+also shows identities found in the response. The packaged catalogue is a snapshot, not an
+exhaustive census of current or historical series. An unrestricted selection includes later
+matching discoveries; it does not freeze retrieval to the catalogue&#39;s known members.
+
+### Narrow and save selections
+
+Use `pick` to narrow a selection by physical facts or by `variant` and `series_id`.
+A variant is a separately published version of a series, using the agency&#39;s own name.
+`pick` accepts a list of station, provider or source identifiers. It keeps only what you ask for;
+it does not substitute another version.
+
+Save the complete selection as a versioned bundle:
+
+```python
+from pathlib import Path
+
+selection_path = Path(&#34;selection.rrbundle&#34;)
+selection_path.write_bytes(rr.to_bundle(chosen_gauges))
+restored_gauges = rr.from_bundle(selection_path.read_bytes())
+```
+
+Bundle version `2` preserves intent, identities, physical evidence and inventory state. Import validates
+the bundle without rebuilding identities from today&#39;s catalogue. Bare frame imports through
+`from_frame` are refused. For custom Polars filtering, inspect a frame and pass selected identifiers
+back to `pick`; a frame is not a lossless selection export.
+
+`describe(provider)` returns an offline, machine-readable catalogue description in
+[Croissant](https://github.com/mlcommons/croissant) format. It identifies files and the evidence
+for catalogue facts. A `withheld` fact means RivRetrieve lacks an established acquisition record. See [catalogue evidence](catalogue-evidence.md).
+
+## Retrieve and inspect results
+
+Retrieve observations for the gauge in `chosen_gauges`:
+
+```python
+result = rr.fetch(chosen_gauges, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;)
+
+print(result.data.select(&#34;station_id&#34;, &#34;value&#34;).rows())
+
+# Output:
+# [(&#39;07374000&#39;, 10562.183778816001)]
+
+print(result.issues)
+
+# Output:
+# ()
+```
+
+The empty tuple means this retrieval reported no issues. An `ObservationResult` carries
+`data`, `issues`, `provenance`, `receipts`, `source_series`, `inventories` and `outcomes`.
+`data` is a Polars frame. `to_polars()` returns
+that frame; `to_pandas()` converts it to a pandas dataframe.
+
+### What you get back
+
+The observation frame has exactly these columns, even when empty:
+
+| Column | Meaning |
+|---|---|
+| `time` | Naive source wall-clock timestamp, read together with `time_zone` |
+| `time_zone` | Established IANA zone, fixed offset, or `unknown` |
+| `station_id` | String identifier within the result&#39;s provider |
+| `product_id` | Source access coordinate, not authority for physical facts |
+| `series_id` | Internal source-series identifier |
+| `facts_id` | Physical-fact segment identifier |
+| `quantity` | Established physical quantity |
+| `source_unit` | Exact established source-unit vocabulary |
+| `unit` | Harmonised unit of `value` |
+| `value` | Float in `unit`, or a published null |
+
+The agency&#39;s timestamp is retained. `unknown` means there is no established time zone to use
+for conversion to UTC. A null value, an absent row and a failed request
+are different states.
+
+Discharge uses m³/s, stage uses metres, and water temperature uses degrees Celsius.
+The USGS result preserves `ft^3/s` in `source_unit` while returning `m3/s` in `unit`.
+Source-series facts describe units and temporal properties. Equal units do not establish
+equal day definitions, stage datums or scientific comparability. RivRetrieve leaves source
+quality judgements uninterpreted and does not compute unpublished products at another frequency.
+
+### Series inspection and result views
+
+`rr.series(result)` inspects response-discovered identities and physical facts, with outcomes even
+for known series that returned no rows. `result.outcomes` also retains limitations that could not
+be assigned a concrete identity. Statuses distinguish `success`, `empty`, `failed`, `unsupported`,
+`unresolved` and `no_match`. A null observation remains a row, not a failed request.
+
+You can narrow a selection before retrieval or filter a result afterwards with `pick`.
+Filtering a result makes no new source request. Original provenance, receipts and issues remain
+available, so they can still describe the broader request.
+
+```python
+result_path = Path(&#34;result.rrbundle&#34;)
+result_path.write_bytes(rr.to_bundle(result))
+restored_result = rr.from_bundle(result_path.read_bytes())
+```
+
+You can also narrow a retrieved result by an inspected internal identifier:
+
+```python
+returned_series = rr.series(result)
+series_id = returned_series[&#34;series_id&#34;][0]
+series_view = rr.pick(result, series_id=series_id)
+```
+
+Result bundles retain observations, late identities, facts, outcomes, inventory, provenance and
+any retained receipts. Observation frames alone do not contain all this context.
+
+`fetch` requires one provider. For selections spanning providers, `fetch_by_provider` returns a
+dictionary of separate results. Each retains its provider identity, source terms and outcomes.
+
+### When the time step is unknown
+
+This Swiss gauge provides discharge values, but their exact time span and statistic are not
+established. The first search includes them. Adding daily-mean filters excludes them.
+Both searches use the packaged catalogue without contacting the source.
+
+```python
+swiss = rr.find(provider=&#34;ch_foen&#34;, station=&#34;2251&#34;, quantity=&#34;discharge&#34;)
+swiss_daily = rr.pick(swiss, frequency=&#34;daily&#34;, statistic=&#34;mean&#34;)
+
+print(rr.series(swiss_daily).height)
+
+# Output:
+# 0
+```
+
+### When an agency publishes more than one version
+
+Brazil&#39;s ANA publishes **Bruto** (raw) and **Consistido** (quality-checked) daily records.
+ANA performs that checking, not RivRetrieve. Both are available: RivRetrieve requests both
+unless you explicitly choose one. A source may not have observations for both in every period.
+The labels do not tell you which record suits your study.
+Provider-specific observation quality flags are not added to the returned table.
+
+Find the two daily mean water-level series (`quantity=&#34;stage&#34;`), then optionally choose Consistido:
+
+```python
+brazil = rr.find(
+    provider=&#34;br_ana&#34;, station=&#34;15400000&#34;, quantity=&#34;stage&#34;, frequency=&#34;daily&#34;, statistic=&#34;mean&#34;
+)
+
+print(sorted(rr.series(brazil)[&#34;variant&#34;].to_list()))
+
+# Output:
+# [&#39;bruto&#39;, &#39;consistido&#39;]
+
+consistido = rr.pick(brazil, variant=&#34;consistido&#34;)
+```
+
+The search above works offline. To run the downloads below, first set `ANA_IDENTIFICADOR` and
+`ANA_SENHA` in your environment or working-directory `.env` file. See
+[supplied credentials](#supplied-credentials). Do not put credential values in the code.
+
+```python
+brazil_result = rr.fetch(brazil, start=&#34;2020-01-10&#34;, end=&#34;2020-01-20&#34;)
+
+print(sorted(rr.series(brazil_result)[&#34;variant&#34;].to_list()))
+
+# Output:
+# [&#39;bruto&#39;, &#39;consistido&#39;]
+
+consistido_result = rr.fetch(consistido, start=&#34;2020-01-10&#34;, end=&#34;2020-01-20&#34;)
+
+print(sorted(rr.series(consistido_result)[&#34;variant&#34;].to_list()))
+
+# Output:
+# [&#39;consistido&#39;]
+```
+
+### When only one series is available
+
+For Lithuania&#39;s Anykščiai gauge, this request returns one daily discharge series.
+There is no extra version to choose in this example:
+
+```python
+lithuania = rr.find(
+    provider=&#34;lt_lhmt&#34;, station=&#34;anyksciu-vms&#34;, quantity=&#34;discharge&#34;, frequency=&#34;daily&#34;, statistic=&#34;mean&#34;
+)
+
+lithuanian_result = rr.fetch(lithuania, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;)
+
+print(lithuanian_result.data[&#34;series_id&#34;].n_unique())
+
+# Output:
+# 1
+```
+
+### When a requested variant is not found
+
+The catalogue does not always list every variant a source may provide. Asking for a name that
+is not listed can therefore mean **“I cannot tell whether that variant is available.”**
+RivRetrieve reports this as `selection.unresolved_inventory`:
+
+```python
+no_variant = rr.pick(lithuania, variant=&#34;nonexistent&#34;, on_issue=&#34;ignore&#34;)
+
+print(rr.series(no_variant).height, [issue.code for issue in no_variant.issues])
+
+# Output:
+# 0 [&#39;selection.unresolved_inventory&#39;]
+```
+
+The empty table means no known series matches. RivRetrieve keeps your requested name for
+retrieval; it does not replace it with the one known series.
+
+Sometimes RivRetrieve can tell that nothing matches. The selection `consistido` already allows
+only that variant, so filtering it again for `&#34;nonexistent&#34;` leaves nothing:
+
+```python
+no_match = rr.pick(consistido, variant=&#34;nonexistent&#34;, on_issue=&#34;ignore&#34;)
+
+print(rr.series(no_match).height, [issue.code for issue in no_match.issues])
+
+# Output:
+# 0 [&#39;selection.no_match&#39;]
+```
+
+`selection.no_match` means **“I can tell, and the answer is no: nothing matches these filters.”**
+A complete source inventory can also establish that a requested variant is absent.
+
+Both examples use `on_issue=&#34;ignore&#34;` to keep the issue without a notification. With `&#34;warn&#34;`,
+you also get a warning; with `&#34;raise&#34;`, the call raises `IssuePolicyError`. None of these choices
+substitutes a different series.
+
+### Request windows and UTC
+
+`start` and `end` use the source&#39;s wall-clock time: the labels on its own clock, rather than UTC
+instants. Both endpoints are included. Use ISO date strings (`&#34;2023-01-01&#34;`), ISO datetime strings
+without a zone (`&#34;2023-01-01T06:00&#34;`), or naive Python `datetime` objects.
+Python `date` objects and values carrying time zones raise errors. `start` is required.
+
+A date-only start means midnight. A date-only end includes the date&#39;s final instant.
+Daily products are clipped by calendar date; other products are clipped by their source time
+labels. Omit `end` to use the caller machine&#39;s current local date through its final instant.
+A future end stays unchanged and adds an `info` issue. See the [reference](reference.md) for
+request and conversion details.
+
+UTC conversion uses each row&#39;s established time zone to put its timestamp on a common clock.
+USGS instantaneous observations publish UTC timestamps. Retrieve two readings
+from the same gauge and apply UTC conversion; these timestamps already use UTC:
+
+```python
+instant_gauge = rr.find(
+    provider=&#34;usgs_nwis&#34;, station=&#34;07374000&#34;, quantity=&#34;discharge&#34;, statistic=&#34;instantaneous&#34;
+)
+
+instant_result = rr.fetch(
+    instant_gauge, start=&#34;2023-01-01T00:00&#34;, end=&#34;2023-01-01T00:15&#34;
+)
+
+print(instant_result.data.select(&#34;time&#34;, &#34;time_zone&#34;).rows())
+
+# Output:
+# [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]
+
+utc_result = rr.to_utc(instant_result)
+
+print(utc_result.data.select(&#34;time&#34;, &#34;time_zone&#34;).rows())
+
+# Output:
+# [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]
+```
+
+The returned `time` remains naive and `time_zone` is `+00:00`. Other result fields remain
+unchanged. If any row has an unknown time zone, as in the USGS daily result, `to_utc` raises
+because it cannot determine the offset needed to convert that timestamp.
+Converting timestamps preserves the source&#39;s daily aggregation definition, including unknowns.
+
+### Issues
+
+Issues describe what happened during retrieval. Each has a severity: `info`, `warning` or
+`error`. Independent successful series can still return rows when another series fails.
+Choose `on_issue` to warn and continue, stop on an issue, or handle notifications yourself.
+A failed request differs from a successful answer with no observations. Inspect issues alongside row counts.
+
+| `on_issue` | Handling of `warning` and `error` issues |
+|---|---|
+| `&#34;warn&#34;` | Emit `RuntimeWarning` and return the result. This is the default. |
+| `&#34;raise&#34;` | Raise `IssuePolicyError` carrying the actionable issues. |
+| `&#34;ignore&#34;` | Return the result without notifications. Keep its issues. |
+
+`info` issues remain available without triggering a warning or exception. To stop when a
+retrieval reports warning or error issues, choose `raise`:
+
+```python
+checked_result = rr.fetch(
+    chosen_gauges, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;, on_issue=&#34;raise&#34;
+)
+
+print(checked_result.issues)
+
+# Output:
+# ()
+```
+
+If an issue triggers this policy, the call raises `IssuePolicyError`. You can catch it with
+`from rivretrieve._internal.issues import IssuePolicyError` and inspect its `issues`.
+
+To handle notifications yourself, use `ignore` and inspect the retained issues:
+
+```python
+quiet_result = rr.fetch(
+    chosen_gauges, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;, on_issue=&#34;ignore&#34;
+)
+
+print([(issue.severity, issue.code) for issue in quiet_result.issues])
+
+# Output:
+# []
+```
+
+The first retrieval example uses the default `warn` policy. Both `warn` and `ignore` return
+issues with their severity, code, message and available failure details. HTTP 404 produces a warning issue. Other
+unsuccessful statuses, rejected credentials and exhausted transport retries produce error
+issues. An all-failed request can return an empty observation frame with issues and outcomes.
+
+Broken stage contracts raise independently of `on_issue`. Invalid windows, missing credentials
+and catalogue-only observation requests also raise. See [reference](reference.md) for
+exception locations and [architecture](architecture.md) for failure isolation.
+
+## Supplied credentials
+
+Most providers are open. Norway (`no_nve`) requires `NVE_API_KEY`; Brazil (`br_ana`) requires
+`ANA_IDENTIFICADOR` and `ANA_SENHA`. Supply the required values in your process environment or a
+`.env` file in your working directory. [.env.example](https://github.com/RivRetrieve/RivRetrieve/blob/main/.env.example) lists the names without
+usable secrets. Keep credential files out of version control.
+
+`providers()` reports credential variable names and an `access` indicator: `open`, `ready`,
+or `missing &lt;variable names&gt;`. `ready` means the values are present, not that the agency has
+accepted them. It does not describe observation capability; see the
+[software declarations](reference.md) for provider kinds.
+
+Environment values take precedence over `.env`. A blank environment value shadows the file
+and counts as missing. Required credentials are checked even for cache reads, so keep them
+configured when reusing data. All selected providers are checked before mixed-provider retrieval
+starts: missing credentials stop that request before any provider retrieves observations.
+Credentials are sent only to configured agency addresses; retained request metadata excludes
+credential values. Do not put secrets into scripts, screenshots or issue reports.
+
+## Cache and bulk downloads
+
+Live retrieval defaults to `cache=&#34;bypass&#34;`. Choose another mode explicitly:
+
+| Mode | Live observation behavior |
+|---|---|
+| `&#34;bypass&#34;` | Fetch without reading or writing the observation cache |
+| `&#34;reuse&#34;` | Use cached observations when the complete request is covered; otherwise fetch again |
+| `&#34;refresh&#34;` | Replace the requested interval with the source&#39;s current successful answer |
+
+To reuse this one-day request later:
+
+```python
+cached_result = rr.fetch(chosen_gauges, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;, cache=&#34;reuse&#34;)
+status = rr.cache_status(&#34;usgs_nwis&#34;)
+
+print(status.exists)
+
+# Output:
+# True
+```
+
+Reuse needs enough cached information to answer the whole request: which series belong to it,
+and whether each was successfully retrieved for the requested interval. For example, cached
+Consistido data alone cannot answer a request for both Brazilian series. If coverage is incomplete,
+RivRetrieve fetches the full requested scope again, with the provider&#39;s normal padded windows.
+It does not request only the missing dates.
+
+A successful answer with no rows can still cover an interval. A failed request cannot.
+Reuse returns the saved answer, which may differ from what the source publishes now. Use
+`refresh` to request a current answer. Refresh can return fewer rows, or none. If a series fails,
+RivRetrieve can retain its previously cached observations alongside the new issues. Those rows
+keep their original retrieval time; they are not presented as a fresh successful download.
+
+Set `RIVRETRIEVE_CACHE_DIR` to choose a cache location. Without an override, RivRetrieve uses
+the platform&#39;s user cache directory. `cache_status` inspects local state without network access
+and refuses malformed or unsupported stores without deleting them. `clear_cache(provider)`
+deletes that provider&#39;s store and pending recovery inputs, including preserved downloads. It returns a removal summary and leaves other providers
+alone. See [architecture](architecture.md#storage-and-reuse) for storage details.
+
+Canada (`ca_eccc`) and Poland (`pl_imgw`) use compiled stores prepared from bulk downloads.
+Polish archive series have established daily frequency but no archive-wide statistic.
+They match daily quantity filters, not a `statistic=&#34;mean&#34;` filter.
+Without a store, retrieval returns an empty result and an issue. It does not start a national
+download. Calling `download(provider)` gives explicit consent to that transfer, which can use
+substantial bandwidth and disk space:
+
+```python
+# Optional national download, deliberately disabled in this walkthrough.
+# rr.download(&#34;ca_eccc&#34;)
+```
+
+For bulk providers, `bypass` and `reuse` both read the compiled store; `refresh` raises before
+transfer. Use `download(provider)` to replace it. After successful compilation the publisher
+artifact is deleted, while its identity remains recorded.
+
+## Provenance
+
+`result.data` contains harmonised observations. `result.provenance` records request and
+origin information, which helps you check where those observations came from:
+
+```python
+print(result.provenance.provider_id, result.provenance.source)
+
+# Output:
+# usgs_nwis live
+
+# Inspect the resolved scope and original source-call records.
+request_scope = result.provenance.request
+source_calls = result.provenance.calls_made
+```
+
+Provenance includes available source-call records, source terms and cache context.
+Failed requests can leave no recorded payload origin. On a cache-only read, `retrieved_at`
+can be `None`; retrieval times for cached intervals are in `served_intervals`.
+See the [reference](reference.md) for the provenance fields.
+
+## Receipts (optional)
+
+Request receipts when you want inspectable source material, for example to check values before
+unit conversion:
+
+```python
+receipt_result = rr.fetch(
+    chosen_gauges, start=&#34;2023-01-01&#34;, end=&#34;2023-01-01&#34;, receipts=True
+)
+
+print([entry.authorship.value for entry in receipt_result.receipts.entries])
+
+# Output:
+# [&#39;publisher_payload&#39;]
+```
+
+- `publisher_payload` holds the bytes handed to the parser, such as an extracted archive member.
+- `store_excerpt` holds cached rows encoded as Parquet by RivRetrieve, rather than the original
+  publisher bytes. Both live caches and compiled bulk stores can return these excerpts.
+
+Receipts can contain extra rows and values in native units. They help inspect source material;
+they are not a full reproducibility archive. Without `receipts=True`, `receipts.entries` is empty.
+See the [receipt reference](reference.md#receipts) for receipt fields and content.
+
+## Maps
+
+Maps let you inspect station coverage. Install `uv add &#34;rivretrieve[map]&#34;` before running this
+example. It saves a Folium map with one marker per selected station, here the same gauge used
+for retrieval:
+
+```python
+station_map = rr.map(chosen_gauges)
+station_map.save(&#34;stations.html&#34;)
+```
+
+Open `stations.html` in a browser. Markers show the catalogue&#39;s CRS statement. Unknown-CRS markers
+are orange; their coordinates are rendered as if they used EPSG:4326. That display assumption
+does not establish their reference system or change the catalogue. Without Folium, `map` raises
+`MissingOptionalDependencyError`.
+</textarea>
+
+<h1 id="usage">Usage</h1>
+<p><a href="../">Documentation index</a> · <a href="../reference/">API reference</a></p>
+<p>Working with RivRetrieve has three main steps: find source series by physical facts, retrieve
+their observations, then inspect the data and issues. This page follows that order, then introduces
+credentials, caching, provenance and maps.</p>
+<p>Run the Python examples in page order in one session. They build on earlier variables.
+The first retrieval uses the same USGS gauge and one-day window as the README. Later examples
+save selections and results, and convert established time zones to UTC. The Brazil download
+example needs ANA credentials; the USGS and Lithuanian examples do not.</p>
+<h2 id="find-stations">Find stations</h2>
+<p>A <strong>provider</strong> supplies observations, such as the US Geological Survey (<code>usgs_nwis</code>).
+A <strong>station</strong> is a monitoring site, such as USGS gauge <code>07374000</code>.
+A <strong>quantity</strong> is discharge, stage or water temperature (<code>temperature</code>). A <strong>source series</strong>
+is a separately published record at a station. Several source series can share quantity,
+frequency and statistic. Finding daily mean discharge can therefore select more than one record.
+Two records that match these filters can still differ in ways that matter for your study.</p>
+<p><code>find</code> searches packaged evidence without contacting observation services. Keep station identifiers
+as strings so leading zeros survive. Start broadly, then narrow by established facts:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Start with discharge, then ask for established daily means.</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">discharge</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">daily_gauges</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">discharge</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">chosen_gauges</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">daily_gauges</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;07374000&quot;</span><span class="p">])</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># Output:</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># [(&#39;07374000&#39;,)]</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;variant&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># Output:</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># [(&#39;c9d823a2491f4b639656a11b35a7625d&#39;, None)]</span>
+</span></code></pre></div>
+<p>USGS variants use publisher time-series identifiers. A <code>None</code> description means the source
+publishes no description; RivRetrieve does not replace it with parameter prose.</p>
+<p>The same physical filters work directly in <code>find</code>. Quantity says <strong>what</strong> was measured;
+frequency and statistic describe <strong>how it was published</strong>, such as a daily mean. RivRetrieve
+uses published daily means rather than calculating them from sub-daily observations.
+A service's update cadence does not establish the time span represented by a value.</p>
+<p>For example, RivRetrieve knows the units of the Swiss discharge values, but not whether they
+represent a daily mean. In other words, you can find those values by asking for discharge,
+but not by asking specifically for daily mean discharge. A value updated every ten minutes
+is not necessarily an average over ten minutes.</p>
+<p><code>rr.series(selection)</code> shows the source records known before retrieval. <code>rr.series(result)</code>
+also shows identities found in the response. The packaged catalogue is a snapshot, not an
+exhaustive census of current or historical series. An unrestricted selection includes later
+matching discoveries; it does not freeze retrieval to the catalogue's known members.</p>
+<h3 id="narrow-and-save-selections">Narrow and save selections</h3>
+<p>Use <code>pick</code> to narrow a selection by physical facts or by <code>variant</code> and <code>series_id</code>.
+A variant is a separately published version of a series, using the agency's own name.
+<code>pick</code> accepts a list of station, provider or source identifiers. It keeps only what you ask for;
+it does not substitute another version.</p>
+<p>Save the complete selection as a versioned bundle:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">selection_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;selection.rrbundle&quot;</span><span class="p">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">selection_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">))</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">restored_gauges</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">selection_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Bundle version <code>2</code> preserves intent, identities, physical evidence and inventory state. Import validates
+the bundle without rebuilding identities from today's catalogue. Bare frame imports through
+<code>from_frame</code> are refused. For custom Polars filtering, inspect a frame and pass selected identifiers
+back to <code>pick</code>; a frame is not a lossless selection export.</p>
+<p><code>describe(provider)</code> returns an offline, machine-readable catalogue description in
+<a href="https://github.com/mlcommons/croissant">Croissant</a> format. It identifies files and the evidence
+for catalogue facts. A <code>withheld</code> fact means RivRetrieve lacks an established acquisition record. See <a href="../catalogue-evidence/">catalogue evidence</a>.</p>
+<h2 id="retrieve-and-inspect-results">Retrieve and inspect results</h2>
+<p>Retrieve observations for the gauge in <code>chosen_gauges</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># [(&#39;07374000&#39;, 10562.183778816001)]</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Output:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># ()</span>
+</span></code></pre></div>
+<p>The empty tuple means this retrieval reported no issues. An <code>ObservationResult</code> carries
+<code>data</code>, <code>issues</code>, <code>provenance</code>, <code>receipts</code>, <code>source_series</code>, <code>inventories</code> and <code>outcomes</code>.
+<code>data</code> is a Polars frame. <code>to_polars()</code> returns
+that frame; <code>to_pandas()</code> converts it to a pandas dataframe.</p>
+<h3 id="what-you-get-back">What you get back</h3>
+<p>The observation frame has exactly these columns, even when empty:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time</code></td>
+<td>Naive source wall-clock timestamp, read together with <code>time_zone</code></td>
+</tr>
+<tr>
+<td><code>time_zone</code></td>
+<td>Established IANA zone, fixed offset, or <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>station_id</code></td>
+<td>String identifier within the result's provider</td>
+</tr>
+<tr>
+<td><code>product_id</code></td>
+<td>Source access coordinate, not authority for physical facts</td>
+</tr>
+<tr>
+<td><code>series_id</code></td>
+<td>Internal source-series identifier</td>
+</tr>
+<tr>
+<td><code>facts_id</code></td>
+<td>Physical-fact segment identifier</td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td>Established physical quantity</td>
+</tr>
+<tr>
+<td><code>source_unit</code></td>
+<td>Exact established source-unit vocabulary</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Harmonised unit of <code>value</code></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>Float in <code>unit</code>, or a published null</td>
+</tr>
+</tbody>
+</table>
+<p>The agency's timestamp is retained. <code>unknown</code> means there is no established time zone to use
+for conversion to UTC. A null value, an absent row and a failed request
+are different states.</p>
+<p>Discharge uses m³/s, stage uses metres, and water temperature uses degrees Celsius.
+The USGS result preserves <code>ft^3/s</code> in <code>source_unit</code> while returning <code>m3/s</code> in <code>unit</code>.
+Source-series facts describe units and temporal properties. Equal units do not establish
+equal day definitions, stage datums or scientific comparability. RivRetrieve leaves source
+quality judgements uninterpreted and does not compute unpublished products at another frequency.</p>
+<h3 id="series-inspection-and-result-views">Series inspection and result views</h3>
+<p><code>rr.series(result)</code> inspects response-discovered identities and physical facts, with outcomes even
+for known series that returned no rows. <code>result.outcomes</code> also retains limitations that could not
+be assigned a concrete identity. Statuses distinguish <code>success</code>, <code>empty</code>, <code>failed</code>, <code>unsupported</code>,
+<code>unresolved</code> and <code>no_match</code>. A null observation remains a row, not a failed request.</p>
+<p>You can narrow a selection before retrieval or filter a result afterwards with <code>pick</code>.
+Filtering a result makes no new source request. Original provenance, receipts and issues remain
+available, so they can still describe the broader request.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">result_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;result.rrbundle&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">result_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">restored_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">result_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
+</span></code></pre></div>
+<p>You can also narrow a retrieved result by an inspected internal identifier:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">returned_series</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">series_id</span> <span class="o">=</span> <span class="n">returned_series</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">series_view</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">series_id</span><span class="o">=</span><span class="n">series_id</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Result bundles retain observations, late identities, facts, outcomes, inventory, provenance and
+any retained receipts. Observation frames alone do not contain all this context.</p>
+<p><code>fetch</code> requires one provider. For selections spanning providers, <code>fetch_by_provider</code> returns a
+dictionary of separate results. Each retains its provider identity, source terms and outcomes.</p>
+<h3 id="when-the-time-step-is-unknown">When the time step is unknown</h3>
+<p>This Swiss gauge provides discharge values, but their exact time span and statistic are not
+established. The first search includes them. Adding daily-mean filters excludes them.
+Both searches use the packaged catalogue without contacting the source.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2251&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">swiss_daily</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">swiss</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">swiss_daily</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Output:</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># 0</span>
+</span></code></pre></div>
+<h3 id="when-an-agency-publishes-more-than-one-version">When an agency publishes more than one version</h3>
+<p>Brazil's ANA publishes <strong>Bruto</strong> (raw) and <strong>Consistido</strong> (quality-checked) daily records.
+ANA performs that checking, not RivRetrieve. Both are available: RivRetrieve requests both
+unless you explicitly choose one. A source may not have observations for both in every period.
+The labels do not tell you which record suits your study.
+Provider-specific observation quality flags are not added to the returned table.</p>
+<p>Find the two daily mean water-level series (<code>quantity="stage"</code>), then optionally choose Consistido:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">brazil</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;br_ana&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;15400000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">consistido</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;consistido&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The search above works offline. To run the downloads below, first set <code>ANA_IDENTIFICADOR</code> and
+<code>ANA_SENHA</code> in your environment or working-directory <code>.env</code> file. See
+<a href="#supplied-credentials">supplied credentials</a>. Do not put credential values in the code.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">brazil_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">consistido_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">consistido_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1"># Output:</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># [&#39;consistido&#39;]</span>
+</span></code></pre></div>
+<h3 id="when-only-one-series-is-available">When only one series is available</h3>
+<p>For Lithuania's Anykščiai gauge, this request returns one daily discharge series.
+There is no extra version to choose in this example:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">lithuania</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;lt_lhmt&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;anyksciu-vms&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">lithuanian_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">lithuanian_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n_unique</span><span class="p">())</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># Output:</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># 1</span>
+</span></code></pre></div>
+<h3 id="when-a-requested-variant-is-not-found">When a requested variant is not found</h3>
+<p>The catalogue does not always list every variant a source may provide. Asking for a name that
+is not listed can therefore mean <strong>“I cannot tell whether that variant is available.”</strong>
+RivRetrieve reports this as <code>selection.unresolved_inventory</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">no_variant</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_variant</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_variant</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># 0 [&#39;selection.unresolved_inventory&#39;]</span>
+</span></code></pre></div>
+<p>The empty table means no known series matches. RivRetrieve keeps your requested name for
+retrieval; it does not replace it with the one known series.</p>
+<p>Sometimes RivRetrieve can tell that nothing matches. The selection <code>consistido</code> already allows
+only that variant, so filtering it again for <code>"nonexistent"</code> leaves nothing:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">no_match</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_match</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_match</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># 0 [&#39;selection.no_match&#39;]</span>
+</span></code></pre></div>
+<p><code>selection.no_match</code> means <strong>“I can tell, and the answer is no: nothing matches these filters.”</strong>
+A complete source inventory can also establish that a requested variant is absent.</p>
+<p>Both examples use <code>on_issue="ignore"</code> to keep the issue without a notification. With <code>"warn"</code>,
+you also get a warning; with <code>"raise"</code>, the call raises <code>IssuePolicyError</code>. None of these choices
+substitutes a different series.</p>
+<h3 id="request-windows-and-utc">Request windows and UTC</h3>
+<p><code>start</code> and <code>end</code> use the source's wall-clock time: the labels on its own clock, rather than UTC
+instants. Both endpoints are included. Use ISO date strings (<code>"2023-01-01"</code>), ISO datetime strings
+without a zone (<code>"2023-01-01T06:00"</code>), or naive Python <code>datetime</code> objects.
+Python <code>date</code> objects and values carrying time zones raise errors. <code>start</code> is required.</p>
+<p>A date-only start means midnight. A date-only end includes the date's final instant.
+Daily products are clipped by calendar date; other products are clipped by their source time
+labels. Omit <code>end</code> to use the caller machine's current local date through its final instant.
+A future end stays unchanged and adds an <code>info</code> issue. See the <a href="../reference/">reference</a> for
+request and conversion details.</p>
+<p>UTC conversion uses each row's established time zone to put its timestamp on a common clock.
+USGS instantaneous observations publish UTC timestamps. Retrieve two readings
+from the same gauge and apply UTC conversion; these timestamps already use UTC:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">instant_gauge</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;07374000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;instantaneous&quot;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">instant_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="n">instant_gauge</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:00&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:15&quot;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">instant_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1"># Output:</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="n">utc_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">to_utc</span><span class="p">(</span><span class="n">instant_result</span><span class="p">)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">utc_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="c1"># Output:</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
+</span></code></pre></div>
+<p>The returned <code>time</code> remains naive and <code>time_zone</code> is <code>+00:00</code>. Other result fields remain
+unchanged. If any row has an unknown time zone, as in the USGS daily result, <code>to_utc</code> raises
+because it cannot determine the offset needed to convert that timestamp.
+Converting timestamps preserves the source's daily aggregation definition, including unknowns.</p>
+<h3 id="issues">Issues</h3>
+<p>Issues describe what happened during retrieval. Each has a severity: <code>info</code>, <code>warning</code> or
+<code>error</code>. Independent successful series can still return rows when another series fails.
+Choose <code>on_issue</code> to warn and continue, stop on an issue, or handle notifications yourself.
+A failed request differs from a successful answer with no observations. Inspect issues alongside row counts.</p>
+<table>
+<thead>
+<tr>
+<th><code>on_issue</code></th>
+<th>Handling of <code>warning</code> and <code>error</code> issues</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"warn"</code></td>
+<td>Emit <code>RuntimeWarning</code> and return the result. This is the default.</td>
+</tr>
+<tr>
+<td><code>"raise"</code></td>
+<td>Raise <code>IssuePolicyError</code> carrying the actionable issues.</td>
+</tr>
+<tr>
+<td><code>"ignore"</code></td>
+<td>Return the result without notifications. Keep its issues.</td>
+</tr>
+</tbody>
+</table>
+<p><code>info</code> issues remain available without triggering a warning or exception. To stop when a
+retrieval reports warning or error issues, choose <code>raise</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">checked_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">checked_result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1"># ()</span>
+</span></code></pre></div>
+<p>If an issue triggers this policy, the call raises <code>IssuePolicyError</code>. You can catch it with
+<code>from rivretrieve._internal.issues import IssuePolicyError</code> and inspect its <code>issues</code>.</p>
+<p>To handle notifications yourself, use <code>ignore</code> and inspect the retained issues:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">quiet_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">quiet_result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># []</span>
+</span></code></pre></div>
+<p>The first retrieval example uses the default <code>warn</code> policy. Both <code>warn</code> and <code>ignore</code> return
+issues with their severity, code, message and available failure details. HTTP 404 produces a warning issue. Other
+unsuccessful statuses, rejected credentials and exhausted transport retries produce error
+issues. An all-failed request can return an empty observation frame with issues and outcomes.</p>
+<p>Broken stage contracts raise independently of <code>on_issue</code>. Invalid windows, missing credentials
+and catalogue-only observation requests also raise. See <a href="../reference/">reference</a> for
+exception locations and <a href="../architecture/">architecture</a> for failure isolation.</p>
+<h2 id="supplied-credentials">Supplied credentials</h2>
+<p>Most providers are open. Norway (<code>no_nve</code>) requires <code>NVE_API_KEY</code>; Brazil (<code>br_ana</code>) requires
+<code>ANA_IDENTIFICADOR</code> and <code>ANA_SENHA</code>. Supply the required values in your process environment or a
+<code>.env</code> file in your working directory. <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/.env.example">.env.example</a> lists the names without
+usable secrets. Keep credential files out of version control.</p>
+<p><code>providers()</code> reports credential variable names and an <code>access</code> indicator: <code>open</code>, <code>ready</code>,
+or <code>missing &lt;variable names&gt;</code>. <code>ready</code> means the values are present, not that the agency has
+accepted them. It does not describe observation capability; see the
+<a href="../reference/">software declarations</a> for provider kinds.</p>
+<p>Environment values take precedence over <code>.env</code>. A blank environment value shadows the file
+and counts as missing. Required credentials are checked even for cache reads, so keep them
+configured when reusing data. All selected providers are checked before mixed-provider retrieval
+starts: missing credentials stop that request before any provider retrieves observations.
+Credentials are sent only to configured agency addresses; retained request metadata excludes
+credential values. Do not put secrets into scripts, screenshots or issue reports.</p>
+<h2 id="cache-and-bulk-downloads">Cache and bulk downloads</h2>
+<p>Live retrieval defaults to <code>cache="bypass"</code>. Choose another mode explicitly:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Live observation behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"bypass"</code></td>
+<td>Fetch without reading or writing the observation cache</td>
+</tr>
+<tr>
+<td><code>"reuse"</code></td>
+<td>Use cached observations when the complete request is covered; otherwise fetch again</td>
+</tr>
+<tr>
+<td><code>"refresh"</code></td>
+<td>Replace the requested interval with the source's current successful answer</td>
+</tr>
+</tbody>
+</table>
+<p>To reuse this one-day request later:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">cached_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;reuse&quot;</span><span class="p">)</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">status</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">cache_status</span><span class="p">(</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Output:</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># True</span>
+</span></code></pre></div>
+<p>Reuse needs enough cached information to answer the whole request: which series belong to it,
+and whether each was successfully retrieved for the requested interval. For example, cached
+Consistido data alone cannot answer a request for both Brazilian series. If coverage is incomplete,
+RivRetrieve fetches the full requested scope again, with the provider's normal padded windows.
+It does not request only the missing dates.</p>
+<p>A successful answer with no rows can still cover an interval. A failed request cannot.
+Reuse returns the saved answer, which may differ from what the source publishes now. Use
+<code>refresh</code> to request a current answer. Refresh can return fewer rows, or none. If a series fails,
+RivRetrieve can retain its previously cached observations alongside the new issues. Those rows
+keep their original retrieval time; they are not presented as a fresh successful download.</p>
+<p>Set <code>RIVRETRIEVE_CACHE_DIR</code> to choose a cache location. Without an override, RivRetrieve uses
+the platform's user cache directory. <code>cache_status</code> inspects local state without network access
+and refuses malformed or unsupported stores without deleting them. <code>clear_cache(provider)</code>
+deletes that provider's store and pending recovery inputs, including preserved downloads. It returns a removal summary and leaves other providers
+alone. See <a href="../architecture/#storage-and-reuse">architecture</a> for storage details.</p>
+<p>Canada (<code>ca_eccc</code>) and Poland (<code>pl_imgw</code>) use compiled stores prepared from bulk downloads.
+Polish archive series have established daily frequency but no archive-wide statistic.
+They match daily quantity filters, not a <code>statistic="mean"</code> filter.
+Without a store, retrieval returns an empty result and an issue. It does not start a national
+download. Calling <code>download(provider)</code> gives explicit consent to that transfer, which can use
+substantial bandwidth and disk space:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Optional national download, deliberately disabled in this walkthrough.</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># rr.download(&quot;ca_eccc&quot;)</span>
+</span></code></pre></div>
+<p>For bulk providers, <code>bypass</code> and <code>reuse</code> both read the compiled store; <code>refresh</code> raises before
+transfer. Use <code>download(provider)</code> to replace it. After successful compilation the publisher
+artifact is deleted, while its identity remains recorded.</p>
+<h2 id="provenance">Provenance</h2>
+<p><code>result.data</code> contains harmonised observations. <code>result.provenance</code> records request and
+origin information, which helps you check where those observations came from:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Output:</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># usgs_nwis live</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># Inspect the resolved scope and original source-call records.</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">request_scope</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">request</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">source_calls</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">calls_made</span>
+</span></code></pre></div>
+<p>Provenance includes available source-call records, source terms and cache context.
+Failed requests can leave no recorded payload origin. On a cache-only read, <code>retrieved_at</code>
+can be <code>None</code>; retrieval times for cached intervals are in <code>served_intervals</code>.
+See the <a href="../reference/">reference</a> for the provenance fields.</p>
+<h2 id="receipts-optional">Receipts (optional)</h2>
+<p>Request receipts when you want inspectable source material, for example to check values before
+unit conversion:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">receipt_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">receipts</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="p">)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="nb">print</span><span class="p">([</span><span class="n">entry</span><span class="o">.</span><span class="n">authorship</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">receipt_result</span><span class="o">.</span><span class="n">receipts</span><span class="o">.</span><span class="n">entries</span><span class="p">])</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># [&#39;publisher_payload&#39;]</span>
+</span></code></pre></div>
+<ul>
+<li><code>publisher_payload</code> holds the bytes handed to the parser, such as an extracted archive member.</li>
+<li><code>store_excerpt</code> holds cached rows encoded as Parquet by RivRetrieve, rather than the original
+  publisher bytes. Both live caches and compiled bulk stores can return these excerpts.</li>
+</ul>
+<p>Receipts can contain extra rows and values in native units. They help inspect source material;
+they are not a full reproducibility archive. Without <code>receipts=True</code>, <code>receipts.entries</code> is empty.
+See the <a href="../reference/#receipts">receipt reference</a> for receipt fields and content.</p>
+<h2 id="maps">Maps</h2>
+<p>Maps let you inspect station coverage. Install <code>uv add "rivretrieve[map]"</code> before running this
+example. It saves a Folium map with one marker per selected station, here the same gauge used
+for retrieval:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">station_map</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">station_map</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;stations.html&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Open <code>stations.html</code> in a browser. Markers show the catalogue's CRS statement. Unknown-CRS markers
+are orange; their coordinates are rendered as if they used EPSG:4326. That display assumption
+does not establish their reference system or change the catalogue. Without Folium, <code>map</code> raises
+<code>MissingOptionalDependencyError</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
