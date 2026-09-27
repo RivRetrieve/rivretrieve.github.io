@@ -6342,6 +6342,9 @@ Source-call facts carried with retained receipt bytes.
 - **query : SourceQuery or UnknownOriginFact**
   Executed local statement and parameters when applicable. UnknownOriginFact
   carries a reason rather than filling an inapplicable fact by assumption.
+- **attempts : int or None**
+  Transport attempt count when retained. Payload attempt traces carry the
+  individual outcomes when the transport exposes them.
 
 ### `StoreStatus`
 
@@ -8910,6 +8913,9 @@ mean that observations exist at every time step in that interval.</p>
 <li><strong>query : SourceQuery or UnknownOriginFact</strong>
   Executed local statement and parameters when applicable. UnknownOriginFact
   carries a reason rather than filling an inapplicable fact by assumption.</li>
+<li><strong>attempts : int or None</strong>
+  Transport attempt count when retained. Payload attempt traces carry the
+  individual outcomes when the transport exposes them.</li>
 </ul>
 <h3 id="storestatus"><code>StoreStatus</code></h3>
 <p>Type location: <code>rivretrieve._internal.store.reader.StoreStatus</code>.</p>
