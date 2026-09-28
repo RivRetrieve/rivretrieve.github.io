@@ -1,0 +1,1630 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/verification/provider-examples/implementation-tests/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Implementation regression evidence - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementation-regression-evidence" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementation regression evidence
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interactive Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../usage/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../providers/fr_hubeau/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Developer Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart & Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CAMELS-US Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../drainage-areas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drainage Areas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hub'Eau (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HydroPortail (France)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLIT (Japan)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/pl_imgw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IMGW-PIB (Poland)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOEN (Switzerland)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../product_dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product Dictionary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Store Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#canada-and-complete-history-stores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canada and complete-history stores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#independent-provider-acquisitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Independent provider acquisitions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-reviewed-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final reviewed integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-repository-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete repository suite
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-integrated-full-suite-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First integrated full-suite failure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-generation-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference generation check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence-branch-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence-branch checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completed-full-suite-rerun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completed full-suite rerun
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Implementation regression evidence
+
+These deterministic tests validate library behavior. They do not replace live
+provider example execution. Commands ran through uv on 2026-09-28.
+
+## Canada and complete-history stores
+
+[PR #409](https://github.com/RivRetrieve/RivRetrieve/pull/409), implementation
+commit `9c804f4`, was independently reviewed and merged. The author reported:
+
+- `uv run pytest tests/store -q --durations=10`: 200 passed in 24.47 s.
+- `uv run pytest tests/store/test_ca_eccc_download_safety.py -q --durations=10`:
+  nine passed in 1.01 s; the slowest new test took 0.23 s.
+- `uv run ruff check src/rivretrieve/_internal/providers/ca_eccc tests/store/test_ca_eccc_download_safety.py`: passed.
+- `uv run ruff format --check src/rivretrieve/_internal/providers/ca_eccc tests/store/test_ca_eccc_download_safety.py`: passed.
+- `uv run ty check src` and `git diff --check`: passed.
+
+Tests use public download composition and real SQLite decode, compilation and
+certification. An older fallback preserves the certified store and manifest.
+Same-date and newer releases may legitimately contain fewer rows. Missing-release
+404 fallback remains supported; 403, 302 and 500 retain status and URL and stop
+after one HEAD. Transport exception identity survives. Existing and dangling
+artifact symlinks fail before network access. The complete store suite preserves
+Poland&#39;s atomic complete-history publication and recovery behavior. This checks
+the witnessed local path-safety defect, not hostile concurrent filesystem mutation.
+The independent reviewer separately reported 200 store tests in 26.08 s.
+
+## Independent provider acquisitions
+
+[PR #411](https://github.com/RivRetrieve/RivRetrieve/pull/411) retains its
+[exact combined command and baseline comparison](https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878114885).
+The author reported 454 passes in 131.44 s with one inherited openpyxl warning,
+then 53 USGS passes in 0.80 s and 11 CHMI annual passes in 10.60 s. These runs
+are separate, overlapping suites, not a sum of unique tests. The author reported
+`uv run ty check src` and Ruff checks of source/tests passing.
+
+Coverage includes CHMI annual DQ/HQ; Thailand capped 365-day requests; ANA
+monthly daily and backward 30-day telemetry requests; MLIT HTML/DAT chunks;
+Hub&#39;Eau incomplete cursors; and USGS independent 1100-day spans. Tests exercise
+first, middle, last and all failures, bounded evidence, receipts, shared failures,
+malformed and empty responses, held refresh and retries. Both implementation slices were subsequently repaired, independently approved and
+merged. The final-head evidence below supersedes preliminary approval status.
+
+Lithuania preservation and shared acquisition composition command:
+`uv run --no-sync pytest -q tests/test_lt_lhmt_monthly_isolation.py tests/test_lt_lhmt_shared_acquisition.py tests/test_acquisition_composition.py`
+reported 69 passes in 198.90 s. The worker used its own uv cache. This run preceded
+the latest shared review fixes and must not be treated as final-head validation.
+
+## Final reviewed integration
+
+Implementation PRs #409, #410 and #411 are merged. The final example checkout is
+`28d12fb70f75c89ee4ceac497fbbf80ddd768922`.
+
+[Provider author validation](https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878610055)
+retains the exact 22-file uv pytest command: **597 passed, one unchanged openpyxl
+style warning, 136.01 s** at `dd61bcbe76168bdf9febe9b09370319df722f692`.
+[Independent review](https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878598296)
+passed a separate 21-file slice: **608 passed in 75.64 s**. These counts overlap.
+Type checking of `src`, lint and formatting of `src tests`, and diff checks passed.
+
+Review exposed and repaired MLIT month-end `24時` persistence, USGS UTC acquisition
+versus native-offset cache boundaries, multi-span identity inventories,
+cross-span physical-fact changes, stale broad inventory after narrow refresh,
+and failed retry call linkage. The original independent probes passed after
+repair. No source time zone or temporal support was inferred by these fixes.
+
+[Shared independent approval](https://github.com/RivRetrieve/RivRetrieve/pull/410#issuecomment-5878618685)
+covers returned/stored overlap agreement, unknown failed-request targets,
+snapshot accepted-row keys and actual acquisition vintages, native/UTC coverage
+validation, bounded inventory reuse and narrower identity changes. Accumulated
+store revision 8 refuses obsolete revision 7 without modifying it. The shared
+reviewer&#39;s final changed fixture test passed in 5.32 s. The author separately ran
+`uv run pytest tests/test_fr_hydroportail_variants.py -q`: **83 passed in 43.40 s**.
+
+[Final integration review](https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878658584)
+approved `174e6b3e0cd6cb888ca6fca4264dcceb6232272b`: only 11 test lines differed
+from the reviewed provider candidate; production code was identical. Independent
+validation of that changed file passed **83 tests in 44.80 s**. The root agent
+then merged it as `28d12fb`. Complete repository tests and live examples are
+separate acceptance gates, not implied by these focused approvals.
+
+## Complete repository suite
+
+The root agent ran `uv run pytest` at baseline
+`0b443049d50819978030e29e46011ca2101cb337`: **4,535 passed, three skipped,
+78 warnings in 2,440.37 s (40:40)**. Its raw log remains at
+`scratchpad/acquisition-validation/baseline-pytest.log`. Two skips require the
+absent optional geopandas dependency; the third requires unavailable controlled
+private Thai response fixtures. Those skips are limitations, not passes.
+Baseline `uv run ty check src` passed. Inherited whole-tree formatting and lint
+failures are recorded separately; exact historical execution scripts were not
+silently reformatted. Final implementation full-suite results are pending.
+
+At final target `28d12fb`, `uv run mkdocs build --strict` and `uv run ty check src`
+passed. The root retained `scratchpad/acquisition-validation/final-mkdocs.log`.
+The optional map follow-up
+`uv run --with geopandas --with matplotlib pytest tests/test_coverage_map.py -q`
+passed **four tests in 30.75 s**, with no dependency-file changes; its captured
+log is `scratchpad/acquisition-validation/final-optional-maps-complete.log`.
+An earlier retry with only geopandas still skipped two tests because matplotlib
+was absent; it is not counted as completed optional coverage.
+
+Final `uv run python scripts/generate_reference.py --check` passed with
+`Reference is current.` The root retained
+`scratchpad/acquisition-validation/final-reference.log`.
+
+## First integrated full-suite failure
+
+The root&#39;s full `uv run pytest` at `28d12fb` returned **41 failed, 4,631 passed,
+five skipped, 78 warnings and seven errors in 2,448.63 s (40:48)**. This is not a
+passing final suite. The skip set included absent optional geopandas/folium and
+the unavailable controlled private Thai bodies. Packaging setup also lacked a
+fresh-cache build prerequisite; a subsequent warmed packaging subset passed
+four tests in 14.17 s. Neither explanation dismisses the remaining contract
+failures. The root assigned repairs and will rerun the complete suite with
+optional dependencies and warmed build prerequisites.
+
+The provider-page runs retained here still identify the exact `28d12fb` code.
+They do not verify any later repair. Final acceptance remains incomplete for
+both the repository suite and the HydroPortail source blocker.
+
+The root then reran the environment-affected subset at unchanged `28d12fb`:
+
+```bash
+uv run --extra map pytest tests/test_documentation_examples.py tests/test_distribution_isolation.py tests/test_drainage_area_packaging.py tests/test_packaging_carries_catalogues.py tests/test_packaging_excludes_catalogue_build_inputs.py -q
+```
+
+With a warmed external `UV_CACHE_DIR`, **33 tests passed in 138.81 s**. The
+optional map extra and an online build preflight supplied missing environment
+prerequisites; source and dependency files did not change. The root retained
+`scratchpad/acquisition-validation/final-environment-regressions.log`. A full
+rerun with these prerequisites remains required.
+
+## Reference generation check
+
+The root later found that `mkdocs build` regenerates `docs/reference.md`. Its
+initial post-build `--check` therefore did not establish that the committed
+reference was current. The evidence checkout ran the check **before** any build:
+
+```text
+$ uv run python scripts/generate_reference.py --check
+Reference drift: run uv run python scripts/generate_reference.py
+```
+
+It exited 1 in 5.21 s. After correcting `CoverageInterval.interval` from
+&#34;Covered wall-clock interval&#34; to &#34;Covered interval on its declared time axis&#34;,
+`uv run python scripts/generate_reference.py` regenerated the reference. An
+immediate pre-build `--check` exited 0 in 0.41 s with `Reference is current.`
+The regenerated page documents format 8, native/UTC interval axes and explicit
+outcome coverage/key evidence. The docstring correction changes documentation,
+not executable behavior. Independent AST comparison is required before carrying
+forward the unchanged-behavior live examples.
+
+The root owns publication of this reference/docstring correction in a separate
+PR. The evidence branch briefly contained the same correction during validation,
+then removed those two file deltas to avoid duplicate ownership. The recorded
+pre-build checks above are historical execution evidence, not a claim that this
+evidence-only PR publishes the generated reference.
+
+## Evidence-branch checks
+
+After merging target `8da58e4` into the evidence branch, the reference check passed
+before any build in 0.41 s. Scoped lint for the runner and five mechanically
+cleaned historical ancillary scripts passed. Whole-tree Ruff now reports only
+one inherited import-spacing error in `canada-provider/final_snippets.py` and two
+formatting failures: that file and `brazil-provider/examples.py`. The other 503
+Python files are formatted. Both retained files explicitly preserve exact
+historical executed snippets; their bytes were intentionally not changed. This
+is a disclosed whole-tree check limitation, not a clean full-lint claim.
+
+## Completed full-suite rerun
+
+At target `8da58e4d30e06b65c86fbbfd9c4cccb461e9e460`, the root ran:
+
+```bash
+UV_CACHE_DIR=&lt;external-warmed-cache&gt; uv run --extra map --with geopandas --with matplotlib pytest
+```
+
+Captured result, exit 0:
+
+```text
+SKIPPED [1] tests/test_thaiwater_governing_evidence.py:72: controlled private bodies are required; mandatory acceptance check
+4683 passed, 1 skipped, 78 warnings in 2424.45s (0:40:24)
+```
+
+The raw log is `scratchpad/acquisition-validation/final-pytest-8da58e4.log`.
+The private Thai fixture acceptance check remains unverified. The warnings remain
+reported; this is not a claim that every test passed. Baseline was 4,535 passed,
+three skipped in 2,440.37 s. Different optional prerequisites and concurrent
+workloads mean these durations are observations, not a performance comparison.
+The reference check passed on the final target before the documentation build.
+
+The completed evidence tree passed its pre-build reference check (0.55 s),
+runner lint/format and `git diff --check`. Its own
+`uv run mkdocs build --strict` exited 0 in 2.02 s. The build
+left the tracked reference unchanged; this pass did not hide a regenerated diff.
+
+Evidence-branch focused documentation validation:
+`uv run --extra map pytest tests/test_documentation.py tests/test_supporting_documentation.py -q`
+completed with the captured result:
+
+```text
+Installed 3 packages in 4ms
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+tests/test_supporting_documentation.py::test_catalogue_evidence_markdown
+  /Users/nicolaslazaro/Desktop/work/RivRetrieve/.worktrees/visions/provider-example-evidence/.venv/lib/python3.13/site-packages/rdflib/plugins/parsers/jsonld.py:159: DeprecationWarning: ConjunctiveGraph is deprecated, use Dataset instead.
+    conj_sink = ConjunctiveGraph(store=sink.store, identifier=sink.identifier)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+7 passed, 1 warning in 7.41s
+```
+</textarea>
+
+<h1 id="implementation-regression-evidence">Implementation regression evidence</h1>
+<p>These deterministic tests validate library behavior. They do not replace live
+provider example execution. Commands ran through uv on 2026-09-28.</p>
+<h2 id="canada-and-complete-history-stores">Canada and complete-history stores</h2>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/pull/409">PR #409</a>, implementation
+commit <code>9c804f4</code>, was independently reviewed and merged. The author reported:</p>
+<ul>
+<li><code>uv run pytest tests/store -q --durations=10</code>: 200 passed in 24.47 s.</li>
+<li><code>uv run pytest tests/store/test_ca_eccc_download_safety.py -q --durations=10</code>:
+  nine passed in 1.01 s; the slowest new test took 0.23 s.</li>
+<li><code>uv run ruff check src/rivretrieve/_internal/providers/ca_eccc tests/store/test_ca_eccc_download_safety.py</code>: passed.</li>
+<li><code>uv run ruff format --check src/rivretrieve/_internal/providers/ca_eccc tests/store/test_ca_eccc_download_safety.py</code>: passed.</li>
+<li><code>uv run ty check src</code> and <code>git diff --check</code>: passed.</li>
+</ul>
+<p>Tests use public download composition and real SQLite decode, compilation and
+certification. An older fallback preserves the certified store and manifest.
+Same-date and newer releases may legitimately contain fewer rows. Missing-release
+404 fallback remains supported; 403, 302 and 500 retain status and URL and stop
+after one HEAD. Transport exception identity survives. Existing and dangling
+artifact symlinks fail before network access. The complete store suite preserves
+Poland's atomic complete-history publication and recovery behavior. This checks
+the witnessed local path-safety defect, not hostile concurrent filesystem mutation.
+The independent reviewer separately reported 200 store tests in 26.08 s.</p>
+<h2 id="independent-provider-acquisitions">Independent provider acquisitions</h2>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/pull/411">PR #411</a> retains its
+<a href="https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878114885">exact combined command and baseline comparison</a>.
+The author reported 454 passes in 131.44 s with one inherited openpyxl warning,
+then 53 USGS passes in 0.80 s and 11 CHMI annual passes in 10.60 s. These runs
+are separate, overlapping suites, not a sum of unique tests. The author reported
+<code>uv run ty check src</code> and Ruff checks of source/tests passing.</p>
+<p>Coverage includes CHMI annual DQ/HQ; Thailand capped 365-day requests; ANA
+monthly daily and backward 30-day telemetry requests; MLIT HTML/DAT chunks;
+Hub'Eau incomplete cursors; and USGS independent 1100-day spans. Tests exercise
+first, middle, last and all failures, bounded evidence, receipts, shared failures,
+malformed and empty responses, held refresh and retries. Both implementation slices were subsequently repaired, independently approved and
+merged. The final-head evidence below supersedes preliminary approval status.</p>
+<p>Lithuania preservation and shared acquisition composition command:
+<code>uv run --no-sync pytest -q tests/test_lt_lhmt_monthly_isolation.py tests/test_lt_lhmt_shared_acquisition.py tests/test_acquisition_composition.py</code>
+reported 69 passes in 198.90 s. The worker used its own uv cache. This run preceded
+the latest shared review fixes and must not be treated as final-head validation.</p>
+<h2 id="final-reviewed-integration">Final reviewed integration</h2>
+<p>Implementation PRs #409, #410 and #411 are merged. The final example checkout is
+<code>28d12fb70f75c89ee4ceac497fbbf80ddd768922</code>.</p>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878610055">Provider author validation</a>
+retains the exact 22-file uv pytest command: <strong>597 passed, one unchanged openpyxl
+style warning, 136.01 s</strong> at <code>dd61bcbe76168bdf9febe9b09370319df722f692</code>.
+<a href="https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878598296">Independent review</a>
+passed a separate 21-file slice: <strong>608 passed in 75.64 s</strong>. These counts overlap.
+Type checking of <code>src</code>, lint and formatting of <code>src tests</code>, and diff checks passed.</p>
+<p>Review exposed and repaired MLIT month-end <code>24時</code> persistence, USGS UTC acquisition
+versus native-offset cache boundaries, multi-span identity inventories,
+cross-span physical-fact changes, stale broad inventory after narrow refresh,
+and failed retry call linkage. The original independent probes passed after
+repair. No source time zone or temporal support was inferred by these fixes.</p>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/pull/410#issuecomment-5878618685">Shared independent approval</a>
+covers returned/stored overlap agreement, unknown failed-request targets,
+snapshot accepted-row keys and actual acquisition vintages, native/UTC coverage
+validation, bounded inventory reuse and narrower identity changes. Accumulated
+store revision 8 refuses obsolete revision 7 without modifying it. The shared
+reviewer's final changed fixture test passed in 5.32 s. The author separately ran
+<code>uv run pytest tests/test_fr_hydroportail_variants.py -q</code>: <strong>83 passed in 43.40 s</strong>.</p>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/pull/411#issuecomment-5878658584">Final integration review</a>
+approved <code>174e6b3e0cd6cb888ca6fca4264dcceb6232272b</code>: only 11 test lines differed
+from the reviewed provider candidate; production code was identical. Independent
+validation of that changed file passed <strong>83 tests in 44.80 s</strong>. The root agent
+then merged it as <code>28d12fb</code>. Complete repository tests and live examples are
+separate acceptance gates, not implied by these focused approvals.</p>
+<h2 id="complete-repository-suite">Complete repository suite</h2>
+<p>The root agent ran <code>uv run pytest</code> at baseline
+<code>0b443049d50819978030e29e46011ca2101cb337</code>: <strong>4,535 passed, three skipped,
+78 warnings in 2,440.37 s (40:40)</strong>. Its raw log remains at
+<code>scratchpad/acquisition-validation/baseline-pytest.log</code>. Two skips require the
+absent optional geopandas dependency; the third requires unavailable controlled
+private Thai response fixtures. Those skips are limitations, not passes.
+Baseline <code>uv run ty check src</code> passed. Inherited whole-tree formatting and lint
+failures are recorded separately; exact historical execution scripts were not
+silently reformatted. Final implementation full-suite results are pending.</p>
+<p>At final target <code>28d12fb</code>, <code>uv run mkdocs build --strict</code> and <code>uv run ty check src</code>
+passed. The root retained <code>scratchpad/acquisition-validation/final-mkdocs.log</code>.
+The optional map follow-up
+<code>uv run --with geopandas --with matplotlib pytest tests/test_coverage_map.py -q</code>
+passed <strong>four tests in 30.75 s</strong>, with no dependency-file changes; its captured
+log is <code>scratchpad/acquisition-validation/final-optional-maps-complete.log</code>.
+An earlier retry with only geopandas still skipped two tests because matplotlib
+was absent; it is not counted as completed optional coverage.</p>
+<p>Final <code>uv run python scripts/generate_reference.py --check</code> passed with
+<code>Reference is current.</code> The root retained
+<code>scratchpad/acquisition-validation/final-reference.log</code>.</p>
+<h2 id="first-integrated-full-suite-failure">First integrated full-suite failure</h2>
+<p>The root's full <code>uv run pytest</code> at <code>28d12fb</code> returned <strong>41 failed, 4,631 passed,
+five skipped, 78 warnings and seven errors in 2,448.63 s (40:48)</strong>. This is not a
+passing final suite. The skip set included absent optional geopandas/folium and
+the unavailable controlled private Thai bodies. Packaging setup also lacked a
+fresh-cache build prerequisite; a subsequent warmed packaging subset passed
+four tests in 14.17 s. Neither explanation dismisses the remaining contract
+failures. The root assigned repairs and will rerun the complete suite with
+optional dependencies and warmed build prerequisites.</p>
+<p>The provider-page runs retained here still identify the exact <code>28d12fb</code> code.
+They do not verify any later repair. Final acceptance remains incomplete for
+both the repository suite and the HydroPortail source blocker.</p>
+<p>The root then reran the environment-affected subset at unchanged <code>28d12fb</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>run<span class="w"> </span>--extra<span class="w"> </span>map<span class="w"> </span>pytest<span class="w"> </span>tests/test_documentation_examples.py<span class="w"> </span>tests/test_distribution_isolation.py<span class="w"> </span>tests/test_drainage_area_packaging.py<span class="w"> </span>tests/test_packaging_carries_catalogues.py<span class="w"> </span>tests/test_packaging_excludes_catalogue_build_inputs.py<span class="w"> </span>-q
+</span></code></pre></div>
+<p>With a warmed external <code>UV_CACHE_DIR</code>, <strong>33 tests passed in 138.81 s</strong>. The
+optional map extra and an online build preflight supplied missing environment
+prerequisites; source and dependency files did not change. The root retained
+<code>scratchpad/acquisition-validation/final-environment-regressions.log</code>. A full
+rerun with these prerequisites remains required.</p>
+<h2 id="reference-generation-check">Reference generation check</h2>
+<p>The root later found that <code>mkdocs build</code> regenerates <code>docs/reference.md</code>. Its
+initial post-build <code>--check</code> therefore did not establish that the committed
+reference was current. The evidence checkout ran the check <strong>before</strong> any build:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ uv run python scripts/generate_reference.py --check
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Reference drift: run uv run python scripts/generate_reference.py
+</span></code></pre></div>
+<p>It exited 1 in 5.21 s. After correcting <code>CoverageInterval.interval</code> from
+"Covered wall-clock interval" to "Covered interval on its declared time axis",
+<code>uv run python scripts/generate_reference.py</code> regenerated the reference. An
+immediate pre-build <code>--check</code> exited 0 in 0.41 s with <code>Reference is current.</code>
+The regenerated page documents format 8, native/UTC interval axes and explicit
+outcome coverage/key evidence. The docstring correction changes documentation,
+not executable behavior. Independent AST comparison is required before carrying
+forward the unchanged-behavior live examples.</p>
+<p>The root owns publication of this reference/docstring correction in a separate
+PR. The evidence branch briefly contained the same correction during validation,
+then removed those two file deltas to avoid duplicate ownership. The recorded
+pre-build checks above are historical execution evidence, not a claim that this
+evidence-only PR publishes the generated reference.</p>
+<h2 id="evidence-branch-checks">Evidence-branch checks</h2>
+<p>After merging target <code>8da58e4</code> into the evidence branch, the reference check passed
+before any build in 0.41 s. Scoped lint for the runner and five mechanically
+cleaned historical ancillary scripts passed. Whole-tree Ruff now reports only
+one inherited import-spacing error in <code>canada-provider/final_snippets.py</code> and two
+formatting failures: that file and <code>brazil-provider/examples.py</code>. The other 503
+Python files are formatted. Both retained files explicitly preserve exact
+historical executed snippets; their bytes were intentionally not changed. This
+is a disclosed whole-tree check limitation, not a clean full-lint claim.</p>
+<h2 id="completed-full-suite-rerun">Completed full-suite rerun</h2>
+<p>At target <code>8da58e4d30e06b65c86fbbfd9c4cccb461e9e460</code>, the root ran:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">UV_CACHE_DIR</span><span class="o">=</span>&lt;external-warmed-cache&gt;<span class="w"> </span>uv<span class="w"> </span>run<span class="w"> </span>--extra<span class="w"> </span>map<span class="w"> </span>--with<span class="w"> </span>geopandas<span class="w"> </span>--with<span class="w"> </span>matplotlib<span class="w"> </span>pytest
+</span></code></pre></div>
+<p>Captured result, exit 0:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>SKIPPED [1] tests/test_thaiwater_governing_evidence.py:72: controlled private bodies are required; mandatory acceptance check
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>4683 passed, 1 skipped, 78 warnings in 2424.45s (0:40:24)
+</span></code></pre></div>
+<p>The raw log is <code>scratchpad/acquisition-validation/final-pytest-8da58e4.log</code>.
+The private Thai fixture acceptance check remains unverified. The warnings remain
+reported; this is not a claim that every test passed. Baseline was 4,535 passed,
+three skipped in 2,440.37 s. Different optional prerequisites and concurrent
+workloads mean these durations are observations, not a performance comparison.
+The reference check passed on the final target before the documentation build.</p>
+<p>The completed evidence tree passed its pre-build reference check (0.55 s),
+runner lint/format and <code>git diff --check</code>. Its own
+<code>uv run mkdocs build --strict</code> exited 0 in 2.02 s. The build
+left the tracked reference unchanged; this pass did not hide a regenerated diff.</p>
+<p>Evidence-branch focused documentation validation:
+<code>uv run --extra map pytest tests/test_documentation.py tests/test_supporting_documentation.py -q</code>
+completed with the captured result:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Installed 3 packages in 4ms
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>.......                                                                  [100%]
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>=============================== warnings summary ===============================
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>tests/test_supporting_documentation.py::test_catalogue_evidence_markdown
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  /Users/nicolaslazaro/Desktop/work/RivRetrieve/.worktrees/visions/provider-example-evidence/.venv/lib/python3.13/site-packages/rdflib/plugins/parsers/jsonld.py:159: DeprecationWarning: ConjunctiveGraph is deprecated, use Dataset instead.
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    conj_sink = ConjunctiveGraph(store=sink.store, identifier=sink.identifier)
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>7 passed, 1 warning in 7.41s
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
