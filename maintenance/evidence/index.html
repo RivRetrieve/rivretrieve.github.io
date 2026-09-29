@@ -1012,6 +1012,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Access and storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1232,6 +1249,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Access and storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1323,7 +1357,7 @@ that every original response has been retained.
 
 ## Access and storage
 
-Shared collections belong in versioned releases of the private
+The retained Bosnia, France and ThaiWater collections are attached to versioned releases of the private
 [`RivRetrieve/verification-evidence`](https://github.com/RivRetrieve/verification-evidence)
 repository. Use a personal GitHub account with the existing organization access.
 An organization owner administers access; ask an owner if the repository is not
@@ -1347,6 +1381,20 @@ The owner chose not to keep an independent backup. A Git clone or mirror does no
 back up release attachments. Loss of those attachments has no independent recovery
 guarantee. Preserve original local evidence during migration; these instructions
 do not authorize deleting it.
+
+### Release protection
+
+GitHub reported `immutable: false` for all three indexed releases when they were
+published on September 29, 2026. These releases are not protected by GitHub release
+immutability. This observed release state does not establish the repository or
+organization setting.
+
+The index pins each release and asset identity, byte size and SHA-256 digest.
+The download tool rejects missing identities and changed bytes. These checks do
+not prevent replacement or deletion, and a digest cannot recover a deleted file.
+Updates must receive new collection identities. The owner authorized these
+versioned releases without immutable-release protection; the lack of an
+independent backup remains unchanged.
 
 ## Public checks
 
@@ -1381,10 +1429,11 @@ list means shared acquisition for that provider is not recorded. Stop rather tha
 invent an ID or treat local derived tables as the missing collection.
 
 Use an evidence directory outside the source checkout. The following example uses
-ThaiWater. Set `COLLECTION_ID` to a real indexed ID before running it:
+the published ThaiWater collection `th_thaiwater-2026-09-29-v1`. Its exact release
+and asset identities are in the index:
 
 ```sh
-export COLLECTION_ID=&#39;COPY_EXACT_ID_FROM_INDEX&#39;
+export COLLECTION_ID=&#39;th_thaiwater-2026-09-29-v1&#39;
 export EVIDENCE_ROOT=&#34;$HOME/.local/share/rivretrieve/verification-evidence&#34;
 
 uv run python -m maintenance.evidence fetch \
@@ -1413,12 +1462,12 @@ parser example establishes national coverage. The complete controlled checks for
 Bosnia, France and ThaiWater require the original bodies and receipts. Missing
 material is a failed prerequisite, not a reason to skip or weaken a mandatory check.
 
-For ThaiWater, copy `verification_root` from the selected collection record or
-fetch output. The retained whole-provider collection uses
-`baseline-capture-2026-09-13`. Set the variable before running the complete verifier:
+For this ThaiWater collection, the indexed `verification_root` is
+`baseline-capture-2026-09-13`. Confirm that value in the selected record or fetch
+output if choosing another collection. Set it before running the complete verifier:
 
 ```sh
-export VERIFICATION_ROOT=&#39;COPY_VERIFICATION_ROOT_FROM_INDEX&#39;
+export VERIFICATION_ROOT=&#39;baseline-capture-2026-09-13&#39;
 export THAIWATER_REVIEW_EVIDENCE_ROOT=&#34;$EVIDENCE_ROOT/$COLLECTION_ID/$VERIFICATION_ROOT&#34;
 
 uv run python maintenance/catalogue/th_thaiwater/scripts/verify_governing_evidence.py \
@@ -1526,7 +1575,7 @@ catalogue inputs, genuine runtime recordings, publisher documents, bulk artifact
 and restricted material. A catalogue rebuilt from a native table does not prove
 that every original response has been retained.</p>
 <h2 id="access-and-storage">Access and storage</h2>
-<p>Shared collections belong in versioned releases of the private
+<p>The retained Bosnia, France and ThaiWater collections are attached to versioned releases of the private
 <a href="https://github.com/RivRetrieve/verification-evidence"><code>RivRetrieve/verification-evidence</code></a>
 repository. Use a personal GitHub account with the existing organization access.
 An organization owner administers access; ask an owner if the repository is not
@@ -1545,6 +1594,17 @@ adding it, even to this private repository.</p>
 back up release attachments. Loss of those attachments has no independent recovery
 guarantee. Preserve original local evidence during migration; these instructions
 do not authorize deleting it.</p>
+<h3 id="release-protection">Release protection</h3>
+<p>GitHub reported <code>immutable: false</code> for all three indexed releases when they were
+published on September 29, 2026. These releases are not protected by GitHub release
+immutability. This observed release state does not establish the repository or
+organization setting.</p>
+<p>The index pins each release and asset identity, byte size and SHA-256 digest.
+The download tool rejects missing identities and changed bytes. These checks do
+not prevent replacement or deletion, and a digest cannot recover a deleted file.
+Updates must receive new collection identities. The owner authorized these
+versioned releases without immutable-release protection; the lack of an
+independent backup remains unchanged.</p>
 <h2 id="public-checks">Public checks</h2>
 <p>Ordinary tests use retained, reviewed source recordings and require no private
 evidence credentials. From the source checkout:</p>
@@ -1570,8 +1630,9 @@ provider verifier. Never substitute a mutable <code>latest</code> release. An em
 list means shared acquisition for that provider is not recorded. Stop rather than
 invent an ID or treat local derived tables as the missing collection.</p>
 <p>Use an evidence directory outside the source checkout. The following example uses
-ThaiWater. Set <code>COLLECTION_ID</code> to a real indexed ID before running it:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">COLLECTION_ID</span><span class="o">=</span><span class="s1">&#39;COPY_EXACT_ID_FROM_INDEX&#39;</span>
+the published ThaiWater collection <code>th_thaiwater-2026-09-29-v1</code>. Its exact release
+and asset identities are in the index:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">COLLECTION_ID</span><span class="o">=</span><span class="s1">&#39;th_thaiwater-2026-09-29-v1&#39;</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">EVIDENCE_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.local/share/rivretrieve/verification-evidence&quot;</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>maintenance.evidence<span class="w"> </span>fetch<span class="w"> </span><span class="se">\</span>
@@ -1595,10 +1656,10 @@ itself; a named subdirectory means the verifier starts inside it.</p>
 parser example establishes national coverage. The complete controlled checks for
 Bosnia, France and ThaiWater require the original bodies and receipts. Missing
 material is a failed prerequisite, not a reason to skip or weaken a mandatory check.</p>
-<p>For ThaiWater, copy <code>verification_root</code> from the selected collection record or
-fetch output. The retained whole-provider collection uses
-<code>baseline-capture-2026-09-13</code>. Set the variable before running the complete verifier:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">VERIFICATION_ROOT</span><span class="o">=</span><span class="s1">&#39;COPY_VERIFICATION_ROOT_FROM_INDEX&#39;</span>
+<p>For this ThaiWater collection, the indexed <code>verification_root</code> is
+<code>baseline-capture-2026-09-13</code>. Confirm that value in the selected record or fetch
+output if choosing another collection. Set it before running the complete verifier:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">VERIFICATION_ROOT</span><span class="o">=</span><span class="s1">&#39;baseline-capture-2026-09-13&#39;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">THAIWATER_REVIEW_EVIDENCE_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$EVIDENCE_ROOT</span><span class="s2">/</span><span class="nv">$COLLECTION_ID</span><span class="s2">/</span><span class="nv">$VERIFICATION_ROOT</span><span class="s2">&quot;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>maintenance/catalogue/th_thaiwater/scripts/verify_governing_evidence.py<span class="w"> </span><span class="se">\</span>
