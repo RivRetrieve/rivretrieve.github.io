@@ -505,6 +505,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#development-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-rights" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1330,6 +1341,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#development-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-rights" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1567,6 +1589,19 @@ Start with the [documentation index](index.md).
 - [Example: Recent streamflow for CAMELS-US gauges](examples/camels-us.md).
 - [Public API and software reference](reference.md).
 - [Architecture](architecture.md): responsibilities, a traced request and contracts.
+
+## Development tests
+
+Run source-independent checks without archive access:
+
+```sh
+uv run pytest --logic-only
+```
+
+Checks that replay retained recordings or verify source inputs use the reviewed
+[private archive test command](maintenance/evidence.md#run-tests).
+It selects and verifies the required inputs automatically. Archive access and
+reviewed code are required; runtime package users need neither.
 
 ## Data rights
 
@@ -1839,6 +1874,14 @@ streamflow for several gauges at once.</p>
 <li><a href="reference/">Public API and software reference</a>.</li>
 <li><a href="architecture/">Architecture</a>: responsibilities, a traced request and contracts.</li>
 </ul>
+<h2 id="development-tests">Development tests</h2>
+<p>Run source-independent checks without archive access:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--logic-only
+</span></code></pre></div>
+<p>Checks that replay retained recordings or verify source inputs use the reviewed
+<a href="maintenance/evidence/#run-tests">private archive test command</a>.
+It selects and verifies the required inputs automatically. Archive access and
+reviewed code are required; runtime package users need neither.</p>
 <h2 id="data-rights">Data rights</h2>
 <p>All data rights remain with the original providers. Credit the providers of data you use and
 follow their attribution and citation requirements. Users are responsible for reviewing and
