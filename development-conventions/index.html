@@ -1136,6 +1136,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#versions-and-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions and publishing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#provider-safety-guards" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1211,6 +1222,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#versions-and-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions and publishing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#provider-safety-guards" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1265,6 +1287,33 @@ The build checks their freshness before preparing other files. Docstring edits
 need no regeneration. Run the focused checks with
 `uv run pytest tests/test_documentation.py tests/test_reference_contracts.py`.
 
+## Versions and publishing
+
+`pyproject.toml` holds the package version. `rivretrieve.__version__` reads the
+installed distribution metadata, so there is no second version to update.
+Use uv to prepare the version and update `uv.lock`:
+
+```sh
+uv version 0.1.0
+```
+
+For subsequent pre-1.0 releases, use `uv version --bump minor` for breaking changes
+or `uv version --bump patch` for compatible improvements and fixes. Review and
+commit `pyproject.toml` and `uv.lock` before releasing. GitHub release notes explain
+the changes and any adaptation needed for breaking changes.
+
+The `publish-pypi.yml` workflow builds with `uv build` and uploads with
+`uv publish --trusted-publishing always`. Each publishing job installs uv and uses
+short-lived GitHub OIDC credentials in its `pypi` or `testpypi` environment.
+TestPyPI uploads explicitly use `https://test.pypi.org/legacy/`.
+
+Publishing a GitHub release, including a prerelease, uploads to PyPI. Manual
+dispatch also uploads packages: its target selector defaults to `pypi` and offers
+`testpypi`. The workflow does not bump versions, create tags or generate release
+notes. Run `uv build` locally to build without uploading. Release publication and
+manual dispatch require a separate decision to upload; do not use them to check a
+local build.
+
 ## Provider safety guards
 
 A live catalogue refresh may enforce a provider-specific minimum-station guard to reject an
@@ -1289,6 +1338,26 @@ Keep private helpers and validation methods out of the reference.</p>
 The build checks their freshness before preparing other files. Docstring edits
 need no regeneration. Run the focused checks with
 <code>uv run pytest tests/test_documentation.py tests/test_reference_contracts.py</code>.</p>
+<h2 id="versions-and-publishing">Versions and publishing</h2>
+<p><code>pyproject.toml</code> holds the package version. <code>rivretrieve.__version__</code> reads the
+installed distribution metadata, so there is no second version to update.
+Use uv to prepare the version and update <code>uv.lock</code>:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>version<span class="w"> </span><span class="m">0</span>.1.0
+</span></code></pre></div>
+<p>For subsequent pre-1.0 releases, use <code>uv version --bump minor</code> for breaking changes
+or <code>uv version --bump patch</code> for compatible improvements and fixes. Review and
+commit <code>pyproject.toml</code> and <code>uv.lock</code> before releasing. GitHub release notes explain
+the changes and any adaptation needed for breaking changes.</p>
+<p>The <code>publish-pypi.yml</code> workflow builds with <code>uv build</code> and uploads with
+<code>uv publish --trusted-publishing always</code>. Each publishing job installs uv and uses
+short-lived GitHub OIDC credentials in its <code>pypi</code> or <code>testpypi</code> environment.
+TestPyPI uploads explicitly use <code>https://test.pypi.org/legacy/</code>.</p>
+<p>Publishing a GitHub release, including a prerelease, uploads to PyPI. Manual
+dispatch also uploads packages: its target selector defaults to <code>pypi</code> and offers
+<code>testpypi</code>. The workflow does not bump versions, create tags or generate release
+notes. Run <code>uv build</code> locally to build without uploading. Release publication and
+manual dispatch require a separate decision to upload; do not use them to check a
+local build.</p>
 <h2 id="provider-safety-guards">Provider safety guards</h2>
 <p>A live catalogue refresh may enforce a provider-specific minimum-station guard to reject an
 implausibly small response. Calibrate the threshold from that provider's established population and
