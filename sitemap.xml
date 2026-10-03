@@ -112,24 +112,4 @@
          <loc>https://rivretrieve.github.io/providers/usgs_nwis/</loc>
          <lastmod>2026-10-03</lastmod>
     </url>
-    <url>
-         <loc>https://rivretrieve.github.io/verification/canada-provider/repository-claims/</loc>
-         <lastmod>2026-10-03</lastmod>
-    </url>
-    <url>
-         <loc>https://rivretrieve.github.io/verification/canada-provider/source-claims/</loc>
-         <lastmod>2026-10-03</lastmod>
-    </url>
-    <url>
-         <loc>https://rivretrieve.github.io/verification/poland-provider/</loc>
-         <lastmod>2026-10-03</lastmod>
-    </url>
-    <url>
-         <loc>https://rivretrieve.github.io/verification/provider-examples/implementation-tests/</loc>
-         <lastmod>2026-10-03</lastmod>
-    </url>
-    <url>
-         <loc>https://rivretrieve.github.io/verification/provider-examples/matrix/</loc>
-         <lastmod>2026-10-03</lastmod>
-    </url>
 </urlset>

@@ -1401,6 +1401,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Provider maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brazil-offline-rebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brazil offline rebuild
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1548,6 +1565,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Provider maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brazil-offline-rebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brazil offline rebuild
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1606,11 +1640,12 @@ Catalogue evidence and its interpretation have complementary homes:
 
 - `src/rivretrieve/_internal/providers/&lt;provider&gt;/catalogue/provenance.json` binds packaged facts to
   source records, the retained native table, and five digest-bound public evidence relations.
-- Provider generators and tests check requests, digests, schemas, counts and semantic frames
-  against acquisition manifests and receipts supplied from the private source archive.
-- [`provider_ports/`](https://github.com/RivRetrieve/RivRetrieve/tree/main/docs/provider_ports) holds provider-specific rationale and source limitations.
-- The private [source archive](maintenance/evidence.md) retains native tables, source
-  recordings and acquisition context used by the checks.
+- Provider generators and library tests check catalogue transformations against
+  explicitly selected, verified archive inputs.
+- The private [source archive](https://github.com/RivRetrieve/verification-evidence#readme)
+  owns retained native tables, recordings, reviewed evidence ledgers, provider-specific
+  source limitations and source-certification tools. Its README locates maintained
+  verification instructions and historical records.
 - The generated Croissant descriptor beside each catalogue exposes its tables, issuing bodies,
   verbatim terms, file identities and [deliberate absences](catalogue-absence.md#absence) to machines.
   `rivretrieve.describe(provider)` reads this packaged document without network access.
@@ -1638,21 +1673,17 @@ why the complete retained payload cannot be reproduced.
 
 ## Retained catalogue inputs
 
-[`maintenance/catalogue/`](https://github.com/RivRetrieve/RivRetrieve/tree/main/maintenance/catalogue) holds maintenance instructions,
-authored interpretation and offline integrity verifiers. The private
-[source archive](maintenance/evidence.md) holds retained source material, selected real source cases and native tables.
-Reviewed declarations and authored ledgers keep their code-repository roles. Source evidence bytes retain their original
-digests. Case indexes are derived claims, not publisher payloads.
+The private [source archive](https://github.com/RivRetrieve/verification-evidence#readme)
+owns retained source material, selected real source cases, native tables and
+source-certification verifiers. RivRetrieve owns catalogue transformations and
+library declarations. Code references identify the actual owning repository and
+reviewed revision, including private evidence ledgers. Source evidence bytes retain
+their original digests. Case indexes are derived claims, not publisher payloads.
 
-- [Bosnia workbook evidence](https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/ba_fhmzbih/README.md)
-- [Brazil inventory evidence](https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/br_ana/README.md)
-- [Hub&#39;Eau and historical French availability evidence](https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/fr_hubeau/README.md)
-- [HydroPortail catalogue scope](https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/fr_hydroportail/COVERAGE.md)
-- [Thailand availability evidence](https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/th_thaiwater/README.md)
-
-These inputs stay outside source checkouts and distributions. Verification requires
-an explicitly supplied local input directory; missing bodies fail rather than
-triggering network acquisition. Provider maintenance commands remain in the provider notes.
+Inputs stay outside source checkouts and distributions. Use the shared
+[evidence workflow](maintenance/evidence.md) to select exact verified inputs.
+Missing bodies fail rather than triggering network acquisition. Archive instructions
+state each provider&#39;s prerequisites and original-body limitations.
 
 ## Row-level withholding
 
@@ -1679,7 +1710,8 @@ Bruto (raw) and Consistido (quality-checked by ANA) daily series are included wi
 preference. Each certified river gauge is a candidate; availability remains unknown
 unless exact source-variant observations establish bounded positive evidence. Request
 windows never become published record bounds. Build from the attested native table;
-see [Brazil maintenance](https://github.com/RivRetrieve/RivRetrieve/blob/main/docs/provider_ports/br_ana.md) for source acquisition evidence.
+see [Brazil offline rebuild](#brazil-offline-rebuild) for build instructions and the
+private archive for source acquisition evidence.
 
 Commit `provider.json`, `products.parquet`, `stations.parquet`, `station_products.parquet`,
 `provenance.json`, all five `provenance_*.parquet` relations, and the generated Croissant descriptor. Test fixtures must not republish
@@ -1708,6 +1740,38 @@ including Brazil&#39;s inventory and separately identified source series. The va
 dependency; reading a descriptor from an installed wheel must not import it. Catalogue
 version and publication date come from the recorded catalogue date, and acquisition dates
 remain source facts. No build clock enters the descriptor.
+
+### Brazil offline rebuild
+
+Use the reviewed archive coordinator&#39;s catalogue-input mode described in the
+[evidence workflow](maintenance/evidence.md). It supplies verified inputs and
+`br_ana.build-inputs.json` outside the checkout. Set `EVIDENCE_ROOT` to the supplied
+input root, `BUILD_INPUTS` to that selection file and `PRIVATE_OUTPUT` to a separate
+external output directory. The selection is not the coordinator receipt
+`catalogue-input-provenance.json`.
+
+The capture record binds the retained inventory recordings and supporting files.
+Materialization checks their identities before reconstructing the attested native
+table. Historical paths beneath `EVIDENCE_ROOT` retain their acquisition identities;
+they do not refer to files in the public checkout.
+
+```sh
+uv run python src/rivretrieve/_internal/providers/br_ana/generate_catalogue.py \
+  --materialize-record &#34;$EVIDENCE_ROOT/tests/test_data/br_ana_inventory/capture.json&#34; \
+  --evidence-root &#34;$EVIDENCE_ROOT&#34; --native-out &#34;$PRIVATE_OUTPUT/ana-native.parquet&#34;
+
+uv run python src/rivretrieve/_internal/providers/br_ana/generate_catalogue.py \
+  --native &#34;$PRIVATE_OUTPUT/ana-native.parquet&#34; \
+  --evidence-root &#34;$EVIDENCE_ROOT&#34; \
+  --build-inputs &#34;$BUILD_INPUTS&#34; \
+  --out &#34;$PRIVATE_OUTPUT/ana-catalogue&#34;
+```
+
+The build uses retained inventory, telemetry and daily-source inputs. Failed
+acquisition attempts remain distinct from successful retries. Review generated
+products for both source fidelity and disclosure before adopting them. Acquisition,
+source certification and original-body limitations are maintained in the
+[private archive](https://github.com/RivRetrieve/verification-evidence#readme).
 
 ## Observation evidence
 
@@ -1744,11 +1808,12 @@ from a verified native table in the private source archive and its declarations.
 <ul>
 <li><code>src/rivretrieve/_internal/providers/&lt;provider&gt;/catalogue/provenance.json</code> binds packaged facts to
   source records, the retained native table, and five digest-bound public evidence relations.</li>
-<li>Provider generators and tests check requests, digests, schemas, counts and semantic frames
-  against acquisition manifests and receipts supplied from the private source archive.</li>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/tree/main/docs/provider_ports"><code>provider_ports/</code></a> holds provider-specific rationale and source limitations.</li>
-<li>The private <a href="../maintenance/evidence/">source archive</a> retains native tables, source
-  recordings and acquisition context used by the checks.</li>
+<li>Provider generators and library tests check catalogue transformations against
+  explicitly selected, verified archive inputs.</li>
+<li>The private <a href="https://github.com/RivRetrieve/verification-evidence#readme">source archive</a>
+  owns retained native tables, recordings, reviewed evidence ledgers, provider-specific
+  source limitations and source-certification tools. Its README locates maintained
+  verification instructions and historical records.</li>
 <li>The generated Croissant descriptor beside each catalogue exposes its tables, issuing bodies,
   verbatim terms, file identities and <a href="../catalogue-absence/#absence">deliberate absences</a> to machines.
   <code>rivretrieve.describe(provider)</code> reads this packaged document without network access.</li>
@@ -1772,21 +1837,16 @@ independent live source, and quantify coverage and agreement against every avail
 A partial or coarser publisher route does not alone justify recovery; the provider notes must explain
 why the complete retained payload cannot be reproduced.</p>
 <h2 id="retained-catalogue-inputs">Retained catalogue inputs</h2>
-<p><a href="https://github.com/RivRetrieve/RivRetrieve/tree/main/maintenance/catalogue"><code>maintenance/catalogue/</code></a> holds maintenance instructions,
-authored interpretation and offline integrity verifiers. The private
-<a href="../maintenance/evidence/">source archive</a> holds retained source material, selected real source cases and native tables.
-Reviewed declarations and authored ledgers keep their code-repository roles. Source evidence bytes retain their original
-digests. Case indexes are derived claims, not publisher payloads.</p>
-<ul>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/ba_fhmzbih/README.md">Bosnia workbook evidence</a></li>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/br_ana/README.md">Brazil inventory evidence</a></li>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/fr_hubeau/README.md">Hub'Eau and historical French availability evidence</a></li>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/fr_hydroportail/COVERAGE.md">HydroPortail catalogue scope</a></li>
-<li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/th_thaiwater/README.md">Thailand availability evidence</a></li>
-</ul>
-<p>These inputs stay outside source checkouts and distributions. Verification requires
-an explicitly supplied local input directory; missing bodies fail rather than
-triggering network acquisition. Provider maintenance commands remain in the provider notes.</p>
+<p>The private <a href="https://github.com/RivRetrieve/verification-evidence#readme">source archive</a>
+owns retained source material, selected real source cases, native tables and
+source-certification verifiers. RivRetrieve owns catalogue transformations and
+library declarations. Code references identify the actual owning repository and
+reviewed revision, including private evidence ledgers. Source evidence bytes retain
+their original digests. Case indexes are derived claims, not publisher payloads.</p>
+<p>Inputs stay outside source checkouts and distributions. Use the shared
+<a href="../maintenance/evidence/">evidence workflow</a> to select exact verified inputs.
+Missing bodies fail rather than triggering network acquisition. Archive instructions
+state each provider's prerequisites and original-body limitations.</p>
 <h2 id="row-level-withholding">Row-level withholding</h2>
 <p>A retained native table and complete column origins do not by themselves establish every row-level
 acquisition fact. Each structured <code>withheld_facts</code> group records a reason. When a group withholds
@@ -1807,7 +1867,8 @@ Bruto (raw) and Consistido (quality-checked by ANA) daily series are included wi
 preference. Each certified river gauge is a candidate; availability remains unknown
 unless exact source-variant observations establish bounded positive evidence. Request
 windows never become published record bounds. Build from the attested native table;
-see <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/docs/provider_ports/br_ana.md">Brazil maintenance</a> for source acquisition evidence.</p>
+see <a href="#brazil-offline-rebuild">Brazil offline rebuild</a> for build instructions and the
+private archive for source acquisition evidence.</p>
 <p>Commit <code>provider.json</code>, <code>products.parquet</code>, <code>stations.parquet</code>, <code>station_products.parquet</code>,
 <code>provenance.json</code>, all five <code>provenance_*.parquet</code> relations, and the generated Croissant descriptor. Test fixtures must not republish
 legacy uncertified catalogue values.</p>
@@ -1830,6 +1891,32 @@ including Brazil's inventory and separately identified source series. The valida
 dependency; reading a descriptor from an installed wheel must not import it. Catalogue
 version and publication date come from the recorded catalogue date, and acquisition dates
 remain source facts. No build clock enters the descriptor.</p>
+<h3 id="brazil-offline-rebuild">Brazil offline rebuild</h3>
+<p>Use the reviewed archive coordinator's catalogue-input mode described in the
+<a href="../maintenance/evidence/">evidence workflow</a>. It supplies verified inputs and
+<code>br_ana.build-inputs.json</code> outside the checkout. Set <code>EVIDENCE_ROOT</code> to the supplied
+input root, <code>BUILD_INPUTS</code> to that selection file and <code>PRIVATE_OUTPUT</code> to a separate
+external output directory. The selection is not the coordinator receipt
+<code>catalogue-input-provenance.json</code>.</p>
+<p>The capture record binds the retained inventory recordings and supporting files.
+Materialization checks their identities before reconstructing the attested native
+table. Historical paths beneath <code>EVIDENCE_ROOT</code> retain their acquisition identities;
+they do not refer to files in the public checkout.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>src/rivretrieve/_internal/providers/br_ana/generate_catalogue.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--materialize-record<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$EVIDENCE_ROOT</span><span class="s2">/tests/test_data/br_ana_inventory/capture.json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--evidence-root<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$EVIDENCE_ROOT</span><span class="s2">&quot;</span><span class="w"> </span>--native-out<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PRIVATE_OUTPUT</span><span class="s2">/ana-native.parquet&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>src/rivretrieve/_internal/providers/br_ana/generate_catalogue.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--native<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PRIVATE_OUTPUT</span><span class="s2">/ana-native.parquet&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>--evidence-root<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$EVIDENCE_ROOT</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>--build-inputs<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BUILD_INPUTS</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>--out<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PRIVATE_OUTPUT</span><span class="s2">/ana-catalogue&quot;</span>
+</span></code></pre></div>
+<p>The build uses retained inventory, telemetry and daily-source inputs. Failed
+acquisition attempts remain distinct from successful retries. Review generated
+products for both source fidelity and disclosure before adopting them. Acquisition,
+source certification and original-body limitations are maintained in the
+<a href="https://github.com/RivRetrieve/verification-evidence#readme">private archive</a>.</p>
 <h2 id="observation-evidence">Observation evidence</h2>
 <p>Observation fixtures record real source interactions. The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/recordings.py">recording implementation</a>
 replays exact requests. Constructed payloads and retired implementations do not establish
