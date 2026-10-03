@@ -16,7 +16,7 @@
         <link rel="prev" href="../../catalogue-evidence/">
       
       
-        <link rel="next" href="../../catalogue-absence/">
+        <link rel="next" href="../testing/">
       
       
         
@@ -1063,6 +1063,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../catalogue-absence/" class="md-nav__link">
         
   
@@ -1320,10 +1348,9 @@ enter packaged provenance. The full restricted receipt is not a package artifact
 
 Review the resulting station metadata, provenance, descriptors and distribution
 contents before copying approved products into RivRetrieve. New name mappings need
-both retained-input checks and a separate disclosure decision. The candidate review
-test writes examples only into the restricted output directory and approves neither
-mapping semantics nor redistribution. Compare existing area fields with their
-approved baseline without changing scalar values, units or absence states.
+both retained-input checks and a separate disclosure decision. Keep candidate field review and disclosure decisions separate from verification
+of adopted mappings. Compare existing area fields with their approved baseline
+without changing scalar values, units or absence states.
 
 Use the provider&#39;s instructions:
 
@@ -1343,6 +1370,9 @@ Use the provider&#39;s instructions:
   inputs and retained recordings used by the offline rebuild.
 
 ## Run tests
+
+The [testing guide](testing.md) explains each layer&#39;s purpose, expected answers
+and ownership. Use it when adding or changing coverage.
 
 Run source-independent checks from the RivRetrieve checkout without archive access:
 
@@ -1479,10 +1509,9 @@ recording support and verifies their exact local bytes. Only those adopted membe
 enter packaged provenance. The full restricted receipt is not a package artifact.</p>
 <p>Review the resulting station metadata, provenance, descriptors and distribution
 contents before copying approved products into RivRetrieve. New name mappings need
-both retained-input checks and a separate disclosure decision. The candidate review
-test writes examples only into the restricted output directory and approves neither
-mapping semantics nor redistribution. Compare existing area fields with their
-approved baseline without changing scalar values, units or absence states.</p>
+both retained-input checks and a separate disclosure decision. Keep candidate field review and disclosure decisions separate from verification
+of adopted mappings. Compare existing area fields with their approved baseline
+without changing scalar values, units or absence states.</p>
 <p>Use the provider's instructions:</p>
 <ul>
 <li><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/maintenance/catalogue/ba_fhmzbih/README.md">Bosnia</a>: complete baseline
@@ -1501,6 +1530,8 @@ approved baseline without changing scalar values, units or absence states.</p>
   inputs and retained recordings used by the offline rebuild.</li>
 </ul>
 <h2 id="run-tests">Run tests</h2>
+<p>The <a href="../testing/">testing guide</a> explains each layer's purpose, expected answers
+and ownership. Use it when adding or changing coverage.</p>
 <p>Run source-independent checks from the RivRetrieve checkout without archive access:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--logic-only
 </span></code></pre></div>
