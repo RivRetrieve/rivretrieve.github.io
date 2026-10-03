@@ -558,6 +558,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#inspect-station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect station metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#narrow-and-save-selections" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -777,14 +788,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../drainage-areas/" class="md-nav__link">
+      <a href="../station-metadata/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Drainage Areas
+    Station Metadata
   
 
     
@@ -1358,6 +1369,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#inspect-station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect station metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#narrow-and-save-selections" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1616,6 +1638,24 @@ is not necessarily an average over ten minutes.
 also shows identities found in the response. The packaged catalogue is a snapshot, not an
 exhaustive census of current or historical series. An unrestricted selection includes later
 matching discoveries; it does not freeze retrieval to the catalogue&#39;s known members.
+
+### Inspect station metadata
+
+```python
+stations = rr.metadata(chosen_gauges)
+print(stations.select(&#34;station_id&#34;, &#34;station_name&#34;).rows())
+
+# Output:
+# [(&#39;07374000&#39;, &#39;Mississippi River at Baton Rouge, LA&#39;)]
+
+source_attributes = rr.metadata(chosen_gauges, view=&#34;source&#34;)
+```
+
+The station table contains names and coordinates with their CRS. Unresolved name
+alternatives leave the summary name null and set its alternatives indicator.
+The source view preserves names and separate drainage-area fields with exact
+values, units where established, and explicit absence states. Both views work
+offline. See [station metadata](station-metadata.md) for interpretation.
 
 ### Narrow and save selections
 
@@ -2136,17 +2176,31 @@ is not necessarily an average over ten minutes.</p>
 also shows identities found in the response. The packaged catalogue is a snapshot, not an
 exhaustive census of current or historical series. An unrestricted selection includes later
 matching discoveries; it does not freeze retrieval to the catalogue's known members.</p>
+<h3 id="inspect-station-metadata">Inspect station metadata</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">stations</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">stations</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;station_name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Output:</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># [(&#39;07374000&#39;, &#39;Mississippi River at Baton Rouge, LA&#39;)]</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">source_attributes</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The station table contains names and coordinates with their CRS. Unresolved name
+alternatives leave the summary name null and set its alternatives indicator.
+The source view preserves names and separate drainage-area fields with exact
+values, units where established, and explicit absence states. Both views work
+offline. See <a href="../station-metadata/">station metadata</a> for interpretation.</p>
 <h3 id="narrow-and-save-selections">Narrow and save selections</h3>
 <p>Use <code>pick</code> to narrow a selection by physical facts or by <code>variant</code> and <code>series_id</code>.
 A variant is a separately published version of a series, using the agency's own name.
 <code>pick</code> accepts a list of station, provider or source identifiers. It keeps only what you ask for;
 it does not substitute another version.</p>
 <p>Save the complete selection as a versioned bundle:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">selection_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;selection.rrbundle&quot;</span><span class="p">)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">selection_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">))</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">restored_gauges</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">selection_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">selection_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;selection.rrbundle&quot;</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">selection_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">))</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">restored_gauges</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">selection_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
 </span></code></pre></div>
 <p>Bundle version <code>2</code> preserves intent, identities, physical evidence and inventory state. Import validates
 the bundle without rebuilding identities from today's catalogue. Bare frame imports through
@@ -2157,17 +2211,17 @@ back to <code>pick</code>; a frame is not a lossless selection export.</p>
 for catalogue facts. A <code>withheld</code> fact means RivRetrieve lacks an established acquisition record. See <a href="../catalogue-evidence/">catalogue evidence</a>.</p>
 <h2 id="retrieve-and-inspect-results">Retrieve and inspect results</h2>
 <p>Retrieve observations for the gauge in <code>chosen_gauges</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Output:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># [(&#39;07374000&#39;, 10562.183778816001)]</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Output:</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># ()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># [(&#39;07374000&#39;, 10562.183778816001)]</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># Output:</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># ()</span>
 </span></code></pre></div>
 <p>The empty tuple means this retrieval reported no issues. An <code>ObservationResult</code> carries
 <code>data</code>, <code>issues</code>, <code>provenance</code>, <code>receipts</code>, <code>source_series</code>, <code>inventories</code> and <code>outcomes</code>.
@@ -2241,14 +2295,14 @@ be assigned a concrete identity. Statuses distinguish <code>success</code>, <cod
 <p>You can narrow a selection before retrieval or filter a result afterwards with <code>pick</code>.
 Filtering a result makes no new source request. Original provenance, receipts and issues remain
 available, so they can still describe the broader request.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">result_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;result.rrbundle&quot;</span><span class="p">)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">result_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">restored_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">result_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">result_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;result.rrbundle&quot;</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">result_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">to_bundle</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">restored_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">from_bundle</span><span class="p">(</span><span class="n">result_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span>
 </span></code></pre></div>
 <p>You can also narrow a retrieved result by an inspected internal identifier:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">returned_series</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">series_id</span> <span class="o">=</span> <span class="n">returned_series</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">series_view</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">series_id</span><span class="o">=</span><span class="n">series_id</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">returned_series</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">series_id</span> <span class="o">=</span> <span class="n">returned_series</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">series_view</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">series_id</span><span class="o">=</span><span class="n">series_id</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Result bundles retain observations, late identities, facts, outcomes, inventory, provenance and
 any retained receipts. Observation frames alone do not contain all this context.</p>
@@ -2258,13 +2312,13 @@ dictionary of separate results. Each retains its provider identity, source terms
 <p>This Swiss gauge provides discharge values, but their exact time span and statistic are not
 established. The first search includes them. Adding daily-mean filters excludes them.
 Both searches use the packaged catalogue without contacting the source.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2251&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">swiss_daily</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">swiss</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">swiss_daily</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Output:</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># 0</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2251&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">swiss_daily</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">swiss</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">swiss_daily</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># Output:</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># 0</span>
 </span></code></pre></div>
 <h3 id="when-an-agency-publishes-more-than-one-version">When an agency publishes more than one version</h3>
 <p>Brazil's ANA publishes <strong>Bruto</strong> (raw) and <strong>Consistido</strong> (quality-checked) daily records.
@@ -2273,69 +2327,69 @@ unless you explicitly choose one. A source may not have observations for both in
 The labels do not tell you which record suits your study.
 Provider-specific observation quality flags are not added to the returned table.</p>
 <p>Find the two daily mean water-level series (<code>quantity="stage"</code>), then optionally choose Consistido:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">brazil</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;br_ana&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;15400000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">)</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Output:</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">consistido</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;consistido&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">brazil</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;br_ana&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;15400000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">consistido</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;consistido&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>The search above works offline. To run the downloads below, first set <code>ANA_IDENTIFICADOR</code> and
 <code>ANA_SENHA</code> in your environment or working-directory <code>.env</code> file. See
 <a href="#supplied-credentials">supplied credentials</a>. Do not put credential values in the code.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">brazil_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Output:</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">consistido_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">consistido_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1"># Output:</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># [&#39;consistido&#39;]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">brazil_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">brazil</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">brazil_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># [&#39;bruto&#39;, &#39;consistido&#39;]</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">consistido_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-01-10&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-01-20&quot;</span><span class="p">)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">consistido_result</span><span class="p">)[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1"># Output:</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1"># [&#39;consistido&#39;]</span>
 </span></code></pre></div>
 <h3 id="when-only-one-series-is-available">When only one series is available</h3>
 <p>For Lithuania's Anykščiai gauge, this request returns one daily discharge series.
 There is no extra version to choose in this example:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">lithuania</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;lt_lhmt&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;anyksciu-vms&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">)</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">lithuanian_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">lithuanian_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n_unique</span><span class="p">())</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># Output:</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># 1</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">lithuania</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;lt_lhmt&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;anyksciu-vms&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="p">)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">lithuanian_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">lithuanian_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;series_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n_unique</span><span class="p">())</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1"># Output:</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1"># 1</span>
 </span></code></pre></div>
 <h3 id="when-a-requested-variant-is-not-found">When a requested variant is not found</h3>
 <p>The catalogue does not always list every variant a source may provide. Asking for a name that
 is not listed can therefore mean <strong>“I cannot tell whether that variant is available.”</strong>
 RivRetrieve reports this as <code>selection.unresolved_inventory</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">no_variant</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_variant</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_variant</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Output:</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># 0 [&#39;selection.unresolved_inventory&#39;]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">no_variant</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">lithuania</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_variant</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_variant</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># 0 [&#39;selection.unresolved_inventory&#39;]</span>
 </span></code></pre></div>
 <p>The empty table means no known series matches. RivRetrieve keeps your requested name for
 retrieval; it does not replace it with the one known series.</p>
 <p>Sometimes RivRetrieve can tell that nothing matches. The selection <code>consistido</code> already allows
 only that variant, so filtering it again for <code>"nonexistent"</code> leaves nothing:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">no_match</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_match</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_match</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Output:</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># 0 [&#39;selection.no_match&#39;]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">no_match</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">consistido</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;nonexistent&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">no_match</span><span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">no_match</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># Output:</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># 0 [&#39;selection.no_match&#39;]</span>
 </span></code></pre></div>
 <p><code>selection.no_match</code> means <strong>“I can tell, and the answer is no: nothing matches these filters.”</strong>
 A complete source inventory can also establish that a requested variant is absent.</p>
@@ -2355,25 +2409,25 @@ request and conversion details.</p>
 <p>UTC conversion uses each row's established time zone to put its timestamp on a common clock.
 USGS instantaneous observations publish UTC timestamps. Retrieve two readings
 from the same gauge and apply UTC conversion; these timestamps already use UTC:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">instant_gauge</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;07374000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;instantaneous&quot;</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">)</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">instant_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="n">instant_gauge</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:00&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:15&quot;</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">)</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">instant_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1"># Output:</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="n">utc_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">to_utc</span><span class="p">(</span><span class="n">instant_result</span><span class="p">)</span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">utc_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="c1"># Output:</span>
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">instant_gauge</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;07374000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;instantaneous&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">instant_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">instant_gauge</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:00&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01T00:15&quot;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">)</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">instant_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="c1"># Output:</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="n">utc_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">to_utc</span><span class="p">(</span><span class="n">instant_result</span><span class="p">)</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">utc_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="c1"># Output:</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="c1"># [(datetime.datetime(2023, 1, 1, 0, 0), &#39;+00:00&#39;), (datetime.datetime(2023, 1, 1, 0, 15), &#39;+00:00&#39;)]</span>
 </span></code></pre></div>
 <p>The returned <code>time</code> remains naive and <code>time_zone</code> is <code>+00:00</code>. Other result fields remain
 unchanged. If any row has an unknown time zone, as in the USGS daily result, <code>to_utc</code> raises
@@ -2408,26 +2462,26 @@ A failed request differs from a successful answer with no observations. Inspect 
 </table>
 <p><code>info</code> issues remain available without triggering a warning or exception. To stop when a
 retrieval reports warning or error issues, choose <code>raise</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">checked_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">checked_result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Output:</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1"># ()</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">checked_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">checked_result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># ()</span>
 </span></code></pre></div>
 <p>If an issue triggers this policy, the call raises <code>IssuePolicyError</code>. You can catch it with
 <code>from rivretrieve._internal.issues import IssuePolicyError</code> and inspect its <code>issues</code>.</p>
 <p>To handle notifications yourself, use <code>ignore</code> and inspect the retained issues:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">quiet_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">quiet_result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Output:</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># []</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">quiet_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">on_issue</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">)</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">quiet_result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1"># []</span>
 </span></code></pre></div>
 <p>The first retrieval example uses the default <code>warn</code> policy. Both <code>warn</code> and <code>ignore</code> return
 issues with their severity, code, message and available failure details. HTTP 404 produces a warning issue. Other
@@ -2488,13 +2542,13 @@ credential values. Do not put secrets into scripts, screenshots or issue reports
 </tbody>
 </table>
 <p>To reuse this one-day request later:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">cached_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;reuse&quot;</span><span class="p">)</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">status</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">cache_status</span><span class="p">(</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">)</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Output:</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># True</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">cached_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;reuse&quot;</span><span class="p">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">status</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">cache_status</span><span class="p">(</span><span class="s2">&quot;usgs_nwis&quot;</span><span class="p">)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1"># Output:</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># True</span>
 </span></code></pre></div>
 <p>Reuse needs enough cached information to answer the whole request: which series belong to it,
 and whether each was successfully retrieved for the requested interval. For example, cached
@@ -2517,8 +2571,8 @@ They match daily quantity filters, not a <code>statistic="mean"</code> filter.
 Without a store, retrieval returns an empty result and an issue. It does not start a national
 download. Calling <code>download(provider)</code> gives explicit consent to that transfer, which can use
 substantial bandwidth and disk space:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Optional national download, deliberately disabled in this walkthrough.</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># rr.download(&quot;ca_eccc&quot;)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Optional national download, deliberately disabled in this walkthrough.</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># rr.download(&quot;ca_eccc&quot;)</span>
 </span></code></pre></div>
 <p>For bulk providers, <code>bypass</code> and <code>reuse</code> both read the compiled store; <code>refresh</code> raises before
 transfer. Use <code>download(provider)</code> to replace it. After successful compilation the publisher
@@ -2526,14 +2580,14 @@ artifact is deleted, while its identity remains recorded.</p>
 <h2 id="provenance">Provenance</h2>
 <p><code>result.data</code> contains harmonised observations. <code>result.provenance</code> records request and
 origin information, which helps you check where those observations came from:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Output:</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># usgs_nwis live</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># Inspect the resolved scope and original source-call records.</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">request_scope</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">request</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">source_calls</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">calls_made</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1"># Output:</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># usgs_nwis live</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># Inspect the resolved scope and original source-call records.</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="n">request_scope</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">request</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="n">source_calls</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">calls_made</span>
 </span></code></pre></div>
 <p>Provenance includes available source-call records, source terms and cache context.
 Failed requests can leave no recorded payload origin. On a cache-only read, <code>retrieved_at</code>
@@ -2542,14 +2596,14 @@ See the <a href="../reference/">reference</a> for the provenance fields.</p>
 <h2 id="receipts-optional">Receipts (optional)</h2>
 <p>Request receipts when you want inspectable source material, for example to check values before
 unit conversion:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">receipt_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">receipts</span><span class="o">=</span><span class="kc">True</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="p">)</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="nb">print</span><span class="p">([</span><span class="n">entry</span><span class="o">.</span><span class="n">authorship</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">receipt_result</span><span class="o">.</span><span class="n">receipts</span><span class="o">.</span><span class="n">entries</span><span class="p">])</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Output:</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># [&#39;publisher_payload&#39;]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">receipt_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">receipts</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="nb">print</span><span class="p">([</span><span class="n">entry</span><span class="o">.</span><span class="n">authorship</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">receipt_result</span><span class="o">.</span><span class="n">receipts</span><span class="o">.</span><span class="n">entries</span><span class="p">])</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># [&#39;publisher_payload&#39;]</span>
 </span></code></pre></div>
 <ul>
 <li><code>publisher_payload</code> holds the bytes handed to the parser.</li>
@@ -2563,8 +2617,8 @@ See the <a href="../reference/#receipts">receipt reference</a> for receipt field
 <p>Maps let you inspect station coverage. Install <code>uv add "rivretrieve[map]"</code> before running this
 example. It saves a Folium map with one marker per selected station, here the same gauge used
 for retrieval:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">station_map</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">station_map</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;stations.html&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">station_map</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">)</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">station_map</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;stations.html&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Open <code>stations.html</code> in a browser. Markers show the catalogue's CRS statement. Unknown-CRS markers
 are orange; their coordinates are rendered as if they used EPSG:4326. That display assumption

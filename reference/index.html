@@ -539,14 +539,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../drainage-areas/" class="md-nav__link">
+      <a href="../station-metadata/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Drainage Areas
+    Station Metadata
   
 
     
@@ -1072,22 +1072,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#drainage_areas" class="md-nav__link">
+  <a href="#metadata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        drainage_areas
+        metadata
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="drainage_areas">
+    <nav class="md-nav" aria-label="metadata">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rivretrieve.drainage_areas" class="md-nav__link">
+  <a href="#rivretrieve.metadata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        drainage_areas
+        metadata
       
     </span>
   </a>
@@ -5795,10 +5795,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#drainage-area-frame" class="md-nav__link">
+  <a href="#station-metadata-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drainage-area frame
+        Station metadata summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source-metadata-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source metadata frame
       
     </span>
   </a>
@@ -6240,22 +6251,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#drainage_areas" class="md-nav__link">
+  <a href="#metadata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        drainage_areas
+        metadata
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="drainage_areas">
+    <nav class="md-nav" aria-label="metadata">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#rivretrieve.drainage_areas" class="md-nav__link">
+  <a href="#rivretrieve.metadata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        drainage_areas
+        metadata
       
     </span>
   </a>
@@ -10963,10 +10974,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#drainage-area-frame" class="md-nav__link">
+  <a href="#station-metadata-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drainage-area frame
+        Station metadata summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source-metadata-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source metadata frame
       
     </span>
   </a>
@@ -11065,9 +11087,9 @@ Functions import from `rivretrieve`. The reference renders their source docstrin
 
 ::: rivretrieve.download
 
-### drainage_areas
+### metadata
 
-::: rivretrieve.drainage_areas
+::: rivretrieve.metadata
 
 ### fetch
 
@@ -12134,23 +12156,25 @@ under the platform's user cache directory. <code>cache_status</code> and
 
     </div>
 
-</div><h3 id="drainage_areas">drainage_areas</h3>
+</div><h3 id="metadata">metadata</h3>
 
 
 <div class="doc doc-object doc-function">
 
 
-<h4 id="rivretrieve.drainage_areas" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">rivretrieve.drainage_areas</span>
+<h4 id="rivretrieve.metadata" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">rivretrieve.metadata</span>
 
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">drainage_areas</span><span class="p">(</span><span class="n">selection</span><span class="p">:</span> <span class="n">_Selection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">metadata</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">selection</span><span class="p">:</span> <span class="n">_Selection</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">view</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;summary&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Read selected gauges' packaged drainage-area metadata offline.</p>
+        <p>Read selected gauges' packaged station metadata offline.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -12173,13 +12197,30 @@ under the platform's user cache directory. <code>cache_status</code> and
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Selection returned by find, pick or from_bundle. Multiple providers and
-products are accepted; each provider-station pair appears once per
-source field, regardless of the number of selected products.</p>
+                <p>Selection from find, pick or from_bundle. Multiple providers and series
+are accepted without repeating gauges or their attributes.</p>
               </div>
             </td>
             <td>
                 <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>view</code>
+            </td>
+            <td>
+                  <code>(&#39;summary&#39;, &#39;source&#39;)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Summary returns one row per gauge with station_name, river_name,
+latitude, longitude, crs and two Boolean name alternatives indicators.
+Source returns separate source attributes with exact values and support.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;summary&#34;</code>
             </td>
           </tr>
       </tbody>
@@ -12201,17 +12242,23 @@ source field, regardless of the number of selected products.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Columns: provider_id, station_id, source_field, source_value,
-source_dtype, source_unit (String), and state (Enum). Rows sort by
-provider, station and source field. Empty selections retain this schema.
-source_value is JSON scalar text: json.loads decodes a non-null cell
-to its original string or number. source_dtype names the native Polars
-dtype. Formatted strings, blanks and numerical values are not converted.
-source_unit preserves an already established unit, otherwise null;
-units embedded in source fields or values remain there unchanged.
-state is value, source_null (a known field holding null), or no_metadata
-(no eligible field exposed for this gauge). The latter has null source
-columns. A source_null row retains its field, dtype and established unit.</p>
+                <p>Both views retain provider_id and station_id as strings. Summary names
+are verbatim strings when exactly one distinct nonblank name exists.
+Otherwise the name is null; the corresponding <code>*_alternatives</code> flag
+is true when multiple distinct nonblank names exist. Coordinates and CRS
+preserve values and unknowns from the current packaged canonical station
+catalogue, independently of locations retained in the selection.</p>
+<p>Source columns are provider_id, station_id, source_field, source_value,
+source_dtype, source_unit, state, attribute_role and support_fact.
+All are String except state and attribute_role, which are Enums.
+Decode non-null source_value with json.loads to recover the exact scalar.
+Blanks and inline units remain unchanged. State is value, source_null
+(a known field with null), or no_metadata (no exposed field for this
+role). The latter has null source columns and support_fact. Other rows
+retain their field, dtype, established unit and stable evidence fact name.
+Roles are station_name, river_name and drainage_area. Areas remain
+separate; no preferred field, inferred unit or conversion is applied.
+Empty selections retain the chosen view's schema.</p>
               </div>
             </td>
           </tr>
@@ -12240,11 +12287,21 @@ columns. A source_null row retains its field, dtype and established unit.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If view is not summary or source.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                   <code><a class="autorefs autorefs-internal" title="rivretrieve._internal.issues.FatalContractError" href="#rivretrieve._internal.issues.FatalContractError">FatalContractError</a></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If the packaged projection has an invalid schema or omits a station.</p>
+                <p>If packaged metadata violates its schema, value states or gauge scope.</p>
               </div>
             </td>
           </tr>
@@ -12254,7 +12311,7 @@ columns. A source_null row retains its field, dtype and established unit.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If the packaged projection cannot be read.</p>
+                <p>If packaged metadata cannot be read.</p>
               </div>
             </td>
           </tr>
@@ -12264,13 +12321,11 @@ columns. A source_null row retains its field, dtype and established unit.</p>
 
 <details class="note" open>
   <summary>Notes</summary>
-  <p>Reads only packaged metadata, without observations, credentials or network
-access. Gauge identity does not require numeric observation admission or map
-coordinates. Coverage is limited to drainage/watershed-size fields established
-by existing repository evidence. Distinct source fields remain separate;
-no area is preferred, inferred, converted or scientifically harmonized.
-Neither absence state means zero or that an agency publishes no area
-elsewhere. See docs/drainage-areas.md for an example and field coverage.</p>
+  <p>No observations, credentials, cache or network access are needed. Gauge
+scope is independent of observation admission and map eligibility. Metadata
+does not establish observation availability. Neither absence state means
+zero or that an agency publishes no metadata elsewhere. See
+docs/station-metadata.md for interpretation and examples.</p>
 </details>
 
     </div>
@@ -13137,7 +13192,7 @@ versions of the series are never substituted.</p>
             <td>
               <div class="doc-md-description">
                 <p>A selection to pass to <code>pick</code>, <code>series</code>, <code>fetch</code>,
-<code>fetch_by_provider</code>, <code>drainage_areas</code>, <code>map</code> or <code>to_bundle</code>.
+<code>fetch_by_provider</code>, <code>metadata</code>, <code>map</code> or <code>to_bundle</code>.
 It cannot be changed in place. Inspect its source series with
 <code>series(selection)</code>.</p>
               </div>
@@ -24777,7 +24832,54 @@ compiled store with <code>download</code> or remove an accumulated store with
 </tbody>
 </table>
 <p>Identity and facts are separate. Nullable facts carry explicit evidence states; admission and inventory are not completeness scores. Use to_bundle for lossless exports.</p>
-<h3 id="drainage-area-frame">Drainage-area frame</h3>
+<h3 id="station-metadata-summary">Station metadata summary</h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Polars dtype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>provider_id</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>station_id</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>station_name</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>river_name</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>latitude</code></td>
+<td><code>Float64</code></td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td><code>Float64</code></td>
+</tr>
+<tr>
+<td><code>crs</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>station_name_alternatives</code></td>
+<td><code>Boolean</code></td>
+</tr>
+<tr>
+<td><code>river_name_alternatives</code></td>
+<td><code>Boolean</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="source-metadata-frame">Source metadata frame</h3>
 <table>
 <thead>
 <tr>
@@ -24814,9 +24916,17 @@ compiled store with <code>download</code> or remove an accumulated store with
 <td><code>state</code></td>
 <td><code>Enum(categories=['value', 'source_null', 'no_metadata'])</code></td>
 </tr>
+<tr>
+<td><code>attribute_role</code></td>
+<td><code>Enum(categories=['station_name', 'river_name', 'drainage_area'])</code></td>
+</tr>
+<tr>
+<td><code>support_fact</code></td>
+<td><code>String</code></td>
+</tr>
 </tbody>
 </table>
-<p>See <code>drainage_areas</code> above and <a href="../drainage-areas/">drainage-area metadata</a> for JSON decoding and absence states.</p>
+<p>See <code>metadata</code> above and <a href="../station-metadata/">station metadata</a> for name alternatives, JSON decoding and absence states.</p>
 <h3 id="observation-frame">Observation frame</h3>
 <table>
 <thead>
