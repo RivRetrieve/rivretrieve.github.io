@@ -1718,6 +1718,11 @@ reported as an issue.
 
 ## Requests
 
+If you request a period extending into the future, ThaiWater can return future
+timestamps with null values. RivRetrieve preserves these source-published rows.
+They are not future measurements, and null does not mean zero. Omit `end` to
+request through the caller machine&#39;s current local date.
+
 RivRetrieve requests two extra days on each side of the requested dates, then returns
 only the requested period. The three-day example above therefore asked ThaiWater for
 May 30 to June 5, 2024. Each request to ThaiWater covers at most 365 calendar dates,
@@ -1975,6 +1980,10 @@ ThaiWater published the timestamp without a discharge value. It differs from an 
 row, where the source supplied no timestamp, and from a failed request, which is
 reported as an issue.</p>
 <h2 id="requests">Requests</h2>
+<p>If you request a period extending into the future, ThaiWater can return future
+timestamps with null values. RivRetrieve preserves these source-published rows.
+They are not future measurements, and null does not mean zero. Omit <code>end</code> to
+request through the caller machine's current local date.</p>
 <p>RivRetrieve requests two extra days on each side of the requested dates, then returns
 only the requested period. The three-day example above therefore asked ThaiWater for
 May 30 to June 5, 2024. Each request to ThaiWater covers at most 365 calendar dates,
