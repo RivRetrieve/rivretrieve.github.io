@@ -1725,8 +1725,33 @@ print(json.loads(gross[&#34;drainage_area_value&#34;].item()))
 
 Quantity values use JSON scalar text so that a number and a source string that
 looks numeric remain distinguishable. `json.loads` restores that source scalar
-type. It does not extract a number from a string containing units or interpret a
-placeholder as missing data.
+type. It does not turn numeric text into a number or interpret a placeholder as
+missing data.
+
+For Japan&#39;s `流域面積` and `零点高`, Bosnia&#39;s `metadata_CATCHMENT_SIZE`, and
+Switzerland&#39;s `Catchment size` and `Station altitude`, the summary separates a
+recognised numeric string from its explicit unit. It preserves numeric spelling,
+including signs, trailing zeros and thousands separators. The unit remains in
+its source spelling, such as `km2` or `km²`.
+
+```python
+japan = rr.find(provider=&#34;jp_mlit&#34;, station=&#34;301011281104010&#34;)
+area = rr.metadata(japan).row(0, named=True)
+
+print(area[&#34;drainage_area_value&#34;], area[&#34;drainage_area_unit&#34;])
+# [&#39;&#34;142.00&#34;&#39;] [&#39;km2&#39;]
+
+numeric_text = json.loads(area[&#34;drainage_area_value&#34;][0])
+print(repr(numeric_text))
+# &#39;142.00&#39;
+```
+
+Numeric text still needs user parsing for arithmetic. For example, a Japanese
+value `1,719.00km2` becomes the JSON string `&#34;1,719.00&#34;`, not the number `1719.0`.
+Blanks, nulls, placeholders and qualified text such as `T.P. +1.230 m` stay
+unchanged. Japan and Bosnia receive a unit only when the individual value can be
+separated unambiguously. Existing independently supported units remain attached
+even when a value cannot be separated.
 
 ### Water-body names
 
@@ -1771,7 +1796,8 @@ alignment. Neither case supplies a numeric area or establishes source silence.
 ## Interpret elevations
 
 The Swiss source publishes station altitude as a string that includes units.
-The summary retains that string&#39;s JSON encoding and the supported datum:
+The summary separates the numeric text from `m a.s.l.` and retains the supported
+datum:
 
 ```python
 swiss = rr.find(provider=&#34;ch_foen&#34;, station=&#34;2004&#34;)
@@ -1780,15 +1806,16 @@ altitude = rr.metadata(swiss).row(0, named=True)
 print(altitude[&#34;elevation_field&#34;])
 # [&#39;Station altitude&#39;]
 print(altitude[&#34;elevation_value&#34;])
-# [&#39;&#34;432 m a.s.l.&#34;&#39;]
+# [&#39;&#34;432&#34;&#39;]
 print(altitude[&#34;elevation_unit&#34;], altitude[&#34;elevation_datum&#34;])
 # [&#39;m&#39;] [&#39;LN02&#39;]
 print(json.loads(altitude[&#34;elevation_value&#34;][0]))
-# 432 m a.s.l.
+# 432
 ```
 
-Decoding restores a string, not the number `432`. The separate unit and datum
-columns do not change its source representation.
+Decoding restores the string `&#34;432&#34;`, not the number `432`. The source view still
+returns `&#34;432 m a.s.l.&#34;` when decoded. Separating this suffix does not change the
+published datum association.
 
 Elevations can describe different physical reference points. Station altitude
 can locate the station, ground level can describe the ground surface, and gauge
@@ -1833,6 +1860,9 @@ print(json.loads(site_name[&#34;source_value&#34;].item()))
 ```
 
 Unlike summary water-body names, source-view strings retain JSON encoding.
+Source quantity values also retain their complete original text, including any
+inline units. For example, Japan&#39;s area above decodes to `142.00km2` in the
+source view. Source and summary units agree entry by entry.
 
 | Column | Meaning |
 | --- | --- |
@@ -1986,55 +2016,78 @@ name rather than taking the first entry:</p>
 </span></code></pre></div>
 <p>Quantity values use JSON scalar text so that a number and a source string that
 looks numeric remain distinguishable. <code>json.loads</code> restores that source scalar
-type. It does not extract a number from a string containing units or interpret a
-placeholder as missing data.</p>
+type. It does not turn numeric text into a number or interpret a placeholder as
+missing data.</p>
+<p>For Japan's <code>流域面積</code> and <code>零点高</code>, Bosnia's <code>metadata_CATCHMENT_SIZE</code>, and
+Switzerland's <code>Catchment size</code> and <code>Station altitude</code>, the summary separates a
+recognised numeric string from its explicit unit. It preserves numeric spelling,
+including signs, trailing zeros and thousands separators. The unit remains in
+its source spelling, such as <code>km2</code> or <code>km²</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">japan</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;jp_mlit&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;301011281104010&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">area</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">japan</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">],</span> <span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_unit&quot;</span><span class="p">])</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># [&#39;&quot;142.00&quot;&#39;] [&#39;km2&#39;]</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">numeric_text</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">numeric_text</span><span class="p">))</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># &#39;142.00&#39;</span>
+</span></code></pre></div>
+<p>Numeric text still needs user parsing for arithmetic. For example, a Japanese
+value <code>1,719.00km2</code> becomes the JSON string <code>"1,719.00"</code>, not the number <code>1719.0</code>.
+Blanks, nulls, placeholders and qualified text such as <code>T.P. +1.230 m</code> stay
+unchanged. Japan and Bosnia receive a unit only when the individual value can be
+separated unambiguously. Existing independently supported units remain attached
+even when a value cannot be separated.</p>
 <h3 id="water-body-names">Water-body names</h3>
 <p>Water-body names are already decoded strings. Norway's lake, reservoir and river
 fields remain separate, including blanks and equal names. Selecting without a
 quantity filter also includes gauges whose listed series are not discharge:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">norway</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;no_nve&quot;</span><span class="p">)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">water</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1.198.0&quot;</span><span class="p">,</span> <span class="s2">&quot;16.24.0&quot;</span><span class="p">]))</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">water</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_field&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_value&quot;</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">)</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># (&#39;1.198.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;&#39;, &#39;&#39;, &#39;Riserelva&#39;])</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># (&#39;16.24.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;Mår&#39;, &#39;MÅRVATN&#39;, &#39;Mår&#39;])</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">norway</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;no_nve&quot;</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">water</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1.198.0&quot;</span><span class="p">,</span> <span class="s2">&quot;16.24.0&quot;</span><span class="p">]))</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">water</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_field&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_value&quot;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># (&#39;1.198.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;&#39;, &#39;&#39;, &#39;Riserelva&#39;])</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># (&#39;16.24.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;Mår&#39;, &#39;MÅRVATN&#39;, &#39;Mår&#39;])</span>
 </span></code></pre></div>
 <p><code>Mår</code> occurs twice because it belongs to two different fields. <code>MÅRVATN</code> retains
 its source spelling. Blank names are not removed.</p>
 <h3 id="missing-fields-and-source-null-values">Missing fields and source-null values</h3>
 <p>The Canadian station above has no exposed water-body name field. The following
 Norwegian station has four exposed area fields, but all four values are null:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_field&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_value&quot;</span><span class="p">])</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># None None</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">missing_areas</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;16.28.0&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">])</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># [&#39;drainageBasinArea&#39;, &#39;drainageBasinAreaNorway&#39;, &#39;transferAreaIn&#39;, &#39;transferAreaOut&#39;]</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">])</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># [None, None, None, None]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_field&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_value&quot;</span><span class="p">])</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># None None</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">missing_areas</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;16.28.0&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">])</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># [&#39;drainageBasinArea&#39;, &#39;drainageBasinAreaNorway&#39;, &#39;transferAreaIn&#39;, &#39;transferAreaOut&#39;]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">])</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># [None, None, None, None]</span>
 </span></code></pre></div>
 <p>The first case has null list cells. The second keeps the named entries and their
 alignment. Neither case supplies a numeric area or establishes source silence.</p>
 <h2 id="interpret-elevations">Interpret elevations</h2>
 <p>The Swiss source publishes station altitude as a string that includes units.
-The summary retains that string's JSON encoding and the supported datum:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2004&quot;</span><span class="p">)</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">altitude</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">swiss</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_field&quot;</span><span class="p">])</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># [&#39;Station altitude&#39;]</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">])</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># [&#39;&quot;432 m a.s.l.&quot;&#39;]</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_unit&quot;</span><span class="p">],</span> <span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_datum&quot;</span><span class="p">])</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># [&#39;m&#39;] [&#39;LN02&#39;]</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># 432 m a.s.l.</span>
+The summary separates the numeric text from <code>m a.s.l.</code> and retains the supported
+datum:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2004&quot;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">altitude</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">swiss</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_field&quot;</span><span class="p">])</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># [&#39;Station altitude&#39;]</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">])</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># [&#39;&quot;432&quot;&#39;]</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_unit&quot;</span><span class="p">],</span> <span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_datum&quot;</span><span class="p">])</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># [&#39;m&#39;] [&#39;LN02&#39;]</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1"># 432</span>
 </span></code></pre></div>
-<p>Decoding restores a string, not the number <code>432</code>. The separate unit and datum
-columns do not change its source representation.</p>
+<p>Decoding restores the string <code>"432"</code>, not the number <code>432</code>. The source view still
+returns <code>"432 m a.s.l."</code> when decoded. Separating this suffix does not change the
+published datum association.</p>
 <p>Elevations can describe different physical reference points. Station altitude
 can locate the station, ground level can describe the ground surface, and gauge
 zero is the reference level from which a gauge measures water level. The agency's
@@ -2059,17 +2112,20 @@ than one place. For example, Hub'Eau station and site records can both publish
 the fields; <code>source_scope</code> distinguishes them in the source view.</p>
 <p>Use both the field name and its scope when the field name alone is ambiguous.
 This selects the site's water-body name rather than the station's separate field:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">french</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;fr_hubeau&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;1011000101&quot;</span><span class="p">)</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">source</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">french</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">site_name</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_scope&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;hydrometrie/referentiel/sites&quot;</span><span class="p">)</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_field&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;libelle_cours_eau&quot;</span><span class="p">)</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">)</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">site_name</span><span class="p">[</span><span class="s2">&quot;source_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Grande Rivière à Goyaves</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">french</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;fr_hubeau&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;1011000101&quot;</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">source</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">french</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">site_name</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_scope&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;hydrometrie/referentiel/sites&quot;</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_field&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;libelle_cours_eau&quot;</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">site_name</span><span class="p">[</span><span class="s2">&quot;source_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Grande Rivière à Goyaves</span>
 </span></code></pre></div>
-<p>Unlike summary water-body names, source-view strings retain JSON encoding.</p>
+<p>Unlike summary water-body names, source-view strings retain JSON encoding.
+Source quantity values also retain their complete original text, including any
+inline units. For example, Japan's area above decodes to <code>142.00km2</code> in the
+source view. Source and summary units agree entry by entry.</p>
 <table>
 <thead>
 <tr>
