@@ -591,10 +591,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#station-table" class="md-nav__link">
+  <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Station table
+        Read the station summary
       
     </span>
   </a>
@@ -602,10 +602,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-attributes" class="md-nav__link">
+  <a href="#work-with-multiple-fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Source attributes
+        Work with multiple fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Work with multiple fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drainage-areas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drainage areas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#water-body-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Water-body names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-fields-and-source-null-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing fields and source-null values
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpret-elevations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpret elevations
       
     </span>
   </a>
@@ -613,10 +663,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#packaged-evidence" class="md-nav__link">
+  <a href="#inspect-source-attributes-and-scope" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Packaged evidence
+        Inspect source attributes and scope
       
     </span>
   </a>
@@ -1460,10 +1510,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#station-table" class="md-nav__link">
+  <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Station table
+        Read the station summary
       
     </span>
   </a>
@@ -1471,10 +1521,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-attributes" class="md-nav__link">
+  <a href="#work-with-multiple-fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Source attributes
+        Work with multiple fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Work with multiple fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drainage-areas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drainage areas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#water-body-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Water-body names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-fields-and-source-null-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing fields and source-null values
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpret-elevations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpret elevations
       
     </span>
   </a>
@@ -1482,10 +1582,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#packaged-evidence" class="md-nav__link">
+  <a href="#inspect-source-attributes-and-scope" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Packaged evidence
+        Inspect source attributes and scope
       
     </span>
   </a>
@@ -1525,149 +1625,451 @@
 
 <textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Station metadata
 
-`metadata` returns a station table or the source attributes behind it. Both views
-read packaged files offline. They accept selections spanning providers and do not
-retrieve observations or require archive credentials.
+`rr.metadata(selection)` returns one row per selected gauge, with its station name,
+canonical geometry, and source-supported water-body names, drainage areas and
+elevations. It reads packaged files offline. It does not retrieve observations or
+require archive credentials.
 
 ```python
 import rivretrieve as rr
 
 selection = rr.find(provider=&#34;ca_eccc&#34;, quantity=&#34;discharge&#34;)
-
-stations = rr.metadata(selection)
-print(stations)
-
-source = rr.metadata(selection, view=&#34;source&#34;)
-print(source)
+metadata = rr.metadata(selection)
 ```
 
-## Station table
+Selections can span providers. Selecting several series at one gauge does not
+repeat its metadata row. Metadata remains available for catalogue-only gauges and
+for gauges excluded from observation admission or map display. A listed station
+or metadata value does not guarantee observations for a quantity or period.
 
-The default view has one row per selected gauge. `provider_id` and `station_id`
-identify the gauge; station identifiers remain strings, including leading zeros.
-Selecting several series for a gauge does not repeat its row.
+## Read the station summary
 
-`station_name` and `river_name` contain verbatim source-supported names. A name
-appears only when there is exactly one distinct nonblank name for that role.
-Whitespace-only strings remain in the source view but do not populate the summary.
-Different spellings, languages and surrounding spaces are not normalised. If more
-than one distinct nonblank name exists, the summary name is null and
-`station_name_alternatives` or `river_name_alternatives` is true. These Boolean
-columns distinguish alternatives from a role with no usable name.
+`provider_id` and `station_id` identify each gauge. Station identifiers remain
+strings, including leading zeros. `latitude`, `longitude` and `crs` come together
+from the current packaged canonical station catalogue, independently of locations
+saved in a selection. Unknown coordinates and CRS remain unknown.
 
-`latitude`, `longitude` and `crs` preserve geometry from the current packaged
-canonical station catalogue together, independently of locations saved in a selection.
-Unknown coordinates or CRS stay unknown. RivRetrieve does not infer a CRS from a
-map display. Geometry is limited to the selected gauges. Metadata remains
-available when observation admission or map eligibility excludes a gauge.
+`station_name` is the one distinct nonblank supported name, when one exists. If
+several distinct nonblank names exist, it is null and `station_name_alternatives`
+is true. Blank names do not populate this scalar, but remain in the source view.
+Spelling, language and surrounding spaces are not normalised.
 
-Names require a reviewed source mapping and permission to publish them. A missing
-name does not establish that the agency publishes none. RivRetrieve does not
-extract a river from a station label or substitute a basin name.
+The other attributes use aligned lists:
 
-## Source attributes
+| Role | Aligned columns | Value representation |
+| --- | --- | --- |
+| Water-body name | `water_body_name_field`, `water_body_name_value` | Native field names and ordinary name strings. |
+| Drainage area | `drainage_area_field`, `drainage_area_value`, `drainage_area_unit` | Native field names, JSON scalar text and established units. |
+| Elevation | `elevation_field`, `elevation_value`, `elevation_unit`, `elevation_datum` | Native field names, JSON scalar text, established units and published datum labels or codes. |
 
-The source view preserves each supported attribute separately. Drainage-area
-fields appear here rather than as one apparently standard area in the summary.
+These columns have Polars `List(String)` dtype. Within a role, position *i* in each
+list describes the same source field. List lengths agree. Fields sort by their
+exact names, with source scope breaking ties. This order does not select a
+preferred field.
+
+Every exposed field remains in the lists. Equal values from different fields stay
+separate. Empty strings, whitespace, source placeholders such as `ND`, and zeros
+are preserved. A null value remains an entry beside its field name. Unknown units
+and datums remain null beside the corresponding value.
+
+If no field is exposed for a gauge and role, all of that role&#39;s list cells are
+null. This differs from a list of named fields whose values are all null. Neither
+case means zero or establishes that an agency publishes no metadata elsewhere.
+Available fields depend on source meaning, retained evidence and publication
+permission.
+
+## Work with multiple fields
+
+### Drainage areas
+
+Area fields can describe different parts of a catchment. Norway&#39;s `transferAreaIn`
+and `transferAreaOut` describe transferred catchment portions, not alternative
+estimates of total drainage area. Keep these meanings separate.
+
+Canada&#39;s effective and gross drainage areas remain separate. This station&#39;s two
+values are numeric source scalars, stored as JSON text:
+
+```python
+import json
+import polars as pl
+
+canada = rr.find(provider=&#34;ca_eccc&#34;, station=&#34;05AA003&#34;, quantity=&#34;discharge&#34;)
+summary = rr.metadata(canada)
+row = summary.row(0, named=True)
+
+print(row[&#34;drainage_area_field&#34;])
+# [&#39;DRAINAGE_AREA_EFFECT&#39;, &#39;DRAINAGE_AREA_GROSS&#39;]
+print(row[&#34;drainage_area_value&#34;])
+# [&#39;1129.0&#39;, &#39;1130.0&#39;]
+print(row[&#34;drainage_area_unit&#34;])
+# [&#39;km2&#39;, &#39;km2&#39;]
+```
+
+Explode a role&#39;s aligned columns together. Exploding them separately can pair a
+field with another field&#39;s value or unit. Select a particular field by its native
+name rather than taking the first entry:
+
+```python
+area_columns = [&#34;drainage_area_field&#34;, &#34;drainage_area_value&#34;, &#34;drainage_area_unit&#34;]
+areas = summary.select(&#34;station_id&#34;, *area_columns).explode(area_columns)
+
+for entry in areas.select(*area_columns).iter_rows():
+    print(entry)
+# (&#39;DRAINAGE_AREA_EFFECT&#39;, &#39;1129.0&#39;, &#39;km2&#39;)
+# (&#39;DRAINAGE_AREA_GROSS&#39;, &#39;1130.0&#39;, &#39;km2&#39;)
+
+gross = areas.filter(pl.col(&#34;drainage_area_field&#34;) == &#34;DRAINAGE_AREA_GROSS&#34;)
+print(json.loads(gross[&#34;drainage_area_value&#34;].item()))
+# 1130.0
+```
+
+Quantity values use JSON scalar text so that a number and a source string that
+looks numeric remain distinguishable. `json.loads` restores that source scalar
+type. It does not extract a number from a string containing units or interpret a
+placeholder as missing data.
+
+### Water-body names
+
+Water-body names are already decoded strings. Norway&#39;s lake, reservoir and river
+fields remain separate, including blanks and equal names. Selecting without a
+quantity filter also includes gauges whose listed series are not discharge:
+
+```python
+norway = rr.find(provider=&#34;no_nve&#34;)
+water = rr.metadata(rr.pick(norway, station=[&#34;1.198.0&#34;, &#34;16.24.0&#34;]))
+
+for entry in water.select(
+    &#34;station_id&#34;, &#34;water_body_name_field&#34;, &#34;water_body_name_value&#34;
+).iter_rows():
+    print(entry)
+# (&#39;1.198.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;&#39;, &#39;&#39;, &#39;Riserelva&#39;])
+# (&#39;16.24.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;Mår&#39;, &#39;MÅRVATN&#39;, &#39;Mår&#39;])
+```
+
+`Mår` occurs twice because it belongs to two different fields. `MÅRVATN` retains
+its source spelling. Blank names are not removed.
+
+### Missing fields and source-null values
+
+The Canadian station above has no exposed water-body name field. The following
+Norwegian station has four exposed area fields, but all four values are null:
+
+```python
+print(row[&#34;water_body_name_field&#34;], row[&#34;water_body_name_value&#34;])
+# None None
+
+missing_areas = rr.metadata(rr.pick(norway, station=&#34;16.28.0&#34;)).row(0, named=True)
+print(missing_areas[&#34;drainage_area_field&#34;])
+# [&#39;drainageBasinArea&#39;, &#39;drainageBasinAreaNorway&#39;, &#39;transferAreaIn&#39;, &#39;transferAreaOut&#39;]
+print(missing_areas[&#34;drainage_area_value&#34;])
+# [None, None, None, None]
+```
+
+The first case has null list cells. The second keeps the named entries and their
+alignment. Neither case supplies a numeric area or establishes source silence.
+
+## Interpret elevations
+
+The Swiss source publishes station altitude as a string that includes units.
+The summary retains that string&#39;s JSON encoding and the supported datum:
+
+```python
+swiss = rr.find(provider=&#34;ch_foen&#34;, station=&#34;2004&#34;)
+altitude = rr.metadata(swiss).row(0, named=True)
+
+print(altitude[&#34;elevation_field&#34;])
+# [&#39;Station altitude&#39;]
+print(altitude[&#34;elevation_value&#34;])
+# [&#39;&#34;432 m a.s.l.&#34;&#39;]
+print(altitude[&#34;elevation_unit&#34;], altitude[&#34;elevation_datum&#34;])
+# [&#39;m&#39;] [&#39;LN02&#39;]
+print(json.loads(altitude[&#34;elevation_value&#34;][0]))
+# 432 m a.s.l.
+```
+
+Decoding restores a string, not the number `432`. The separate unit and datum
+columns do not change its source representation.
+
+Elevations can describe different physical reference points. Station altitude
+can locate the station, ground level can describe the ground surface, and gauge
+zero is the reference level from which a gauge measures water level. The agency&#39;s
+field definition determines the meaning. Some definitions remain broader, such
+as USGS&#39;s gage/land-surface wording.
+
+RivRetrieve preserves each field separately under one elevation role. It does not
+choose a reference point, convert quantities, shift datums or remove implausible
+values. A published datum code remains a code; it is not replaced by an expanded
+label. A datum defined in source documentation can be attached without a separate
+native datum field. A standalone water-level datum does not create an elevation
+value.
+
+Fields can refer to different source snapshots or physical points. Station
+metadata does not establish which reference level applies to historical water-level
+observations. Do not compute water-surface elevation by adding a water level to an
+arbitrary elevation entry.
+
+## Inspect source attributes and scope
+
+`rr.metadata(selection, view=&#34;source&#34;)` returns the supported attributes behind
+the summary. It keeps each field, its scalar type, its state and its support links.
+It also distinguishes source contexts when the same field name appears in more
+than one place. For example, Hub&#39;Eau station and site records can both publish
+`libelle_cours_eau`. Both values remain in the summary without renaming or merging
+the fields; `source_scope` distinguishes them in the source view.
+
+Use both the field name and its scope when the field name alone is ambiguous.
+This selects the site&#39;s water-body name rather than the station&#39;s separate field:
+
+```python
+french = rr.find(provider=&#34;fr_hubeau&#34;, station=&#34;1011000101&#34;)
+source = rr.metadata(french, view=&#34;source&#34;)
+site_name = source.filter(
+    (pl.col(&#34;source_scope&#34;) == &#34;hydrometrie/referentiel/sites&#34;)
+    &amp; (pl.col(&#34;source_field&#34;) == &#34;libelle_cours_eau&#34;)
+)
+
+print(json.loads(site_name[&#34;source_value&#34;].item()))
+# Grande Rivière à Goyaves
+```
+
+Unlike summary water-body names, source-view strings retain JSON encoding.
 
 | Column | Meaning |
 | --- | --- |
 | `provider_id`, `station_id` | Gauge identity. |
-| `attribute_role` | Enum: `station_name`, `river_name`, or `drainage_area`. |
+| `attribute_role` | Enum: `station_name`, `water_body_name`, `drainage_area` or `elevation`. |
 | `source_field` | Exact native field name. |
+| `source_scope` | Source context where needed to distinguish fields, otherwise null. |
 | `source_value` | JSON scalar text, or null. Decode non-null cells with `json.loads`. |
-| `source_dtype` | Native dtype. |
-| `source_unit` | An already established unit, otherwise null. |
-| `state` | Enum: `value`, `source_null`, or `no_metadata`. |
-| `support_fact` | Stable fact name in the provider&#39;s packaged catalogue evidence, otherwise null for `no_metadata`. |
+| `source_dtype` | Native scalar type, such as `String` or `Float64`. |
+| `source_unit` | Established unit, otherwise null. |
+| `state` | Enum: `value`, `source_null` or `no_metadata`. |
+| `support_fact` | Stable fact name in the provider&#39;s packaged catalogue evidence. |
+| `source_datum` | Published datum label or code as plain text, otherwise null. |
+| `source_datum_field`, `source_datum_dtype` | Native datum field and type, when the datum comes from a native field. |
+| `datum_support_fact` | Evidence for the datum&#39;s association with this elevation field. |
 
-All columns except the two Enums have Polars String dtype. Rows sort by provider,
-station, role, source field, source value and support fact. JSON encoding retains
-the original scalar type:
-
-```python
-import json
-
-areas = source.filter(source[&#34;attribute_role&#34;] == &#34;drainage_area&#34;)
-values = [json.loads(value) for value in areas[&#34;source_value&#34;] if value is not None]
-```
-
-A string such as `633.00 km²` decodes to that exact string. Blank strings, inline
-units and numeric values are preserved. Distinct area meanings stay separate.
-RivRetrieve does not choose a preferred area, infer a unit or convert these values.
+All columns except the two Enums have Polars String dtype. Datum codes retain
+their native string or integer type through `source_datum_dtype`. A datum supplied
+by a documented declaration has no native datum field or dtype.
 
 - `value`: the field holds a non-null value, including a blank string.
-- `source_null`: the field holds null. Its field name, dtype, established unit
-  and support fact remain in the row.
-- `no_metadata`: no field is exposed for this gauge and role. The four source
-  columns and support fact are null.
+- `source_null`: the field holds null. Its field name, dtype and established
+  associations remain present.
+- `no_metadata`: no field is exposed for this gauge and role. Source attributes
+  and support links are null.
 
-Neither absence means zero or establishes that an agency publishes no metadata
-elsewhere. Each selected gauge has source rows for all three roles, including
-explicit `no_metadata` rows where needed. Empty selections retain their view&#39;s
-schema. Metadata does not establish that observations exist for a requested period.
-
-## Packaged evidence
-
-Each provider&#39;s catalogue carries `station_metadata.parquet` beside its evidence.
-The projection contains approved fields, not complete native tables. Stable support
-fact names connect source values to catalogue evidence without exposing archived
-source bodies. Rebuilds require explicit verified inputs and reviewed mappings;
-see the [evidence guide](maintenance/evidence.md). Missing or invalid packaged
-metadata raises an error rather than becoming an absence row.
-
-See the [API reference](reference.md#metadata) for the function contract.
+Every selected gauge has source rows for all four roles, including `no_metadata`
+rows where needed. Empty selections retain their view&#39;s schema. Missing or invalid
+packaged metadata raises an error rather than becoming an absence row.
 
 ## Data rights
 
-Packaged station metadata remains subject to the source provider&#39;s terms. RivRetrieve&#39;s
-MIT licence applies to its code. Follow the attribution and reuse conditions on the
-[provider pages](index.md#river-data-and-where-to-find-them). Use `rr.describe(provider)` to read a packaged
-catalogue descriptor offline. Applied metadata notices appear in its `station_metadata`
-record set.
+Each provider&#39;s catalogue carries approved metadata and evidence. Support facts
+connect values, definitions and datum associations to their adopted inputs without
+exposing archived source bodies. Rebuilds require verified inputs and reviewed
+mappings; see the [evidence guide](maintenance/evidence.md).
 
-- [LHMT&#39;s terms](providers/lt_lhmt.md#terms-and-citation) require source attribution and
-  apply CC BY-SA 4.0 unless stated otherwise. Adaptations must use the same licence.
-- [MLIT&#39;s terms](providers/jp_mlit.md#terms-and-citation) explain PDL1.0 and its exceptions,
-  citation with the consultation date, and notices for processing and the responsible party.
+Packaged metadata remains subject to the source provider&#39;s terms. RivRetrieve&#39;s
+MIT licence applies to its code. Follow the attribution and reuse conditions on
+the [provider pages](index.md#river-data-and-where-to-find-them). `rr.describe(provider)` reads the
+packaged catalogue descriptor offline; metadata notices appear in its
+`station_metadata` record set.
+
+- [LHMT&#39;s terms](providers/lt_lhmt.md#terms-and-citation) require source attribution
+  and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence&#39;s share-alike conditions.
+- [MLIT&#39;s terms](providers/jp_mlit.md#terms-and-citation) explain PDL1.0 and its
+  exceptions, citation with the consultation date, and notices for processing
+  and the responsible party.
+
+See the [API reference](reference.md#metadata) for the function contract.
 </textarea>
 
 <h1 id="station-metadata">Station metadata</h1>
-<p><code>metadata</code> returns a station table or the source attributes behind it. Both views
-read packaged files offline. They accept selections spanning providers and do not
-retrieve observations or require archive credentials.</p>
+<p><code>rr.metadata(selection)</code> returns one row per selected gauge, with its station name,
+canonical geometry, and source-supported water-body names, drainage areas and
+elevations. It reads packaged files offline. It does not retrieve observations or
+require archive credentials.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ca_eccc&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">stations</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">source</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">metadata</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="station-table">Station table</h2>
-<p>The default view has one row per selected gauge. <code>provider_id</code> and <code>station_id</code>
-identify the gauge; station identifiers remain strings, including leading zeros.
-Selecting several series for a gauge does not repeat its row.</p>
-<p><code>station_name</code> and <code>river_name</code> contain verbatim source-supported names. A name
-appears only when there is exactly one distinct nonblank name for that role.
-Whitespace-only strings remain in the source view but do not populate the summary.
-Different spellings, languages and surrounding spaces are not normalised. If more
-than one distinct nonblank name exists, the summary name is null and
-<code>station_name_alternatives</code> or <code>river_name_alternatives</code> is true. These Boolean
-columns distinguish alternatives from a role with no usable name.</p>
-<p><code>latitude</code>, <code>longitude</code> and <code>crs</code> preserve geometry from the current packaged
-canonical station catalogue together, independently of locations saved in a selection.
-Unknown coordinates or CRS stay unknown. RivRetrieve does not infer a CRS from a
-map display. Geometry is limited to the selected gauges. Metadata remains
-available when observation admission or map eligibility excludes a gauge.</p>
-<p>Names require a reviewed source mapping and permission to publish them. A missing
-name does not establish that the agency publishes none. RivRetrieve does not
-extract a river from a station label or substitute a basin name.</p>
-<h2 id="source-attributes">Source attributes</h2>
-<p>The source view preserves each supported attribute separately. Drainage-area
-fields appear here rather than as one apparently standard area in the summary.</p>
+<p>Selections can span providers. Selecting several series at one gauge does not
+repeat its metadata row. Metadata remains available for catalogue-only gauges and
+for gauges excluded from observation admission or map display. A listed station
+or metadata value does not guarantee observations for a quantity or period.</p>
+<h2 id="read-the-station-summary">Read the station summary</h2>
+<p><code>provider_id</code> and <code>station_id</code> identify each gauge. Station identifiers remain
+strings, including leading zeros. <code>latitude</code>, <code>longitude</code> and <code>crs</code> come together
+from the current packaged canonical station catalogue, independently of locations
+saved in a selection. Unknown coordinates and CRS remain unknown.</p>
+<p><code>station_name</code> is the one distinct nonblank supported name, when one exists. If
+several distinct nonblank names exist, it is null and <code>station_name_alternatives</code>
+is true. Blank names do not populate this scalar, but remain in the source view.
+Spelling, language and surrounding spaces are not normalised.</p>
+<p>The other attributes use aligned lists:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Aligned columns</th>
+<th>Value representation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Water-body name</td>
+<td><code>water_body_name_field</code>, <code>water_body_name_value</code></td>
+<td>Native field names and ordinary name strings.</td>
+</tr>
+<tr>
+<td>Drainage area</td>
+<td><code>drainage_area_field</code>, <code>drainage_area_value</code>, <code>drainage_area_unit</code></td>
+<td>Native field names, JSON scalar text and established units.</td>
+</tr>
+<tr>
+<td>Elevation</td>
+<td><code>elevation_field</code>, <code>elevation_value</code>, <code>elevation_unit</code>, <code>elevation_datum</code></td>
+<td>Native field names, JSON scalar text, established units and published datum labels or codes.</td>
+</tr>
+</tbody>
+</table>
+<p>These columns have Polars <code>List(String)</code> dtype. Within a role, position <em>i</em> in each
+list describes the same source field. List lengths agree. Fields sort by their
+exact names, with source scope breaking ties. This order does not select a
+preferred field.</p>
+<p>Every exposed field remains in the lists. Equal values from different fields stay
+separate. Empty strings, whitespace, source placeholders such as <code>ND</code>, and zeros
+are preserved. A null value remains an entry beside its field name. Unknown units
+and datums remain null beside the corresponding value.</p>
+<p>If no field is exposed for a gauge and role, all of that role's list cells are
+null. This differs from a list of named fields whose values are all null. Neither
+case means zero or establishes that an agency publishes no metadata elsewhere.
+Available fields depend on source meaning, retained evidence and publication
+permission.</p>
+<h2 id="work-with-multiple-fields">Work with multiple fields</h2>
+<h3 id="drainage-areas">Drainage areas</h3>
+<p>Area fields can describe different parts of a catchment. Norway's <code>transferAreaIn</code>
+and <code>transferAreaOut</code> describe transferred catchment portions, not alternative
+estimates of total drainage area. Keep these meanings separate.</p>
+<p>Canada's effective and gross drainage areas remain separate. This station's two
+values are numeric source scalars, stored as JSON text:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">canada</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ca_eccc&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;05AA003&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">summary</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">canada</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">row</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">])</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># [&#39;DRAINAGE_AREA_EFFECT&#39;, &#39;DRAINAGE_AREA_GROSS&#39;]</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">])</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># [&#39;1129.0&#39;, &#39;1130.0&#39;]</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;drainage_area_unit&quot;</span><span class="p">])</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># [&#39;km2&#39;, &#39;km2&#39;]</span>
+</span></code></pre></div>
+<p>Explode a role's aligned columns together. Exploding them separately can pair a
+field with another field's value or unit. Select a particular field by its native
+name rather than taking the first entry:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">area_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">,</span> <span class="s2">&quot;drainage_area_value&quot;</span><span class="p">,</span> <span class="s2">&quot;drainage_area_unit&quot;</span><span class="p">]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">areas</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">area_columns</span><span class="p">)</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="n">area_columns</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">areas</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">*</span><span class="n">area_columns</span><span class="p">)</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># (&#39;DRAINAGE_AREA_EFFECT&#39;, &#39;1129.0&#39;, &#39;km2&#39;)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># (&#39;DRAINAGE_AREA_GROSS&#39;, &#39;1130.0&#39;, &#39;km2&#39;)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">gross</span> <span class="o">=</span> <span class="n">areas</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;DRAINAGE_AREA_GROSS&quot;</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">gross</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># 1130.0</span>
+</span></code></pre></div>
+<p>Quantity values use JSON scalar text so that a number and a source string that
+looks numeric remain distinguishable. <code>json.loads</code> restores that source scalar
+type. It does not extract a number from a string containing units or interpret a
+placeholder as missing data.</p>
+<h3 id="water-body-names">Water-body names</h3>
+<p>Water-body names are already decoded strings. Norway's lake, reservoir and river
+fields remain separate, including blanks and equal names. Selecting without a
+quantity filter also includes gauges whose listed series are not discharge:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">norway</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;no_nve&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">water</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1.198.0&quot;</span><span class="p">,</span> <span class="s2">&quot;16.24.0&quot;</span><span class="p">]))</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">water</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">&quot;station_id&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_field&quot;</span><span class="p">,</span> <span class="s2">&quot;water_body_name_value&quot;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">)</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">():</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># (&#39;1.198.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;&#39;, &#39;&#39;, &#39;Riserelva&#39;])</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># (&#39;16.24.0&#39;, [&#39;lakeName&#39;, &#39;reservoirName&#39;, &#39;riverName&#39;], [&#39;Mår&#39;, &#39;MÅRVATN&#39;, &#39;Mår&#39;])</span>
+</span></code></pre></div>
+<p><code>Mår</code> occurs twice because it belongs to two different fields. <code>MÅRVATN</code> retains
+its source spelling. Blank names are not removed.</p>
+<h3 id="missing-fields-and-source-null-values">Missing fields and source-null values</h3>
+<p>The Canadian station above has no exposed water-body name field. The following
+Norwegian station has four exposed area fields, but all four values are null:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_field&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;water_body_name_value&quot;</span><span class="p">])</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># None None</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">missing_areas</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">norway</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;16.28.0&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_field&quot;</span><span class="p">])</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># [&#39;drainageBasinArea&#39;, &#39;drainageBasinAreaNorway&#39;, &#39;transferAreaIn&#39;, &#39;transferAreaOut&#39;]</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">missing_areas</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">])</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># [None, None, None, None]</span>
+</span></code></pre></div>
+<p>The first case has null list cells. The second keeps the named entries and their
+alignment. Neither case supplies a numeric area or establishes source silence.</p>
+<h2 id="interpret-elevations">Interpret elevations</h2>
+<p>The Swiss source publishes station altitude as a string that includes units.
+The summary retains that string's JSON encoding and the supported datum:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">swiss</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ch_foen&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2004&quot;</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">altitude</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">swiss</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_field&quot;</span><span class="p">])</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># [&#39;Station altitude&#39;]</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">])</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># [&#39;&quot;432 m a.s.l.&quot;&#39;]</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_unit&quot;</span><span class="p">],</span> <span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_datum&quot;</span><span class="p">])</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># [&#39;m&#39;] [&#39;LN02&#39;]</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">altitude</span><span class="p">[</span><span class="s2">&quot;elevation_value&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># 432 m a.s.l.</span>
+</span></code></pre></div>
+<p>Decoding restores a string, not the number <code>432</code>. The separate unit and datum
+columns do not change its source representation.</p>
+<p>Elevations can describe different physical reference points. Station altitude
+can locate the station, ground level can describe the ground surface, and gauge
+zero is the reference level from which a gauge measures water level. The agency's
+field definition determines the meaning. Some definitions remain broader, such
+as USGS's gage/land-surface wording.</p>
+<p>RivRetrieve preserves each field separately under one elevation role. It does not
+choose a reference point, convert quantities, shift datums or remove implausible
+values. A published datum code remains a code; it is not replaced by an expanded
+label. A datum defined in source documentation can be attached without a separate
+native datum field. A standalone water-level datum does not create an elevation
+value.</p>
+<p>Fields can refer to different source snapshots or physical points. Station
+metadata does not establish which reference level applies to historical water-level
+observations. Do not compute water-surface elevation by adding a water level to an
+arbitrary elevation entry.</p>
+<h2 id="inspect-source-attributes-and-scope">Inspect source attributes and scope</h2>
+<p><code>rr.metadata(selection, view="source")</code> returns the supported attributes behind
+the summary. It keeps each field, its scalar type, its state and its support links.
+It also distinguishes source contexts when the same field name appears in more
+than one place. For example, Hub'Eau station and site records can both publish
+<code>libelle_cours_eau</code>. Both values remain in the summary without renaming or merging
+the fields; <code>source_scope</code> distinguishes them in the source view.</p>
+<p>Use both the field name and its scope when the field name alone is ambiguous.
+This selects the site's water-body name rather than the station's separate field:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">french</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;fr_hubeau&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;1011000101&quot;</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">source</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">french</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">site_name</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_scope&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;hydrometrie/referentiel/sites&quot;</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;source_field&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;libelle_cours_eau&quot;</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">site_name</span><span class="p">[</span><span class="s2">&quot;source_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Grande Rivière à Goyaves</span>
+</span></code></pre></div>
+<p>Unlike summary water-body names, source-view strings retain JSON encoding.</p>
 <table>
 <thead>
 <tr>
@@ -1682,11 +2084,15 @@ fields appear here rather than as one apparently standard area in the summary.</
 </tr>
 <tr>
 <td><code>attribute_role</code></td>
-<td>Enum: <code>station_name</code>, <code>river_name</code>, or <code>drainage_area</code>.</td>
+<td>Enum: <code>station_name</code>, <code>water_body_name</code>, <code>drainage_area</code> or <code>elevation</code>.</td>
 </tr>
 <tr>
 <td><code>source_field</code></td>
 <td>Exact native field name.</td>
+</tr>
+<tr>
+<td><code>source_scope</code></td>
+<td>Source context where needed to distinguish fields, otherwise null.</td>
 </tr>
 <tr>
 <td><code>source_value</code></td>
@@ -1694,64 +2100,65 @@ fields appear here rather than as one apparently standard area in the summary.</
 </tr>
 <tr>
 <td><code>source_dtype</code></td>
-<td>Native dtype.</td>
+<td>Native scalar type, such as <code>String</code> or <code>Float64</code>.</td>
 </tr>
 <tr>
 <td><code>source_unit</code></td>
-<td>An already established unit, otherwise null.</td>
+<td>Established unit, otherwise null.</td>
 </tr>
 <tr>
 <td><code>state</code></td>
-<td>Enum: <code>value</code>, <code>source_null</code>, or <code>no_metadata</code>.</td>
+<td>Enum: <code>value</code>, <code>source_null</code> or <code>no_metadata</code>.</td>
 </tr>
 <tr>
 <td><code>support_fact</code></td>
-<td>Stable fact name in the provider's packaged catalogue evidence, otherwise null for <code>no_metadata</code>.</td>
+<td>Stable fact name in the provider's packaged catalogue evidence.</td>
+</tr>
+<tr>
+<td><code>source_datum</code></td>
+<td>Published datum label or code as plain text, otherwise null.</td>
+</tr>
+<tr>
+<td><code>source_datum_field</code>, <code>source_datum_dtype</code></td>
+<td>Native datum field and type, when the datum comes from a native field.</td>
+</tr>
+<tr>
+<td><code>datum_support_fact</code></td>
+<td>Evidence for the datum's association with this elevation field.</td>
 </tr>
 </tbody>
 </table>
-<p>All columns except the two Enums have Polars String dtype. Rows sort by provider,
-station, role, source field, source value and support fact. JSON encoding retains
-the original scalar type:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">areas</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s2">&quot;attribute_role&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;drainage_area&quot;</span><span class="p">)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">areas</span><span class="p">[</span><span class="s2">&quot;source_value&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-</span></code></pre></div>
-<p>A string such as <code>633.00 km²</code> decodes to that exact string. Blank strings, inline
-units and numeric values are preserved. Distinct area meanings stay separate.
-RivRetrieve does not choose a preferred area, infer a unit or convert these values.</p>
+<p>All columns except the two Enums have Polars String dtype. Datum codes retain
+their native string or integer type through <code>source_datum_dtype</code>. A datum supplied
+by a documented declaration has no native datum field or dtype.</p>
 <ul>
 <li><code>value</code>: the field holds a non-null value, including a blank string.</li>
-<li><code>source_null</code>: the field holds null. Its field name, dtype, established unit
-  and support fact remain in the row.</li>
-<li><code>no_metadata</code>: no field is exposed for this gauge and role. The four source
-  columns and support fact are null.</li>
+<li><code>source_null</code>: the field holds null. Its field name, dtype and established
+  associations remain present.</li>
+<li><code>no_metadata</code>: no field is exposed for this gauge and role. Source attributes
+  and support links are null.</li>
 </ul>
-<p>Neither absence means zero or establishes that an agency publishes no metadata
-elsewhere. Each selected gauge has source rows for all three roles, including
-explicit <code>no_metadata</code> rows where needed. Empty selections retain their view's
-schema. Metadata does not establish that observations exist for a requested period.</p>
-<h2 id="packaged-evidence">Packaged evidence</h2>
-<p>Each provider's catalogue carries <code>station_metadata.parquet</code> beside its evidence.
-The projection contains approved fields, not complete native tables. Stable support
-fact names connect source values to catalogue evidence without exposing archived
-source bodies. Rebuilds require explicit verified inputs and reviewed mappings;
-see the <a href="../maintenance/evidence/">evidence guide</a>. Missing or invalid packaged
-metadata raises an error rather than becoming an absence row.</p>
-<p>See the <a href="../reference/#metadata">API reference</a> for the function contract.</p>
+<p>Every selected gauge has source rows for all four roles, including <code>no_metadata</code>
+rows where needed. Empty selections retain their view's schema. Missing or invalid
+packaged metadata raises an error rather than becoming an absence row.</p>
 <h2 id="data-rights">Data rights</h2>
-<p>Packaged station metadata remains subject to the source provider's terms. RivRetrieve's
-MIT licence applies to its code. Follow the attribution and reuse conditions on the
-<a href="../#river-data-and-where-to-find-them">provider pages</a>. Use <code>rr.describe(provider)</code> to read a packaged
-catalogue descriptor offline. Applied metadata notices appear in its <code>station_metadata</code>
-record set.</p>
+<p>Each provider's catalogue carries approved metadata and evidence. Support facts
+connect values, definitions and datum associations to their adopted inputs without
+exposing archived source bodies. Rebuilds require verified inputs and reviewed
+mappings; see the <a href="../maintenance/evidence/">evidence guide</a>.</p>
+<p>Packaged metadata remains subject to the source provider's terms. RivRetrieve's
+MIT licence applies to its code. Follow the attribution and reuse conditions on
+the <a href="../#river-data-and-where-to-find-them">provider pages</a>. <code>rr.describe(provider)</code> reads the
+packaged catalogue descriptor offline; metadata notices appear in its
+<code>station_metadata</code> record set.</p>
 <ul>
-<li><a href="../providers/lt_lhmt/#terms-and-citation">LHMT's terms</a> require source attribution and
-  apply CC BY-SA 4.0 unless stated otherwise. Adaptations must use the same licence.</li>
-<li><a href="../providers/jp_mlit/#terms-and-citation">MLIT's terms</a> explain PDL1.0 and its exceptions,
-  citation with the consultation date, and notices for processing and the responsible party.</li>
+<li><a href="../providers/lt_lhmt/#terms-and-citation">LHMT's terms</a> require source attribution
+  and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence's share-alike conditions.</li>
+<li><a href="../providers/jp_mlit/#terms-and-citation">MLIT's terms</a> explain PDL1.0 and its
+  exceptions, citation with the consultation date, and notices for processing
+  and the responsible party.</li>
 </ul>
+<p>See the <a href="../reference/#metadata">API reference</a> for the function contract.</p>
 
 
 
