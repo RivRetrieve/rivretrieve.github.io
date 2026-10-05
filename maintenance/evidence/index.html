@@ -1408,6 +1408,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rebuild-hubeau-from-original-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rebuild Hub’Eau from original responses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#protect-controlled-material" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1487,6 +1498,17 @@
     <span class="md-ellipsis">
       
         Run tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rebuild-hubeau-from-original-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rebuild Hub’Eau from original responses
       
     </span>
   </a>
@@ -1680,6 +1702,32 @@ explicitly reviewed RivRetrieve commit and records exact collections, fingerprin
 commands, outcomes, skips and limitations. Follow its current instructions rather
 than reconstructing a verification run from historical acceptance records.
 
+## Rebuild Hub’Eau from original responses
+
+The offline module `rivretrieve._internal.providers.fr_hubeau.rebuild_catalogue`
+reconstructs the native table and capture record, then publishes catalogue tables
+including station metadata. Follow the private archive README for the maintained
+command and reviewed input selection. Supply `--input-receipt` with the verified
+`RetainedInputReceipt` JSON, in addition to `--build-inputs`, `--evidence-root`,
+`--availability-ledger`, `--revision`, `--out` and `--capture-output`.
+The receipt selects the original site responses, their receipts, manifest and
+lineage. The adopted build inputs must include that support. Missing or changed
+members fail; the command does not fetch replacements.
+
+Library callers of `rebuild` must now pass `metadata_sources`, obtained from
+`read_station_metadata_sources` with the verified input receipt and the declared
+Hub’Eau site pins. Include those sources when building the provenance used to
+select `build_inputs`. This also applies to callers that previously supplied
+only station responses. The retained native revision passed as `revision` remains
+separate from the reviewed executable revision.
+
+Use a new output directory and a new capture path outside that directory.
+Existing destinations are refused to prevent replacement through file aliases.
+Keep both outside source checkouts and retained inputs. A later
+publication failure can leave the native table or capture record in the output
+location. Keep these candidates external until the complete build and source
+checks pass and their disclosure is approved.
+
 ## Protect controlled material
 
 Run only reviewed code with private evidence or credentials. Tests receive local
@@ -1847,6 +1895,28 @@ tests do not establish genuine collection acceptance.</p>
 explicitly reviewed RivRetrieve commit and records exact collections, fingerprints,
 commands, outcomes, skips and limitations. Follow its current instructions rather
 than reconstructing a verification run from historical acceptance records.</p>
+<h2 id="rebuild-hubeau-from-original-responses">Rebuild Hub’Eau from original responses</h2>
+<p>The offline module <code>rivretrieve._internal.providers.fr_hubeau.rebuild_catalogue</code>
+reconstructs the native table and capture record, then publishes catalogue tables
+including station metadata. Follow the private archive README for the maintained
+command and reviewed input selection. Supply <code>--input-receipt</code> with the verified
+<code>RetainedInputReceipt</code> JSON, in addition to <code>--build-inputs</code>, <code>--evidence-root</code>,
+<code>--availability-ledger</code>, <code>--revision</code>, <code>--out</code> and <code>--capture-output</code>.
+The receipt selects the original site responses, their receipts, manifest and
+lineage. The adopted build inputs must include that support. Missing or changed
+members fail; the command does not fetch replacements.</p>
+<p>Library callers of <code>rebuild</code> must now pass <code>metadata_sources</code>, obtained from
+<code>read_station_metadata_sources</code> with the verified input receipt and the declared
+Hub’Eau site pins. Include those sources when building the provenance used to
+select <code>build_inputs</code>. This also applies to callers that previously supplied
+only station responses. The retained native revision passed as <code>revision</code> remains
+separate from the reviewed executable revision.</p>
+<p>Use a new output directory and a new capture path outside that directory.
+Existing destinations are refused to prevent replacement through file aliases.
+Keep both outside source checkouts and retained inputs. A later
+publication failure can leave the native table or capture record in the output
+location. Keep these candidates external until the complete build and source
+checks pass and their disclosure is approved.</p>
 <h2 id="protect-controlled-material">Protect controlled material</h2>
 <p>Run only reviewed code with private evidence or credentials. Tests receive local
 inputs, not archive credentials. Keep private bodies, request details, credentials
