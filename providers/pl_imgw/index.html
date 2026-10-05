@@ -987,6 +987,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Station metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#station-coordinates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1529,6 +1540,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Station metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#station-coordinates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1765,6 +1787,19 @@ reported separately as [issues](../usage.md#issues).
 
 These are unofficial English translations. Other values, including `999`, are returned
 as published.
+
+## Station metadata
+
+Station metadata supplied through the Global Runoff Data Centre (GRDC) describe
+gauge-zero height in metres. `rr.metadata` returns these heights as elevation
+metadata, with each station&#39;s published vertical reference: `EVRF2007`,
+`Kronsztadt` or the source placeholder `ND`. Height strings and `ND` placeholders
+remain as supplied.
+
+Gauge-zero height is not ground height. These metadata do not establish which
+vertical reference applies to historical water-level observations, so they do not
+by themselves support conversion of those observations to elevations. See the
+[station metadata guide](../station-metadata.md) for API usage and returned fields.
 
 ## Station coordinates
 
@@ -2113,6 +2148,16 @@ reported separately as <a href="../../usage/#issues">issues</a>.</p>
 </table>
 <p>These are unofficial English translations. Other values, including <code>999</code>, are returned
 as published.</p>
+<h2 id="station-metadata">Station metadata</h2>
+<p>Station metadata supplied through the Global Runoff Data Centre (GRDC) describe
+gauge-zero height in metres. <code>rr.metadata</code> returns these heights as elevation
+metadata, with each station's published vertical reference: <code>EVRF2007</code>,
+<code>Kronsztadt</code> or the source placeholder <code>ND</code>. Height strings and <code>ND</code> placeholders
+remain as supplied.</p>
+<p>Gauge-zero height is not ground height. These metadata do not establish which
+vertical reference applies to historical water-level observations, so they do not
+by themselves support conversion of those observations to elevations. See the
+<a href="../../station-metadata/">station metadata guide</a> for API usage and returned fields.</p>
 <h2 id="station-coordinates">Station coordinates</h2>
 <p>IMGW-PIB's station list contains the 1,301 station identifiers, names and rivers, but
 no coordinates. The station coordinates used by RivRetrieve were supplied by the
