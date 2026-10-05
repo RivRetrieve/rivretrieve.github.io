@@ -2033,12 +2033,54 @@ full requested scope with normal source padding, not only the missing dates.
 A successful empty answer can cover an interval; a failed request cannot.
 Reuse returns the saved answer, which may differ from the source today. Refresh
 can return fewer rows or none. If a series fails, older cached observations can
-remain alongside new issues, with their original retrieval time.
+remain alongside new issues, with their original retrieval time. A later successful
+answer replaces failures only for the identity, physical facts and interval it
+establishes. After full recovery, reuse does not repeat the superseded failure.
+Rolling snapshots replace matching observation keys; missing keys in a new snapshot
+do not establish an empty historical interval.
 
 Set `RIVRETRIEVE_CACHE_DIR` to override the platform&#39;s user cache directory.
-`cache_status(provider)` inspects local state without network access;
-`clear_cache(provider)` deletes that provider&#39;s store and pending recovery inputs,
-including preserved downloads.
+The following operations make no source request:
+
+- `cache_status(provider)` checks stored metadata and reports committed data,
+  interrupted work, cleanup residue and active ownership separately. It does not
+  read every observation byte.
+- `audit_cache(provider)` checks every saved file and observation. A returned
+  `CacheAuditResult` identifies the generation checked and reports partition, row
+  and byte counts. Missing or damaged data raises an error. This local check does
+  not repeat certification against original publisher artifacts.
+- `recover_cache(provider)` validates committed data and finishes recognized
+  interrupted work. It returns the resulting status and actions. It refuses an
+  active writer or ambiguous state rather than guessing which data to restore.
+- `clear_cache(provider)` deletes that provider&#39;s store and recognized interrupted
+  work, including preserved downloads. This is destructive consent. It leaves the
+  small coordination file used to prevent conflicting local operations.
+
+For example, after an interrupted preparation:
+
+```python
+recovery_status = rr.cache_status(&#34;ca_eccc&#34;)
+unfinished_paths = recovery_status.interrupted_paths
+cleanup_paths = recovery_status.cleanup_paths
+
+recovery = rr.recover_cache(&#34;ca_eccc&#34;)
+actions_taken = recovery.actions
+resulting_status = recovery.status
+```
+
+A first installation can have unfinished work without any committed observations.
+Its status is `interrupted`, not `absent`. Recovery discards that uncommitted stage.
+During replacement, the previous committed store remains identifiable. After the
+new store is committed, failed cleanup does not undo it. A
+`StorePostCommitCleanupError` retains the initiating error, cleanup errors,
+authoritative path and remaining paths. Inspect the status before retrying.
+
+The guarantee covers local process interruption while the operating system and
+filesystem continue running. Concurrent reading during replacement, distributed
+coordination and host or power failure are not covered. The configured cache root
+may be a symlink; managed provider directories and store contents must not be.
+Clear removes terminal managed symlinks without following their targets and never
+removes unrelated siblings.
 
 Canada (`ca_eccc`) and Poland (`pl_imgw`) read compiled stores from bulk downloads.
 Without a store, retrieval returns an empty result and an issue. Use
@@ -2324,11 +2366,49 @@ full requested scope with normal source padding, not only the missing dates.</p>
 <p>A successful empty answer can cover an interval; a failed request cannot.
 Reuse returns the saved answer, which may differ from the source today. Refresh
 can return fewer rows or none. If a series fails, older cached observations can
-remain alongside new issues, with their original retrieval time.</p>
+remain alongside new issues, with their original retrieval time. A later successful
+answer replaces failures only for the identity, physical facts and interval it
+establishes. After full recovery, reuse does not repeat the superseded failure.
+Rolling snapshots replace matching observation keys; missing keys in a new snapshot
+do not establish an empty historical interval.</p>
 <p>Set <code>RIVRETRIEVE_CACHE_DIR</code> to override the platform's user cache directory.
-<code>cache_status(provider)</code> inspects local state without network access;
-<code>clear_cache(provider)</code> deletes that provider's store and pending recovery inputs,
-including preserved downloads.</p>
+The following operations make no source request:</p>
+<ul>
+<li><code>cache_status(provider)</code> checks stored metadata and reports committed data,
+  interrupted work, cleanup residue and active ownership separately. It does not
+  read every observation byte.</li>
+<li><code>audit_cache(provider)</code> checks every saved file and observation. A returned
+  <code>CacheAuditResult</code> identifies the generation checked and reports partition, row
+  and byte counts. Missing or damaged data raises an error. This local check does
+  not repeat certification against original publisher artifacts.</li>
+<li><code>recover_cache(provider)</code> validates committed data and finishes recognized
+  interrupted work. It returns the resulting status and actions. It refuses an
+  active writer or ambiguous state rather than guessing which data to restore.</li>
+<li><code>clear_cache(provider)</code> deletes that provider's store and recognized interrupted
+  work, including preserved downloads. This is destructive consent. It leaves the
+  small coordination file used to prevent conflicting local operations.</li>
+</ul>
+<p>For example, after an interrupted preparation:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">recovery_status</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">cache_status</span><span class="p">(</span><span class="s2">&quot;ca_eccc&quot;</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">unfinished_paths</span> <span class="o">=</span> <span class="n">recovery_status</span><span class="o">.</span><span class="n">interrupted_paths</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">cleanup_paths</span> <span class="o">=</span> <span class="n">recovery_status</span><span class="o">.</span><span class="n">cleanup_paths</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">recovery</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">recover_cache</span><span class="p">(</span><span class="s2">&quot;ca_eccc&quot;</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">actions_taken</span> <span class="o">=</span> <span class="n">recovery</span><span class="o">.</span><span class="n">actions</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">resulting_status</span> <span class="o">=</span> <span class="n">recovery</span><span class="o">.</span><span class="n">status</span>
+</span></code></pre></div>
+<p>A first installation can have unfinished work without any committed observations.
+Its status is <code>interrupted</code>, not <code>absent</code>. Recovery discards that uncommitted stage.
+During replacement, the previous committed store remains identifiable. After the
+new store is committed, failed cleanup does not undo it. A
+<code>StorePostCommitCleanupError</code> retains the initiating error, cleanup errors,
+authoritative path and remaining paths. Inspect the status before retrying.</p>
+<p>The guarantee covers local process interruption while the operating system and
+filesystem continue running. Concurrent reading during replacement, distributed
+coordination and host or power failure are not covered. The configured cache root
+may be a symlink; managed provider directories and store contents must not be.
+Clear removes terminal managed symlinks without following their targets and never
+removes unrelated siblings.</p>
 <p>Canada (<code>ca_eccc</code>) and Poland (<code>pl_imgw</code>) read compiled stores from bulk downloads.
 Without a store, retrieval returns an empty result and an issue. Use
 <code>download(provider)</code> to authorize the national download, which can require substantial
@@ -2336,28 +2416,28 @@ bandwidth and disk space. Both <code>bypass</code> and <code>reuse</code> read t
 raises. Use <code>download</code> to replace a store. Polish daily archive series have no
 archive-wide statistic, so they do not match an explicit mean-statistic filter.</p>
 <h2 id="provenance">Provenance</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Output:</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># usgs_nwis live</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># Inspect the resolved scope and original source-call records.</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">request_scope</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">request</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">source_calls</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">calls_made</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Output:</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># usgs_nwis live</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># Inspect the resolved scope and original source-call records.</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">request_scope</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">request</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">source_calls</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">provenance</span><span class="o">.</span><span class="n">calls_made</span>
 </span></code></pre></div>
 <p>Provenance records request scope, available source calls, source terms and cache
 context. Failed requests can leave no payload origin. Cache-only retrieval can have
 <code>retrieved_at=None</code>; cached retrieval times are retained in <code>served_intervals</code>.</p>
 <h2 id="receipts-optional">Receipts (optional)</h2>
 <p>Request receipts to inspect source material, such as values before conversion:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">receipt_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">receipts</span><span class="o">=</span><span class="kc">True</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">)</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nb">print</span><span class="p">([</span><span class="n">entry</span><span class="o">.</span><span class="n">authorship</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">receipt_result</span><span class="o">.</span><span class="n">receipts</span><span class="o">.</span><span class="n">entries</span><span class="p">])</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Output:</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1"># [&#39;publisher_payload&#39;]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">receipt_result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">receipts</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nb">print</span><span class="p">([</span><span class="n">entry</span><span class="o">.</span><span class="n">authorship</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">receipt_result</span><span class="o">.</span><span class="n">receipts</span><span class="o">.</span><span class="n">entries</span><span class="p">])</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Output:</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># [&#39;publisher_payload&#39;]</span>
 </span></code></pre></div>
 <p><code>publisher_payload</code> contains bytes handed to the parser. <code>store_excerpt</code> contains
 cached rows encoded as Parquet by RivRetrieve, not original publisher bytes.
