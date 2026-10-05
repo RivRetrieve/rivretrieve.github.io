@@ -591,6 +591,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#columns-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1510,6 +1521,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#columns-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1641,6 +1663,34 @@ Selections can span providers. Selecting several series at one gauge does not
 repeat its metadata row. Metadata remains available for catalogue-only gauges and
 for gauges excluded from observation admission or map display. A listed station
 or metadata value does not guarantee observations for a quantity or period.
+
+## Columns at a glance
+
+The summary has one row per gauge and these columns, in this order.
+
+| Column | Type | What it holds |
+| --- | --- | --- |
+| `provider_id` | `String` | The provider the gauge belongs to, such as `usgs_nwis`. |
+| `station_id` | `String` | The station identifier. It stays a string so leading zeros survive. |
+| `station_name` | `String` | The one distinct nonblank name the source supports. Null when there is none. |
+| `latitude` | `Float64` | Latitude from the packaged station catalogue, unchanged. |
+| `longitude` | `Float64` | Longitude from the packaged station catalogue, unchanged. |
+| `crs` | `String` | The coordinate reference system of the coordinates, such as `EPSG:4269`. The text `unknown` when the catalogue does not state it. |
+| `water_body_name_field` | `List(String)` | Native field names that hold a water-body name, such as `riverName`. |
+| `water_body_name_value` | `List(String)` | The names themselves, in the same order as the field list. |
+| `drainage_area_field` | `List(String)` | Native field names that hold a drainage area. |
+| `drainage_area_value` | `List(String)` | The areas as JSON text. Decode each entry with `json.loads`. |
+| `drainage_area_unit` | `List(String)` | The unit of each area, such as `km2` or `sq mi`. Null when unknown. |
+| `elevation_field` | `List(String)` | Native field names that hold an elevation. |
+| `elevation_value` | `List(String)` | The elevations as JSON text. Decode each entry with `json.loads`. |
+| `elevation_unit` | `List(String)` | The unit of each elevation, such as `feet`. Null when unknown. |
+| `elevation_datum` | `List(String)` | The published datum label or code of each elevation, such as `NAVD88`. Null when none is published. A blank source value stays blank. |
+
+In each group of list columns, entry *i* of every list describes the same source
+field. A gauge with no field for a group has null list cells. Each part below
+explains these columns. `rr.metadata(selection, view=&#34;source&#34;)` returns a different
+table with one row per source attribute, described in
+[Inspect source attributes and scope](#inspect-source-attributes-and-scope).
 
 ## Read the station summary
 
@@ -1893,13 +1943,13 @@ inline units and leading padding. For example, Japan&#39;s area above decodes to
 | Column | Meaning |
 | --- | --- |
 | `provider_id`, `station_id` | Gauge identity. |
-| `attribute_role` | Enum: `station_name`, `water_body_name`, `drainage_area` or `elevation`. |
 | `source_field` | Exact native field name. |
 | `source_scope` | Source context where needed to distinguish fields, otherwise null. |
 | `source_value` | JSON scalar text, or null. Decode non-null cells with `json.loads`. |
 | `source_dtype` | Native scalar type, such as `String` or `Float64`. |
 | `source_unit` | Established unit, otherwise null. |
 | `state` | Enum: `value`, `source_null` or `no_metadata`. |
+| `attribute_role` | Enum: `station_name`, `water_body_name`, `drainage_area` or `elevation`. |
 | `support_fact` | Stable fact name in the provider&#39;s packaged catalogue evidence. |
 | `source_datum` | Published datum label or code as plain text, otherwise null. |
 | `source_datum_field`, `source_datum_dtype` | Native datum field and type, when the datum comes from a native field. |
@@ -1955,6 +2005,99 @@ require archive credentials.</p>
 repeat its metadata row. Metadata remains available for catalogue-only gauges and
 for gauges excluded from observation admission or map display. A listed station
 or metadata value does not guarantee observations for a quantity or period.</p>
+<h2 id="columns-at-a-glance">Columns at a glance</h2>
+<p>The summary has one row per gauge and these columns, in this order.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>provider_id</code></td>
+<td><code>String</code></td>
+<td>The provider the gauge belongs to, such as <code>usgs_nwis</code>.</td>
+</tr>
+<tr>
+<td><code>station_id</code></td>
+<td><code>String</code></td>
+<td>The station identifier. It stays a string so leading zeros survive.</td>
+</tr>
+<tr>
+<td><code>station_name</code></td>
+<td><code>String</code></td>
+<td>The one distinct nonblank name the source supports. Null when there is none.</td>
+</tr>
+<tr>
+<td><code>latitude</code></td>
+<td><code>Float64</code></td>
+<td>Latitude from the packaged station catalogue, unchanged.</td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td><code>Float64</code></td>
+<td>Longitude from the packaged station catalogue, unchanged.</td>
+</tr>
+<tr>
+<td><code>crs</code></td>
+<td><code>String</code></td>
+<td>The coordinate reference system of the coordinates, such as <code>EPSG:4269</code>. The text <code>unknown</code> when the catalogue does not state it.</td>
+</tr>
+<tr>
+<td><code>water_body_name_field</code></td>
+<td><code>List(String)</code></td>
+<td>Native field names that hold a water-body name, such as <code>riverName</code>.</td>
+</tr>
+<tr>
+<td><code>water_body_name_value</code></td>
+<td><code>List(String)</code></td>
+<td>The names themselves, in the same order as the field list.</td>
+</tr>
+<tr>
+<td><code>drainage_area_field</code></td>
+<td><code>List(String)</code></td>
+<td>Native field names that hold a drainage area.</td>
+</tr>
+<tr>
+<td><code>drainage_area_value</code></td>
+<td><code>List(String)</code></td>
+<td>The areas as JSON text. Decode each entry with <code>json.loads</code>.</td>
+</tr>
+<tr>
+<td><code>drainage_area_unit</code></td>
+<td><code>List(String)</code></td>
+<td>The unit of each area, such as <code>km2</code> or <code>sq mi</code>. Null when unknown.</td>
+</tr>
+<tr>
+<td><code>elevation_field</code></td>
+<td><code>List(String)</code></td>
+<td>Native field names that hold an elevation.</td>
+</tr>
+<tr>
+<td><code>elevation_value</code></td>
+<td><code>List(String)</code></td>
+<td>The elevations as JSON text. Decode each entry with <code>json.loads</code>.</td>
+</tr>
+<tr>
+<td><code>elevation_unit</code></td>
+<td><code>List(String)</code></td>
+<td>The unit of each elevation, such as <code>feet</code>. Null when unknown.</td>
+</tr>
+<tr>
+<td><code>elevation_datum</code></td>
+<td><code>List(String)</code></td>
+<td>The published datum label or code of each elevation, such as <code>NAVD88</code>. Null when none is published. A blank source value stays blank.</td>
+</tr>
+</tbody>
+</table>
+<p>In each group of list columns, entry <em>i</em> of every list describes the same source
+field. A gauge with no field for a group has null list cells. Each part below
+explains these columns. <code>rr.metadata(selection, view="source")</code> returns a different
+table with one row per source attribute, described in
+<a href="#inspect-source-attributes-and-scope">Inspect source attributes and scope</a>.</p>
 <h2 id="read-the-station-summary">Read the station summary</h2>
 <p><code>provider_id</code> and <code>station_id</code> identify each gauge. Station identifiers remain
 strings, including leading zeros. <code>latitude</code>, <code>longitude</code> and <code>crs</code> come together
@@ -2187,10 +2330,6 @@ inline units and leading padding. For example, Japan's area above decodes to
 <td>Gauge identity.</td>
 </tr>
 <tr>
-<td><code>attribute_role</code></td>
-<td>Enum: <code>station_name</code>, <code>water_body_name</code>, <code>drainage_area</code> or <code>elevation</code>.</td>
-</tr>
-<tr>
 <td><code>source_field</code></td>
 <td>Exact native field name.</td>
 </tr>
@@ -2213,6 +2352,10 @@ inline units and leading padding. For example, Japan's area above decodes to
 <tr>
 <td><code>state</code></td>
 <td>Enum: <code>value</code>, <code>source_null</code> or <code>no_metadata</code>.</td>
+</tr>
+<tr>
+<td><code>attribute_role</code></td>
+<td>Enum: <code>station_name</code>, <code>water_body_name</code>, <code>drainage_area</code> or <code>elevation</code>.</td>
 </tr>
 <tr>
 <td><code>support_fact</code></td>
