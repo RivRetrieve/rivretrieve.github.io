@@ -2054,6 +2054,17 @@ Both manifest kinds MUST contain `series`, `inventories`, `outcomes`, `issues`, 
 - `issues` retains active issue identity, severity and reason. `source_calls` retains
   supporting source-call provenance, not publisher payload bytes or request headers.
   Outcome call references resolve to recorded call or acquisition identities.
+  Ordinary acquisition calls MAY declare `prerequisite_acquisition_ids`, encoded
+  as a tuple by the source-call encoder. These are directed references to the
+  acquisitions that were actually needed to make the call. Each reference MUST
+  resolve to a recorded acquisition identity, or its call identity when no
+  separate acquisition identity exists. References MUST be unique and nonempty;
+  the tuple itself MAY be empty. Self-references, cycles and conflicting
+  declarations for one acquisition MUST be refused. Retry aliases and sanitized
+  credential exchanges remain distinct from these acquisition dependencies.
+  Retained outcomes and inventories retain their prerequisite calls transitively.
+  A call retained only as a prerequisite MUST NOT reactivate its superseded
+  diagnosis. Unneeded acquisition chains MUST be removed.
   Stored native issue summaries can carry engine acquisition references in
   `details.acquisition_ids`; source code, message, native fields and counts stay
   unchanged. Counts describe the original supporting acquisition, not a new count
@@ -2151,6 +2162,14 @@ where applicable. `built_at` is the UTC write instant with six fractional digits
 Coverage and partition counts MAY be empty: inventory and unsuccessful outcomes can be
 stored even when no successful interval or observation row exists.
 
+MLIT accumulated stores MUST include `prerequisite_acquisition_ids` on every
+ordinary acquisition call, including an empty tuple on an HTML request with no
+prerequisite. Stores missing this declaration are incompatible. Both reuse and
+refresh MUST refuse them before transport or mutation. Run `clear_cache(&#34;jp_mlit&#34;)`
+and retrieve the required series again. This creates new acquisition history;
+it does not reconstruct an original HTML request that an older cache discarded.
+Other providers’ revision-8 stores remain readable without this field.
+
 Each coverage record contains exactly `series_id`, `start`, `end`, `retrieved_at`,
 `outcome_id`, `facts_ids`, and `axis`. Endpoints are closed, timezone-naive timestamps
 with microsecond precision. `axis=&#34;native&#34;` identifies source wall-clock labels;
@@ -2202,6 +2221,21 @@ replaces the corresponding held rows too. Failed or unsupported acquisitions pre
 held rows and successful coverage at their original retrieval instants; their outcomes
 and issues can still be recorded. Inventory evidence remains separate from successful
 coverage. Matching facts never allow one source identity to cover another.
+
+A failure naming physical facts affects only those facts within its established window.
+An unspecified fact scope remains conservative within the concrete series or failed
+route. Inventory-only uncertainty does not invalidate independently successful observations.
+For example, a failed maximum-stage request preserves its held observations while a
+successful mean-stage request replaces its own observations, including a successful empty
+answer. Each fact keeps the acquisition time and calls that support it, including an
+unknown acquisition time. Independent facts do not share attribution merely because
+one transaction writes them together.
+
+Explicit complete acquired fact membership can remain valid when a named member&#39;s
+observations fail. This membership evidence does not supply missing observation coverage.
+Retiring an older fact requires applicable complete acquired membership that establishes
+its absence, with valid inventory dependencies. Caller selection and missing rows do not
+authorize retirement; failed and unestablished fact scopes remain protected.
 
 Both store kinds use the shared publication lifecycle described below. Partition
 files MUST NOT be modified in place. An accumulated update groups replacements by
@@ -2592,6 +2626,17 @@ the manifest.</p>
 <li><code>issues</code> retains active issue identity, severity and reason. <code>source_calls</code> retains
   supporting source-call provenance, not publisher payload bytes or request headers.
   Outcome call references resolve to recorded call or acquisition identities.
+  Ordinary acquisition calls MAY declare <code>prerequisite_acquisition_ids</code>, encoded
+  as a tuple by the source-call encoder. These are directed references to the
+  acquisitions that were actually needed to make the call. Each reference MUST
+  resolve to a recorded acquisition identity, or its call identity when no
+  separate acquisition identity exists. References MUST be unique and nonempty;
+  the tuple itself MAY be empty. Self-references, cycles and conflicting
+  declarations for one acquisition MUST be refused. Retry aliases and sanitized
+  credential exchanges remain distinct from these acquisition dependencies.
+  Retained outcomes and inventories retain their prerequisite calls transitively.
+  A call retained only as a prerequisite MUST NOT reactivate its superseded
+  diagnosis. Unneeded acquisition chains MUST be removed.
   Stored native issue summaries can carry engine acquisition references in
   <code>details.acquisition_ids</code>; source code, message, native fields and counts stay
   unchanged. Counts describe the original supporting acquisition, not a new count
@@ -2673,6 +2718,13 @@ accumulated store.</p>
 where applicable. <code>built_at</code> is the UTC write instant with six fractional digits and <code>Z</code>.
 Coverage and partition counts MAY be empty: inventory and unsuccessful outcomes can be
 stored even when no successful interval or observation row exists.</p>
+<p>MLIT accumulated stores MUST include <code>prerequisite_acquisition_ids</code> on every
+ordinary acquisition call, including an empty tuple on an HTML request with no
+prerequisite. Stores missing this declaration are incompatible. Both reuse and
+refresh MUST refuse them before transport or mutation. Run <code>clear_cache("jp_mlit")</code>
+and retrieve the required series again. This creates new acquisition history;
+it does not reconstruct an original HTML request that an older cache discarded.
+Other providers’ revision-8 stores remain readable without this field.</p>
 <p>Each coverage record contains exactly <code>series_id</code>, <code>start</code>, <code>end</code>, <code>retrieved_at</code>,
 <code>outcome_id</code>, <code>facts_ids</code>, and <code>axis</code>. Endpoints are closed, timezone-naive timestamps
 with microsecond precision. <code>axis="native"</code> identifies source wall-clock labels;
@@ -2718,6 +2770,19 @@ replaces the corresponding held rows too. Failed or unsupported acquisitions pre
 held rows and successful coverage at their original retrieval instants; their outcomes
 and issues can still be recorded. Inventory evidence remains separate from successful
 coverage. Matching facts never allow one source identity to cover another.</p>
+<p>A failure naming physical facts affects only those facts within its established window.
+An unspecified fact scope remains conservative within the concrete series or failed
+route. Inventory-only uncertainty does not invalidate independently successful observations.
+For example, a failed maximum-stage request preserves its held observations while a
+successful mean-stage request replaces its own observations, including a successful empty
+answer. Each fact keeps the acquisition time and calls that support it, including an
+unknown acquisition time. Independent facts do not share attribution merely because
+one transaction writes them together.</p>
+<p>Explicit complete acquired fact membership can remain valid when a named member's
+observations fail. This membership evidence does not supply missing observation coverage.
+Retiring an older fact requires applicable complete acquired membership that establishes
+its absence, with valid inventory dependencies. Caller selection and missing rows do not
+authorize retirement; failed and unestablished fact scopes remain protected.</p>
 <p>Both store kinds use the shared publication lifecycle described below. Partition
 files MUST NOT be modified in place. An accumulated update groups replacements by
 partition and rewrites each affected partition once. Unchanged partitions retain
