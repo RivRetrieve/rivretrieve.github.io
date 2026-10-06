@@ -1376,6 +1376,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rivretrieve._internal.observations.ObservationResult.supporting_outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        supporting_outcomes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rivretrieve._internal.observations.ObservationResult.scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7525,6 +7536,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rivretrieve._internal.observations.ObservationResult.supporting_outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        supporting_outcomes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rivretrieve._internal.observations.ObservationResult.scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -12134,7 +12156,7 @@ These types are not re-exported from `rivretrieve`. Their headings identify thei
 
 ::: rivretrieve._internal.observations.ObservationResult
     options:
-      members: [data, provenance, issues, receipts, source_series, inventories, outcomes, scope, view_scope]
+      members: [data, provenance, issues, receipts, source_series, inventories, outcomes, supporting_outcomes, scope, view_scope]
 
 ### ObservationResult.to_polars
 
@@ -14692,7 +14714,7 @@ it had when exported.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If the bytes are not a bundle, the bundle version is not 2, or its
+                <p>If the bytes are not a bundle, the bundle version is not 3, or its
 contents fail validation. Bundles from other format versions must be
 exported again or re-fetched.</p>
               </div>
@@ -15688,7 +15710,7 @@ export, including a result view from <code>pick</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>ZIP archive in bundle format version 2. Write the bytes to a file to
+                <p>ZIP archive in bundle format version 3. Write the bytes to a file to
 keep them. A selection bundle holds its request intent, source-series
 definitions, inventories, issues, station locations, catalogue evidence
 and empty-selection reason. A result bundle also holds the observation
@@ -16426,13 +16448,38 @@ series first identified in the response.</p>
                 <p>Retrieval statuses, each for one source series, or for a request that
 has no concrete series identity, over the interval in its <code>window</code>.
 A series can have several outcomes, for example <code>empty</code>, <code>success</code>
-and <code>failed</code> for different months. Outcomes remain present even when
-a series returned no rows. When cached rows are returned after a failed
+and <code>failed</code> for different months. Returned acquisitions keep their
+original windows and observation keys. Their scope can extend beyond
+returned rows, and older and newer successful acquisitions can mention
+the same key in a mixed result. The data frame is the selected answer;
+acquisition records are not a one-to-one index of its rows.
+Outcomes remain present even when a series returned no rows. When cached rows are returned after a failed
 retrieval, the cached <code>success</code> outcome and the new <code>failed</code> outcome
 can cover the same interval. Parts requested only as padding outside
 the requested dates produce an outcome only when their source request
 fails, and a padding-only HTTP 404 that the provider declares to mean
 no stored observations produces none.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><a class="autorefs autorefs-internal" title="supporting_outcomes
+
+
+  
+      class-attribute
+      instance-attribute
+   (rivretrieve._internal.observations.ObservationResult.supporting_outcomes)" href="#rivretrieve._internal.observations.ObservationResult.supporting_outcomes">supporting_outcomes</a></code></td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="rivretrieve._internal.source_series.RetrievalOutcome" href="#rivretrieve._internal.source_series.RetrievalOutcome">RetrievalOutcome</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Original acquisition outcomes needed to interpret retained inventories.
+These records can include historical failures that later retrievals
+resolved. They are separate from active <code>outcomes</code> and do not trigger
+issue policy. Their identities, reasons, calls and acquisition times
+remain unchanged. The tuple is empty when no such support is needed.</p>
               </div>
             </td>
           </tr>
@@ -16642,6 +16689,29 @@ been narrowed.</p>
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">outcomes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">RetrievalOutcome</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="rivretrieve._internal.observations.ObservationResult.supporting_outcomes" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">supporting_outcomes</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h5>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">supporting_outcomes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">RetrievalOutcome</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -16868,7 +16938,9 @@ and receipts are not included.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>UTC request instant and latest known source retrieval instant.</p>
+                <p>Local UTC invocation instant and latest known original acquisition
+instant among returned calls. Reuse does not create an acquisition time;
+no known returned acquisition time leaves retrieved_at as None.</p>
               </div>
             </td>
           </tr>
@@ -16906,8 +16978,10 @@ and receipts are not included.</p>
 A failed request for one series and interval also appears, with its
 <code>window</code>, <code>failure_reason</code> and <code>response_meaning</code>, such as
 <code>no_observations</code> when the provider declares that the response means
-no stored observations for that interval. Rows served from the cache
-bring the calls of the earlier retrievals that produced them.</p>
+no stored observations for that interval. Held rows bring their original
+calls. Calls can also support successful empty answers and intact source
+inventories. Unrelated acquisition history is excluded; inventory
+dependencies can extend beyond selected rows.</p>
               </div>
             </td>
           </tr>
