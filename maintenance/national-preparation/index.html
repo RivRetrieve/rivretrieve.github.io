@@ -1,0 +1,1821 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/maintenance/national-preparation/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>National preparation measurements - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#national-preparation-measurements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              National preparation measurements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../station-metadata/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Metadata
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../providers/ba_fhmzbih/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/camels-us/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worked Example
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development-conventions/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ba_fhmzbih/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bosnia and Herzegovina (AVP Sava)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/br_ana/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brazil (ANA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ca_eccc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canada (ECCC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/cz_chmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (Hub'Eau)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (HydroPortail)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Japan (MLIT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/lt_lhmt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lithuania (LHMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/no_nve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/pl_imgw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poland (IMGW-PIB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Switzerland (FOEN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/th_thaiwater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thailand (ThaiWater)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/usgs_nwis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    United States (USGS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing Useful Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Stores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verification Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#behavior-and-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior and changes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-and-exact-revisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method and exact revisions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#national-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        National results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disk-scope-and-admission-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disk scope and admission limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acquisition-replay-and-fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acquisition replay and fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># National preparation measurements
+
+## Behavior and changes
+
+`rr.download(&#34;pl_imgw&#34;)` replaces the local store with a valid newly acquired
+history even when it ends earlier. Removed rows are not carried forward. Incomplete
+or ambiguous archive listings, failed transfers and invalid archives still prevent
+replacement. Canada&#39;s safeguard against an older dated release remains unchanged.
+
+Preparation uses a smaller reconciliation journal, a temporary SQLite table that
+checks source-record and emitted-row coverage. Poland expands only the selected
+product during each product pass and uses 1024-row sort fetch chunks. An index
+maintained during scratch insertion avoids an implicit SQLite sort. Certification
+removes one redundant semantic scan, which checks stored values and schema, while
+retaining byte checks and complete independent source replay. These changes preserve the shared publication lifecycle.
+
+## Method and exact revisions
+
+Both versions use the same retained publisher inputs selected through the maintained
+verification archive. Builds ran serially with network access denied, using retained
+publisher originals. They used Python
+3.13.14, Polars 1.40.1 and PyArrow 24.0.0 on Darwin 24.6.0 arm64, with 16 logical CPUs.
+Machine model and RAM were not recorded. Dependencies were locked at the executable revisions.
+Both versions compiled independent input copies named from publisher URL basenames.
+
+- Baseline: [`30ee78e0f4dcb1b57508819894f6d82fbf980d6c`](https://github.com/RivRetrieve/RivRetrieve/commit/30ee78e0f4dcb1b57508819894f6d82fbf980d6c).
+- Candidate: [`a906f8b7a1d14a05bc324ee331bc69115b35e7ca`](https://github.com/RivRetrieve/RivRetrieve/commit/a906f8b7a1d14a05bc324ee331bc69115b35e7ca).
+- Reviewed archive executable: `53099b6bba902bf875b90d38eb22a6f8fd43994c`.
+- Baseline harness SHA256: `04303bca6441142fc3e190354f4fc0f2db6d9d4ad73c0452b708504adb129d93`.
+- Candidate harness SHA256: `339276768cb706f0a5a5e6e6c39e2498c9a7e4dd0ea4a40d536e820c420bae4b`.
+
+The baselines are fresh builds. Candidates replace audited prior stores linked to
+retained baseline copies. These hardlinks share the same underlying files (inodes). Compilation timers include certification,
+publication and cleanup, but exclude setup, working-copy preparation and postcheck
+hashes. Observer and extra-root monitoring overhead is unquantified. OS caches were
+not purged. Light synthetic checks and two brief, read-only ZIP-directory scans
+overlapped the Poland baseline. This was not an isolated benchmark.
+
+## National results
+
+Decimal GB and MB describe bytes. Five-second disk samples can miss short peaks.
+
+| Measure | Poland baseline | Poland candidate | Canada baseline | Canada candidate |
+|---|---:|---:|---:|---:|
+| Local compilation, seconds | 3,511.349 | 2,722.202 | 2,836.077 | 2,627.485 |
+| Observation rows | 59,629,260 | 59,629,260 | 79,811,984 | 79,811,984 |
+| Partitions | 228 | 228 | 344 | 344 |
+| Final store, MB | 222.986 | 222.986 | 412.932 | 412.932 |
+| Sampled managed-file peak, GB | 7.964 | 3.123 | 1.926 | 2.221 |
+| Sampled journal peak, GB | 7.395 | 2.324 | 0.241 | 0.123 |
+| RSS high-water through compilation, GB | 2.945 | 2.138 | 3.716 | 2.310 |
+
+RSS includes imports, setup and candidate pre-audits. Its final sample precedes the
+later baseline-preservation post-audit and comparator. It is not the completed-job
+or system-wide peak. Smaller batches do not establish a total memory bound.
+The following timings are **inclusive and overlapping; do not add them**.
+Compile/write includes decoding, semantic validation and sealing. Source replay
+includes decoding and, in the baseline only, the redundant semantic scan.
+
+| Component, seconds | Poland baseline | Poland candidate | Canada baseline | Canada candidate |
+|---|---:|---:|---:|---:|
+| Independent censuses | 351.945 | 253.106 | 12.450 | 13.527 |
+| Sort preparation | 1,714.493 | 1,185.489 | not called | not called |
+| Extraction preparation | not called | not called | 4.105 | 4.830 |
+| Compile/write including seal | 1,758.083 | 1,456.178 | 1,864.779 | 1,910.649 |
+| Source replay | 1,399.013 | 1,010.100 | 952.094 | 696.517 |
+| Redundant certification scan | 196.716 | removed | 262.310 | removed |
+
+Poland still makes 6,954 raw decoder entries and 5,220 sort preparations. Smaller
+product expansion is protected by tests, not a separately measured national CPU
+saving. Canada still extracts four times. Its write phase increased; extraction
+remains a small cost. The candidate retains one complete semantic validation and
+independent replay. Remaining work is substantial; these timings promise no fixed speedup.
+
+## Disk scope and admission limits
+
+Old data, inputs, output and scratch coexist during replacement; renaming the old
+store creates no copy. Canada&#39;s higher managed peak includes its old 0.413 GB store.
+Poland&#39;s sampled active sorts were 393.839/403.218 MB: no sort-space reduction is shown.
+The historic 8.587 GB Polish journal is not the comparison baseline; artifact naming differed.
+Candidate simultaneous run-plus-originals-plus-baseline peaks were 3.660/3.242 GB
+for Poland/Canada by path, or 3.437/2.829 GB after counting each shared underlying file once. These are not
+physical APFS allocations. Separate component maxima are not simultaneous totals.
+Visible-file sampling misses open, unlinked SQLite spills; physical I/O was not measured.
+
+Admission counts estimated additional growth on actual filesystems, excluding old
+stores and inputs already present. Here a source record is one Polish CSV row or
+one Canadian monthly table row. Calibration uses 160 bytes/source record for the
+journal, a 24-byte/output-row floor, Poland&#39;s 80-byte/source-record width reference
+and an excess-width term, plus explicit 64 MiB metadata headroom. Width/entropy
+probes inform these allowances; they are neither reservations nor guaranteed bounds.
+Downloads still buffer a complete response. SQLite caches and concurrent Python/Arrow
+buffers remain costs. Native temp accounting assumes the default VFS and unchanged
+startup environment. VFS means SQLite&#39;s operating-system file backend. Late
+environment changes and custom file backends are unsupported.
+Windows `GetTempPathW` has source review and synthetic controls, not native Windows
+execution evidence. Baseline TMPDIR preceded project imports; startup/site SQLite
+initialization was not established. The implementation changes no global temp settings.
+
+## Acquisition replay and fidelity
+
+Strict recorded replays passed: Poland&#39;s 943 GETs (76 listings, 867 ZIPs) took 0.209 s;
+Canada&#39;s 80 final-status HEAD probes and one GET took 0.156 s. Timers include provider
+discovery, on-demand retained-body reads and production transfer writes, excluding setup
+and identity hashes. Hash prechecks warmed files: these are local replay times, not
+network throughput or fresh acquisition. No missing HEAD payload/retry history was invented.
+Artifact URL/hash/size/vintage/order and complete response exhaustion matched.
+
+Both national comparisons passed: all stored columns, including original source
+fields, matched across every row and partition. Schemas, floating-point bits and
+duplicate multiplicity matched in stored order.
+Manifests matched except actual build time. Original-seal byte/semantic audits and
+frozen input/code/receipt/archive postchecks passed. Baseline bytes, generation,
+inode and mtime were preserved; owned ctime changes were recorded. Synthetic tests
+protect omissions, substitutions, malformed sources, failed shorter refreshes, late
+resource failures and committed cleanup debt. No check infers withdrawal intent or live availability.
+</textarea>
+
+<h1 id="national-preparation-measurements">National preparation measurements</h1>
+<h2 id="behavior-and-changes">Behavior and changes</h2>
+<p><code>rr.download("pl_imgw")</code> replaces the local store with a valid newly acquired
+history even when it ends earlier. Removed rows are not carried forward. Incomplete
+or ambiguous archive listings, failed transfers and invalid archives still prevent
+replacement. Canada's safeguard against an older dated release remains unchanged.</p>
+<p>Preparation uses a smaller reconciliation journal, a temporary SQLite table that
+checks source-record and emitted-row coverage. Poland expands only the selected
+product during each product pass and uses 1024-row sort fetch chunks. An index
+maintained during scratch insertion avoids an implicit SQLite sort. Certification
+removes one redundant semantic scan, which checks stored values and schema, while
+retaining byte checks and complete independent source replay. These changes preserve the shared publication lifecycle.</p>
+<h2 id="method-and-exact-revisions">Method and exact revisions</h2>
+<p>Both versions use the same retained publisher inputs selected through the maintained
+verification archive. Builds ran serially with network access denied, using retained
+publisher originals. They used Python
+3.13.14, Polars 1.40.1 and PyArrow 24.0.0 on Darwin 24.6.0 arm64, with 16 logical CPUs.
+Machine model and RAM were not recorded. Dependencies were locked at the executable revisions.
+Both versions compiled independent input copies named from publisher URL basenames.</p>
+<ul>
+<li>Baseline: <a href="https://github.com/RivRetrieve/RivRetrieve/commit/30ee78e0f4dcb1b57508819894f6d82fbf980d6c"><code>30ee78e0f4dcb1b57508819894f6d82fbf980d6c</code></a>.</li>
+<li>Candidate: <a href="https://github.com/RivRetrieve/RivRetrieve/commit/a906f8b7a1d14a05bc324ee331bc69115b35e7ca"><code>a906f8b7a1d14a05bc324ee331bc69115b35e7ca</code></a>.</li>
+<li>Reviewed archive executable: <code>53099b6bba902bf875b90d38eb22a6f8fd43994c</code>.</li>
+<li>Baseline harness SHA256: <code>04303bca6441142fc3e190354f4fc0f2db6d9d4ad73c0452b708504adb129d93</code>.</li>
+<li>Candidate harness SHA256: <code>339276768cb706f0a5a5e6e6c39e2498c9a7e4dd0ea4a40d536e820c420bae4b</code>.</li>
+</ul>
+<p>The baselines are fresh builds. Candidates replace audited prior stores linked to
+retained baseline copies. These hardlinks share the same underlying files (inodes). Compilation timers include certification,
+publication and cleanup, but exclude setup, working-copy preparation and postcheck
+hashes. Observer and extra-root monitoring overhead is unquantified. OS caches were
+not purged. Light synthetic checks and two brief, read-only ZIP-directory scans
+overlapped the Poland baseline. This was not an isolated benchmark.</p>
+<h2 id="national-results">National results</h2>
+<p>Decimal GB and MB describe bytes. Five-second disk samples can miss short peaks.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align: right;">Poland baseline</th>
+<th style="text-align: right;">Poland candidate</th>
+<th style="text-align: right;">Canada baseline</th>
+<th style="text-align: right;">Canada candidate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local compilation, seconds</td>
+<td style="text-align: right;">3,511.349</td>
+<td style="text-align: right;">2,722.202</td>
+<td style="text-align: right;">2,836.077</td>
+<td style="text-align: right;">2,627.485</td>
+</tr>
+<tr>
+<td>Observation rows</td>
+<td style="text-align: right;">59,629,260</td>
+<td style="text-align: right;">59,629,260</td>
+<td style="text-align: right;">79,811,984</td>
+<td style="text-align: right;">79,811,984</td>
+</tr>
+<tr>
+<td>Partitions</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">344</td>
+<td style="text-align: right;">344</td>
+</tr>
+<tr>
+<td>Final store, MB</td>
+<td style="text-align: right;">222.986</td>
+<td style="text-align: right;">222.986</td>
+<td style="text-align: right;">412.932</td>
+<td style="text-align: right;">412.932</td>
+</tr>
+<tr>
+<td>Sampled managed-file peak, GB</td>
+<td style="text-align: right;">7.964</td>
+<td style="text-align: right;">3.123</td>
+<td style="text-align: right;">1.926</td>
+<td style="text-align: right;">2.221</td>
+</tr>
+<tr>
+<td>Sampled journal peak, GB</td>
+<td style="text-align: right;">7.395</td>
+<td style="text-align: right;">2.324</td>
+<td style="text-align: right;">0.241</td>
+<td style="text-align: right;">0.123</td>
+</tr>
+<tr>
+<td>RSS high-water through compilation, GB</td>
+<td style="text-align: right;">2.945</td>
+<td style="text-align: right;">2.138</td>
+<td style="text-align: right;">3.716</td>
+<td style="text-align: right;">2.310</td>
+</tr>
+</tbody>
+</table>
+<p>RSS includes imports, setup and candidate pre-audits. Its final sample precedes the
+later baseline-preservation post-audit and comparator. It is not the completed-job
+or system-wide peak. Smaller batches do not establish a total memory bound.
+The following timings are <strong>inclusive and overlapping; do not add them</strong>.
+Compile/write includes decoding, semantic validation and sealing. Source replay
+includes decoding and, in the baseline only, the redundant semantic scan.</p>
+<table>
+<thead>
+<tr>
+<th>Component, seconds</th>
+<th style="text-align: right;">Poland baseline</th>
+<th style="text-align: right;">Poland candidate</th>
+<th style="text-align: right;">Canada baseline</th>
+<th style="text-align: right;">Canada candidate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Independent censuses</td>
+<td style="text-align: right;">351.945</td>
+<td style="text-align: right;">253.106</td>
+<td style="text-align: right;">12.450</td>
+<td style="text-align: right;">13.527</td>
+</tr>
+<tr>
+<td>Sort preparation</td>
+<td style="text-align: right;">1,714.493</td>
+<td style="text-align: right;">1,185.489</td>
+<td style="text-align: right;">not called</td>
+<td style="text-align: right;">not called</td>
+</tr>
+<tr>
+<td>Extraction preparation</td>
+<td style="text-align: right;">not called</td>
+<td style="text-align: right;">not called</td>
+<td style="text-align: right;">4.105</td>
+<td style="text-align: right;">4.830</td>
+</tr>
+<tr>
+<td>Compile/write including seal</td>
+<td style="text-align: right;">1,758.083</td>
+<td style="text-align: right;">1,456.178</td>
+<td style="text-align: right;">1,864.779</td>
+<td style="text-align: right;">1,910.649</td>
+</tr>
+<tr>
+<td>Source replay</td>
+<td style="text-align: right;">1,399.013</td>
+<td style="text-align: right;">1,010.100</td>
+<td style="text-align: right;">952.094</td>
+<td style="text-align: right;">696.517</td>
+</tr>
+<tr>
+<td>Redundant certification scan</td>
+<td style="text-align: right;">196.716</td>
+<td style="text-align: right;">removed</td>
+<td style="text-align: right;">262.310</td>
+<td style="text-align: right;">removed</td>
+</tr>
+</tbody>
+</table>
+<p>Poland still makes 6,954 raw decoder entries and 5,220 sort preparations. Smaller
+product expansion is protected by tests, not a separately measured national CPU
+saving. Canada still extracts four times. Its write phase increased; extraction
+remains a small cost. The candidate retains one complete semantic validation and
+independent replay. Remaining work is substantial; these timings promise no fixed speedup.</p>
+<h2 id="disk-scope-and-admission-limits">Disk scope and admission limits</h2>
+<p>Old data, inputs, output and scratch coexist during replacement; renaming the old
+store creates no copy. Canada's higher managed peak includes its old 0.413 GB store.
+Poland's sampled active sorts were 393.839/403.218 MB: no sort-space reduction is shown.
+The historic 8.587 GB Polish journal is not the comparison baseline; artifact naming differed.
+Candidate simultaneous run-plus-originals-plus-baseline peaks were 3.660/3.242 GB
+for Poland/Canada by path, or 3.437/2.829 GB after counting each shared underlying file once. These are not
+physical APFS allocations. Separate component maxima are not simultaneous totals.
+Visible-file sampling misses open, unlinked SQLite spills; physical I/O was not measured.</p>
+<p>Admission counts estimated additional growth on actual filesystems, excluding old
+stores and inputs already present. Here a source record is one Polish CSV row or
+one Canadian monthly table row. Calibration uses 160 bytes/source record for the
+journal, a 24-byte/output-row floor, Poland's 80-byte/source-record width reference
+and an excess-width term, plus explicit 64 MiB metadata headroom. Width/entropy
+probes inform these allowances; they are neither reservations nor guaranteed bounds.
+Downloads still buffer a complete response. SQLite caches and concurrent Python/Arrow
+buffers remain costs. Native temp accounting assumes the default VFS and unchanged
+startup environment. VFS means SQLite's operating-system file backend. Late
+environment changes and custom file backends are unsupported.
+Windows <code>GetTempPathW</code> has source review and synthetic controls, not native Windows
+execution evidence. Baseline TMPDIR preceded project imports; startup/site SQLite
+initialization was not established. The implementation changes no global temp settings.</p>
+<h2 id="acquisition-replay-and-fidelity">Acquisition replay and fidelity</h2>
+<p>Strict recorded replays passed: Poland's 943 GETs (76 listings, 867 ZIPs) took 0.209 s;
+Canada's 80 final-status HEAD probes and one GET took 0.156 s. Timers include provider
+discovery, on-demand retained-body reads and production transfer writes, excluding setup
+and identity hashes. Hash prechecks warmed files: these are local replay times, not
+network throughput or fresh acquisition. No missing HEAD payload/retry history was invented.
+Artifact URL/hash/size/vintage/order and complete response exhaustion matched.</p>
+<p>Both national comparisons passed: all stored columns, including original source
+fields, matched across every row and partition. Schemas, floating-point bits and
+duplicate multiplicity matched in stored order.
+Manifests matched except actual build time. Original-seal byte/semantic audits and
+frozen input/code/receipt/archive postchecks passed. Baseline bytes, generation,
+inode and mtime were preserved; owned ctime changes were recorded. Synthetic tests
+protect omissions, substitutions, malformed sources, failed shorter refreshes, late
+resource failures and committed cleanup debt. No check infers withdrawal intent or live availability.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

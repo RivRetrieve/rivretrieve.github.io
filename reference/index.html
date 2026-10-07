@@ -13377,6 +13377,18 @@ downloaded publisher artifacts. Their identities remain in the manifest.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
+                  <code><span title="InsufficientPreparationSpaceError">InsufficientPreparationSpaceError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If estimated additional growth exceeds free space after transfer.
+This check covers each workspace filesystem and does not reserve space.
+Retained inputs or cleanup residue can wrap this in StoreTransactionError.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                   <code><a class="autorefs autorefs-internal" title="rivretrieve._internal.issues.FatalContractError" href="#rivretrieve._internal.issues.FatalContractError">FatalContractError</a></code>
             </td>
             <td>
@@ -13453,6 +13465,10 @@ providers. Before publication, a failed compilation preserves the previous
 store and publisher inputs. Use recover_cache for interrupted work; use
 clear_cache only when deleting all owned state is intended.
 Transport failures can also propagate rather than becoming result issues.</p>
+<p>Canada's disk estimate requires <code>SQLITE_TMPDIR</code> and <code>TMPDIR</code> to be set
+before Python starts and unchanged for the process lifetime. SQLite can cache
+those settings. If they changed after startup, restart Python with the intended
+environment before downloading Canada; admission cannot recover the old state.</p>
 <p>An existing compiled store that passes validation supplies its source
 vintage, so the provider can refuse a download whose published history
 would regress. An existing store that fails validation does not block the
