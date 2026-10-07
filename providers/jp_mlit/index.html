@@ -1671,12 +1671,12 @@ RivRetrieve reads the database&#39;s observation pages and their linked download
 
 ## What you can retrieve
 
-| Quantity filter | Frequency filter | Source and returned unit |
-|---|---|---|
-| `stage` | `hourly` | m |
-| `stage` | `daily` | m |
-| `discharge` | `hourly` | m³/s |
-| `discharge` | `daily` | m³/s |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `stage` | `KIND` 2 | Hourly | Unknown | m | m |
+| `stage` | `KIND` 3 | Daily | Unknown | m | m |
+| `discharge` | `KIND` 6 | Hourly | Unknown | m³/s | m³/s |
+| `discharge` | `KIND` 7 | Daily | Unknown | m³/s | m³/s |
 
 The catalogue lists these four candidates at each station. A station being listed
 does not guarantee data for every quantity or requested period. The source station
@@ -1952,29 +1952,44 @@ claim to cover all Japanese hydrometry.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Frequency filter</th>
-<th>Source and returned unit</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>stage</code></td>
-<td><code>hourly</code></td>
+<td><code>KIND</code> 2</td>
+<td>Hourly</td>
+<td>Unknown</td>
+<td>m</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
-<td><code>daily</code></td>
+<td><code>KIND</code> 3</td>
+<td>Daily</td>
+<td>Unknown</td>
+<td>m</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>discharge</code></td>
-<td><code>hourly</code></td>
+<td><code>KIND</code> 6</td>
+<td>Hourly</td>
+<td>Unknown</td>
+<td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>discharge</code></td>
-<td><code>daily</code></td>
+<td><code>KIND</code> 7</td>
+<td>Daily</td>
+<td>Unknown</td>
+<td>m³/s</td>
 <td>m³/s</td>
 </tr>
 </tbody>

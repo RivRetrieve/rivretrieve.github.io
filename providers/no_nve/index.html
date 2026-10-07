@@ -1701,11 +1701,17 @@ than treating a failed request as missing observations.
 
 ## What you can retrieve
 
-| Quantity filter | Published resolutions | Published statistics | Source and returned unit |
-|---|---|---|---|
-| `discharge` | Raw, hourly, daily | Mean or instantaneous, depending on series | m³/s |
-| `stage` | Raw, hourly, daily | Mean or instantaneous, depending on series | m |
-| `temperature` | Raw, hourly, daily | Mean or instantaneous, depending on series | °C |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | Raw resolution | Unknown | Mean or instantaneous, depending on series | m³/s | m³/s |
+| `discharge` | Hourly resolution | Hourly | Mean or instantaneous, depending on series | m³/s | m³/s |
+| `discharge` | Daily resolution | Daily | Mean or instantaneous, depending on series | m³/s | m³/s |
+| `stage` | Raw resolution | Unknown | Mean or instantaneous, depending on series | m | m |
+| `stage` | Hourly resolution | Hourly | Mean or instantaneous, depending on series | m | m |
+| `stage` | Daily resolution | Daily | Mean or instantaneous, depending on series | m | m |
+| `temperature` | Raw resolution | Unknown | Mean or instantaneous, depending on series | °C | °C |
+| `temperature` | Hourly resolution | Hourly | Mean or instantaneous, depending on series | °C | °C |
+| `temperature` | Daily resolution | Daily | Mean or instantaneous, depending on series | °C | °C |
 
 These units require no numerical scaling. Stage is water level; RivRetrieve has
 not established its vertical reference or datum.
@@ -1968,28 +1974,84 @@ than treating a failed request as missing observations.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Published resolutions</th>
-<th>Published statistics</th>
-<th>Source and returned unit</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>discharge</code></td>
-<td>Raw, hourly, daily</td>
+<td>Raw resolution</td>
+<td>Unknown</td>
 <td>Mean or instantaneous, depending on series</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td>Hourly resolution</td>
+<td>Hourly</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td>Daily resolution</td>
+<td>Daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
-<td>Raw, hourly, daily</td>
+<td>Raw resolution</td>
+<td>Unknown</td>
 <td>Mean or instantaneous, depending on series</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>Hourly resolution</td>
+<td>Hourly</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>Daily resolution</td>
+<td>Daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>m</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>temperature</code></td>
-<td>Raw, hourly, daily</td>
+<td>Raw resolution</td>
+<td>Unknown</td>
 <td>Mean or instantaneous, depending on series</td>
+<td>°C</td>
+<td>°C</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>Hourly resolution</td>
+<td>Hourly</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>°C</td>
+<td>°C</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td>Daily resolution</td>
+<td>Daily</td>
+<td>Mean or instantaneous, depending on series</td>
+<td>°C</td>
 <td>°C</td>
 </tr>
 </tbody>

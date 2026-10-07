@@ -1663,10 +1663,10 @@ on 2026-09-24 it listed 804. Neither list is a complete inventory of Thai river 
 
 ## What you can retrieve
 
-| Quantity filter | Published frequency and statistic | Source and returned unit |
-|---|---|---|
-| `stage` | Not established | m |
-| `discharge` | Not established | m³/s |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `stage` | `value` | Unknown | Unknown | m | m |
+| `discharge` | `discharge` | Unknown | Unknown | m³/s | m³/s |
 
 These units require no numerical scaling. ThaiWater labels stage in metres above
 mean sea level (ม.รทก.). The water-data exchange standard published at
@@ -1924,19 +1924,28 @@ on 2026-09-24 it listed 804. Neither list is a complete inventory of Thai river 
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Published frequency and statistic</th>
-<th>Source and returned unit</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>stage</code></td>
-<td>Not established</td>
+<td><code>value</code></td>
+<td>Unknown</td>
+<td>Unknown</td>
+<td>m</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>discharge</code></td>
-<td>Not established</td>
+<td><code>discharge</code></td>
+<td>Unknown</td>
+<td>Unknown</td>
+<td>m³/s</td>
 <td>m³/s</td>
 </tr>
 </tbody>

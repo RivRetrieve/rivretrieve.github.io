@@ -1695,10 +1695,10 @@ the latest available edition. Retrieval does not check for a newer archive.
 
 ## What you can retrieve
 
-| Quantity filter | Published statistic | Source and returned unit |
-|---|---|---|
-| `discharge` | Daily mean | m³/s |
-| `stage` | Daily mean | m |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `FLOW` in `DLY_FLOWS` | Daily | Mean | m³/s | m³/s |
+| `stage` | `LEVEL` in `DLY_LEVELS` | Daily | Mean | m | m |
 
 Use `frequency=&#34;daily&#34;` and `statistic=&#34;mean&#34;` for either quantity.
 Stage is water level, not water depth or automatically an elevation above sea
@@ -1909,19 +1909,28 @@ the latest available edition. Retrieval does not check for a newer archive.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Published statistic</th>
-<th>Source and returned unit</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>discharge</code></td>
-<td>Daily mean</td>
+<td><code>FLOW</code> in <code>DLY_FLOWS</code></td>
+<td>Daily</td>
+<td>Mean</td>
+<td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
-<td>Daily mean</td>
+<td><code>LEVEL</code> in <code>DLY_LEVELS</code></td>
+<td>Daily</td>
+<td>Mean</td>
+<td>m</td>
 <td>m</td>
 </tr>
 </tbody>

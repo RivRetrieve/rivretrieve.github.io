@@ -1675,10 +1675,10 @@ for example `nemajunu-vms`.
 
 ## What you can retrieve
 
-| Quantity filter | API field | Published statistic | Source unit | Returned unit |
-|---|---|---|---|---|
-| `discharge` | `waterDischarge` | Daily mean | m³/s | m³/s |
-| `stage` | `waterLevel` | Daily mean | cm | m |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `waterDischarge` | Daily | Mean | m³/s | m³/s |
+| `stage` | `waterLevel` | Daily | Mean | cm | m |
 
 The API documents both fields as daily means (&#34;Vidurkis per parą&#34;). RivRetrieve
 converts stage from centimetres to metres; discharge needs no conversion. The
@@ -1906,8 +1906,9 @@ for example <code>nemajunu-vms</code>.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>API field</th>
-<th>Published statistic</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -1916,14 +1917,16 @@ for example <code>nemajunu-vms</code>.</p>
 <tr>
 <td><code>discharge</code></td>
 <td><code>waterDischarge</code></td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td><code>waterLevel</code></td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>cm</td>
 <td>m</td>
 </tr>

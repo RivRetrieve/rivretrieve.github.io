@@ -1652,13 +1652,13 @@ VD České Údolí. RivRetrieve keeps these source identifiers unchanged.
 
 ## What you can retrieve
 
-| Quantity filter | CHMI code | Published statistic | Source unit | Returned unit |
-|---|---|---|---|---|
-| `discharge` | QD | Daily mean | m³/s | m³/s |
-| `stage` | HD | Daily mean | cm | m |
-| `temperature` | TD | Daily mean | °C | °C |
-| `discharge` | QH | Hourly mean | m³/s | m³/s |
-| `stage` | HH | Hourly mean | cm | m |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | QD | Daily | Mean | m³/s | m³/s |
+| `stage` | HD | Daily | Mean | cm | m |
+| `temperature` | TD | Daily | Mean | °C | °C |
+| `discharge` | QH | Hourly | Mean | m³/s | m³/s |
+| `stage` | HH | Hourly | Mean | cm | m |
 
 Select `frequency=&#34;daily&#34;` or `frequency=&#34;hourly&#34;`, with `statistic=&#34;mean&#34;`.
 CHMI&#39;s [dataset description](https://opendata.chmi.cz/hydrology/read_me/Popis_datovych_sad_historical.pdf)
@@ -1846,8 +1846,9 @@ VD České Údolí. RivRetrieve keeps these source identifiers unchanged.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>CHMI code</th>
-<th>Published statistic</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -1856,35 +1857,40 @@ VD České Údolí. RivRetrieve keeps these source identifiers unchanged.</p>
 <tr>
 <td><code>discharge</code></td>
 <td>QD</td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td>HD</td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>cm</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>temperature</code></td>
 <td>TD</td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>°C</td>
 <td>°C</td>
 </tr>
 <tr>
 <td><code>discharge</code></td>
 <td>QH</td>
-<td>Hourly mean</td>
+<td>Hourly</td>
+<td>Mean</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td>HH</td>
-<td>Hourly mean</td>
+<td>Hourly</td>
+<td>Mean</td>
 <td>cm</td>
 <td>m</td>
 </tr>

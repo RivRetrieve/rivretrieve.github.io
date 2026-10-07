@@ -1755,11 +1755,11 @@ time or compilation time.
 
 IMGW-PIB&#39;s field description (`CODZ_publiczne_format.txt`) names each field:
 
-| Quantity filter | Frequency | Statistic | IMGW-PIB field | Source unit | Returned unit |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
 |---|---|---|---|---|---|
-| `discharge` | Daily | Unknown | `COPRZP`: Przepływ [m^3/s] (discharge) | m³/s | m³/s |
-| `stage` | Daily | Unknown | `COSTAN`: Stan wody [cm] (water level) | cm | m |
-| `temperature` | Daily | Unknown | `COPTMP`: Temperatura wody [st. C] (water temperature) | °C | °C |
+| `discharge` | `COPRZP`: Przepływ [m^3/s] (discharge) | Daily | Unknown | m³/s | m³/s |
+| `stage` | `COSTAN`: Stan wody [cm] (water level) | Daily | Unknown | cm | m |
+| `temperature` | `COPTMP`: Temperatura wody [st. C] (water temperature) | Daily | Unknown | °C | °C |
 
 RivRetrieve converts stage from centimetres to metres. Stage is water level, not
 water depth or an elevation above sea level. RivRetrieve has not established its
@@ -2083,9 +2083,9 @@ time or compilation time.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
+<th>Source field / <code>variant</code></th>
 <th>Frequency</th>
 <th>Statistic</th>
-<th>IMGW-PIB field</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -2093,25 +2093,25 @@ time or compilation time.</p>
 <tbody>
 <tr>
 <td><code>discharge</code></td>
+<td><code>COPRZP</code>: Przepływ [m^3/s] (discharge)</td>
 <td>Daily</td>
 <td>Unknown</td>
-<td><code>COPRZP</code>: Przepływ [m^3/s] (discharge)</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
+<td><code>COSTAN</code>: Stan wody [cm] (water level)</td>
 <td>Daily</td>
 <td>Unknown</td>
-<td><code>COSTAN</code>: Stan wody [cm] (water level)</td>
 <td>cm</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>temperature</code></td>
+<td><code>COPTMP</code>: Temperatura wody [st. C] (water temperature)</td>
 <td>Daily</td>
 <td>Unknown</td>
-<td><code>COPTMP</code>: Temperatura wody [st. C] (water temperature)</td>
 <td>°C</td>
 <td>°C</td>
 </tr>

@@ -1675,10 +1675,10 @@ monitoring network.
 
 ## What you can retrieve
 
-| Quantity filter | Source field / `variant` | Source unit | Returned unit |
-|---|---|---|---|
-| `discharge` | `Q`; four selectors below | l/s | m³/s |
-| `stage` | `H`; four selectors below | mm | m |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `Q`; four selectors below | Unknown | Instantaneous | l/s | m³/s |
+| `stage` | `H`; four selectors below | Unknown | Instantaneous | mm | m |
 
 Both quantities are instantaneous. Each source field supports the same four
 `variant` selectors: `raw`, `validated`, `pre_validated_and_validated`, and
@@ -1906,6 +1906,8 @@ monitoring network.</p>
 <tr>
 <th>Quantity filter</th>
 <th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -1914,12 +1916,16 @@ monitoring network.</p>
 <tr>
 <td><code>discharge</code></td>
 <td><code>Q</code>; four selectors below</td>
+<td>Unknown</td>
+<td>Instantaneous</td>
 <td>l/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td><code>H</code>; four selectors below</td>
+<td>Unknown</td>
+<td>Instantaneous</td>
 <td>mm</td>
 <td>m</td>
 </tr>

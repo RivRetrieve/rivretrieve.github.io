@@ -1669,11 +1669,11 @@ provider name with compatibility for `ba_fhmzbih` are on the roadmap
 
 ## What you can retrieve
 
-| Quantity filter | Source parameter | Source unit | Returned unit |
-|---|---|---|---|
-| `discharge` | Proticaj | m³/s | m³/s |
-| `stage` | Vodostaj | cm | m |
-| `temperature` | Temperatura vode | °C | °C |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | Proticaj | Unknown | Unknown | m³/s | m³/s |
+| `stage` | Vodostaj | Unknown | Unknown | cm | m |
+| `temperature` | Temperatura vode | Unknown | Unknown | °C | °C |
 
 RivRetrieve converts stage from centimetres to metres. Discharge and water
 temperature need no unit conversion. Stage is water level; its vertical
@@ -1875,7 +1875,9 @@ provider name with compatibility for <code>ba_fhmzbih</code> are on the roadmap
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Source parameter</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -1884,18 +1886,24 @@ provider name with compatibility for <code>ba_fhmzbih</code> are on the roadmap
 <tr>
 <td><code>discharge</code></td>
 <td>Proticaj</td>
+<td>Unknown</td>
+<td>Unknown</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td>Vodostaj</td>
+<td>Unknown</td>
+<td>Unknown</td>
 <td>cm</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>temperature</code></td>
 <td>Temperatura vode</td>
+<td>Unknown</td>
+<td>Unknown</td>
 <td>°C</td>
 <td>°C</td>
 </tr>

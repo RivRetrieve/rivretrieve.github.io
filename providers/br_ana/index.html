@@ -1702,12 +1702,12 @@ selected by consistency level, `bruto` or `consistido` (see
 Telemetry series are ANA&#39;s adopted discharge and stage values, `Vazao_Adotada`
 and `Cota_Adotada`, each labelled with its measurement time.
 
-| Quantity filter | Source selection / `variant` | Published statistic | Source unit | Returned unit |
-|---|---|---|---|---|
-| `discharge` | `bruto`, `consistido` | Daily mean | m³/s | m³/s |
-| `stage` | `bruto`, `consistido` | Daily mean | cm | m |
-| `discharge` | `Vazao_Adotada` | Not established | m³/s | m³/s |
-| `stage` | `Cota_Adotada` | Not established | cm | m |
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `bruto`, `consistido` | Daily | Mean | m³/s | m³/s |
+| `stage` | `bruto`, `consistido` | Daily | Mean | cm | m |
+| `discharge` | `Vazao_Adotada` | Unknown | Unknown | m³/s | m³/s |
+| `stage` | `Cota_Adotada` | Unknown | Unknown | cm | m |
 
 RivRetrieve divides stage values by 100 to convert centimetres to metres.
 Discharge is already in m³/s. Water temperature is currently not supported.
@@ -1973,8 +1973,9 @@ and <code>Cota_Adotada</code>, each labelled with its measurement time.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Source selection / <code>variant</code></th>
-<th>Published statistic</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
 <th>Source unit</th>
 <th>Returned unit</th>
 </tr>
@@ -1983,28 +1984,32 @@ and <code>Cota_Adotada</code>, each labelled with its measurement time.</p>
 <tr>
 <td><code>discharge</code></td>
 <td><code>bruto</code>, <code>consistido</code></td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td><code>bruto</code>, <code>consistido</code></td>
-<td>Daily mean</td>
+<td>Daily</td>
+<td>Mean</td>
 <td>cm</td>
 <td>m</td>
 </tr>
 <tr>
 <td><code>discharge</code></td>
 <td><code>Vazao_Adotada</code></td>
-<td>Not established</td>
+<td>Unknown</td>
+<td>Unknown</td>
 <td>m³/s</td>
 <td>m³/s</td>
 </tr>
 <tr>
 <td><code>stage</code></td>
 <td><code>Cota_Adotada</code></td>
-<td>Not established</td>
+<td>Unknown</td>
+<td>Unknown</td>
 <td>cm</td>
 <td>m</td>
 </tr>
