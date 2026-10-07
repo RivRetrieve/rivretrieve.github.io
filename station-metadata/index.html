@@ -602,6 +602,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fields-by-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields by provider
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1532,6 +1543,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fields-by-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields by provider
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-the-station-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1691,6 +1713,38 @@ field. A gauge with no field for a group has null list cells. Each part below
 explains these columns. `rr.metadata(selection, view=&#34;source&#34;)` returns a different
 table with one row per source attribute, described in
 [Inspect source attributes and scope](#inspect-source-attributes-and-scope).
+
+## Fields by provider
+
+Each agency names its metadata fields in its own way: `station_nm` at USGS, `Estacao_Nome` at
+ANA, `観測所名` at MLIT. The table shows the native field names behind each role, in the source&#39;s
+own spelling, with the unit the source publishes. A field without a unit has none established.
+A dash means the provider exposes no field for that role. These are the names you see in the `*_field` columns and in the `source_field` column
+of the source view.
+
+&lt;!-- fields-by-provider:start --&gt;
+| Provider | Station name | Water body | Drainage area | Elevation |
+|---|---|---|---|---|
+| [`ba_fhmzbih`](providers/ba_fhmzbih.md) | — | — | `metadata_CATCHMENT_SIZE` (km²) | — |
+| [`br_ana`](providers/br_ana.md) | `Estacao_Nome` | `Rio_Nome` | `Area_Drenagem` | `Altitude` |
+| [`ca_eccc`](providers/ca_eccc.md) | `STATION_NAME` | — | `DRAINAGE_AREA_EFFECT`, `DRAINAGE_AREA_GROSS` (km2) | — |
+| [`ch_foen`](providers/ch_foen.md) | `data-name` | `data-hydro-body` | `Catchment size` (km2) | `Station altitude` (m) |
+| [`cz_chmi`](providers/cz_chmi.md) | `STATION_NAME` | `STREAM_NAME` | `PLO_STA` (km²) | — |
+| [`fr_hubeau`](providers/fr_hubeau.md) | `libelle_station` | `libelle_cours_eau`, `libelle_masse_eau` | `superficie_reelle`, `superficie_topo`; `surface_bv` (km²) | `altitude`, `altitude_site`; `altitude_ref_alti_station` (m) |
+| [`fr_hydroportail`](providers/fr_hydroportail.md) | — | — | — | — |
+| [`jp_mlit`](providers/jp_mlit.md) | `観測所名` | `河川名` | `流域面積` (km2) | `零点高` (m) |
+| [`lt_lhmt`](providers/lt_lhmt.md) | `name` | `waterBody` | — | — |
+| [`no_nve`](providers/no_nve.md) | `stationName` | `lakeName`, `reservoirName`, `riverName` | `drainageBasinArea`, `drainageBasinAreaNorway`, `transferAreaIn`, `transferAreaOut` (km2) | `masl` (m) |
+| [`pl_imgw`](providers/pl_imgw.md) | — | — | `area` (square kilometre) | `gauge_altitude` (m) |
+| [`th_thaiwater`](providers/th_thaiwater.md) | — | — | — | — |
+| [`usgs_nwis`](providers/usgs_nwis.md) | `station_nm` | — | `contrib_drain_area_va`, `drain_area_va` (sq mi) | `alt_va` (feet) |
+| `za_dws` | — | — | `Catchment Area km**2` (km**2) | — |
+&lt;!-- fields-by-provider:end --&gt;
+
+The table lists names only. What a field means is defined by the agency: Norway&#39;s `transferAreaIn`
+and `transferAreaOut` are not total areas, and elevation fields refer to different reference
+points. See [Work with multiple fields](#work-with-multiple-fields) and
+[Interpret elevations](#interpret-elevations).
 
 ## Read the station summary
 
@@ -2106,6 +2160,130 @@ field. A gauge with no field for a group has null list cells. Each part below
 explains these columns. <code>rr.metadata(selection, view="source")</code> returns a different
 table with one row per source attribute, described in
 <a href="#inspect-source-attributes-and-scope">Inspect source attributes and scope</a>.</p>
+<h2 id="fields-by-provider">Fields by provider</h2>
+<p>Each agency names its metadata fields in its own way: <code>station_nm</code> at USGS, <code>Estacao_Nome</code> at
+ANA, <code>観測所名</code> at MLIT. The table shows the native field names behind each role, in the source's
+own spelling, with the unit the source publishes. A field without a unit has none established.
+A dash means the provider exposes no field for that role. These are the names you see in the <code>*_field</code> columns and in the <code>source_field</code> column
+of the source view.</p>
+<!-- fields-by-provider:start -->
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Station name</th>
+<th>Water body</th>
+<th>Drainage area</th>
+<th>Elevation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../providers/ba_fhmzbih/"><code>ba_fhmzbih</code></a></td>
+<td>—</td>
+<td>—</td>
+<td><code>metadata_CATCHMENT_SIZE</code> (km²)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/br_ana/"><code>br_ana</code></a></td>
+<td><code>Estacao_Nome</code></td>
+<td><code>Rio_Nome</code></td>
+<td><code>Area_Drenagem</code></td>
+<td><code>Altitude</code></td>
+</tr>
+<tr>
+<td><a href="../providers/ca_eccc/"><code>ca_eccc</code></a></td>
+<td><code>STATION_NAME</code></td>
+<td>—</td>
+<td><code>DRAINAGE_AREA_EFFECT</code>, <code>DRAINAGE_AREA_GROSS</code> (km2)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/ch_foen/"><code>ch_foen</code></a></td>
+<td><code>data-name</code></td>
+<td><code>data-hydro-body</code></td>
+<td><code>Catchment size</code> (km2)</td>
+<td><code>Station altitude</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/cz_chmi/"><code>cz_chmi</code></a></td>
+<td><code>STATION_NAME</code></td>
+<td><code>STREAM_NAME</code></td>
+<td><code>PLO_STA</code> (km²)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/fr_hubeau/"><code>fr_hubeau</code></a></td>
+<td><code>libelle_station</code></td>
+<td><code>libelle_cours_eau</code>, <code>libelle_masse_eau</code></td>
+<td><code>superficie_reelle</code>, <code>superficie_topo</code>; <code>surface_bv</code> (km²)</td>
+<td><code>altitude</code>, <code>altitude_site</code>; <code>altitude_ref_alti_station</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/fr_hydroportail/"><code>fr_hydroportail</code></a></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/jp_mlit/"><code>jp_mlit</code></a></td>
+<td><code>観測所名</code></td>
+<td><code>河川名</code></td>
+<td><code>流域面積</code> (km2)</td>
+<td><code>零点高</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/lt_lhmt/"><code>lt_lhmt</code></a></td>
+<td><code>name</code></td>
+<td><code>waterBody</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/no_nve/"><code>no_nve</code></a></td>
+<td><code>stationName</code></td>
+<td><code>lakeName</code>, <code>reservoirName</code>, <code>riverName</code></td>
+<td><code>drainageBasinArea</code>, <code>drainageBasinAreaNorway</code>, <code>transferAreaIn</code>, <code>transferAreaOut</code> (km2)</td>
+<td><code>masl</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/pl_imgw/"><code>pl_imgw</code></a></td>
+<td>—</td>
+<td>—</td>
+<td><code>area</code> (square kilometre)</td>
+<td><code>gauge_altitude</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/th_thaiwater/"><code>th_thaiwater</code></a></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/usgs_nwis/"><code>usgs_nwis</code></a></td>
+<td><code>station_nm</code></td>
+<td>—</td>
+<td><code>contrib_drain_area_va</code>, <code>drain_area_va</code> (sq mi)</td>
+<td><code>alt_va</code> (feet)</td>
+</tr>
+<tr>
+<td><code>za_dws</code></td>
+<td>—</td>
+<td>—</td>
+<td><code>Catchment Area km**2</code> (km**2)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<!-- fields-by-provider:end -->
+
+<p>The table lists names only. What a field means is defined by the agency: Norway's <code>transferAreaIn</code>
+and <code>transferAreaOut</code> are not total areas, and elevation fields refer to different reference
+points. See <a href="#work-with-multiple-fields">Work with multiple fields</a> and
+<a href="#interpret-elevations">Interpret elevations</a>.</p>
 <h2 id="read-the-station-summary">Read the station summary</h2>
 <p><code>provider_id</code> and <code>station_id</code> identify each gauge. Station identifiers remain
 strings, including leading zeros. <code>latitude</code>, <code>longitude</code> and <code>crs</code> come together
