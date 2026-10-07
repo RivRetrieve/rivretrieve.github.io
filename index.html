@@ -1809,7 +1809,7 @@ given, briefly confirm readiness.
 
 The packaged catalogue contains station locations and known source-series facts.
 Searching it does not contact the agencies. The following example then contacts USGS to retrieve
-one day of daily mean streamflow, without credentials.
+one day of daily mean streamflow.
 
 ```python
 import rivretrieve as rr
@@ -1846,7 +1846,7 @@ comparability. Downloading observations requires internet access.
 
 ### When an agency publishes different versions for the same variable
 
-Brazil&#39;s ANA publishes Bruto (raw) and Consistido (quality-checked) daily records.
+Brazil&#39;s ANA publishes `bruto` (raw) and `consistido` (quality-checked) daily records.
 ANA performs that checking, not RivRetrieve. Both are available. You choose whether to request
 both or just one. You can inspect and select them without credentials or network access:
 
@@ -2144,7 +2144,7 @@ access information.</p>
 <h2 id="quick-start">Quick start</h2>
 <p>The packaged catalogue contains station locations and known source-series facts.
 Searching it does not contact the agencies. The following example then contacts USGS to retrieve
-one day of daily mean streamflow, without credentials.</p>
+one day of daily mean streamflow.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Find daily mean streamflow and choose a gauge.</span>
@@ -2175,7 +2175,7 @@ Discharge values use m³/s. Read timestamps together with their zone column. Ins
 even when rows come back. A successful call does not establish continuous records or scientific
 comparability. Downloading observations requires internet access.</p>
 <h3 id="when-an-agency-publishes-different-versions-for-the-same-variable">When an agency publishes different versions for the same variable</h3>
-<p>Brazil's ANA publishes Bruto (raw) and Consistido (quality-checked) daily records.
+<p>Brazil's ANA publishes <code>bruto</code> (raw) and <code>consistido</code> (quality-checked) daily records.
 ANA performs that checking, not RivRetrieve. Both are available. You choose whether to request
 both or just one. You can inspect and select them without credentials or network access:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">brazil</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>

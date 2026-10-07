@@ -1749,10 +1749,10 @@
 
 [Documentation index](index.md) · [API reference](reference.md)
 
-Find source series by physical facts, retrieve observations, then inspect both values
-and retrieval outcomes. Run these examples in order in one Python session. Searches
-work offline; downloads need network access. The displayed observations come from
-recorded source responses, which can differ from a current live response.
+Search for series by what they measure, download their data, and check the results.
+Run these examples in order in one Python session. Searches work offline, but
+downloads need network access. The displayed observations come from recorded source
+responses, which can differ from a current live response.
 
 ## Find stations
 
@@ -1813,10 +1813,10 @@ source_attributes = rr.metadata(chosen_gauges, view=&#34;source&#34;)
 ```
 
 The station table contains names and coordinates with their CRS, plus lists of
-water-body, drainage-area and elevation fields. When a gauge has no name or
-several different names, the summary name is null. The source view preserves names
-and separate drainage-area fields with exact values, units where established, and
-explicit absence states. Both views work offline. The
+water-body, drainage-area and elevation fields. When the provider gives a gauge no
+name, or several different names, the summary name is null. The source view
+preserves names and separate drainage-area fields with exact values, units where
+established, and explicit absence states. Both views work offline. The
 [column table](station-metadata.md#columns-at-a-glance) lists what to expect, and
 [station metadata](station-metadata.md) explains how to interpret it.
 
@@ -1859,7 +1859,7 @@ print(result.issues)
 
 ### Series inspection and result views
 
-`result.data` is a Polars table. Discharge uses m³/s, stage metres and water
+`result.data` is a Polars table. Discharge uses cubic meters per second, stage metres and water
 temperature degrees Celsius. The original unit remains in `source_unit`.
 Inspect the source facts and outcomes as well as the numeric values:
 
@@ -1922,8 +1922,8 @@ See the [API reference](reference.md) for returned fields and export methods.
 
 ### When an agency publishes more than one version
 
-Brazil&#39;s ANA publishes Bruto (raw) and Consistido (quality-checked) daily records.
-ANA performs that checking, not RivRetrieve. These labels do not determine which
+Brazil&#39;s ANA publishes `bruto` (raw) and `consistido` (quality-checked) daily records.
+ANA performs that checking, not RivRetrieve. RivRetrieve does not determine which
 record suits a study. Inspect both, then optionally narrow the selection:
 
 ```python
@@ -1971,12 +1971,12 @@ are included. Use ISO date strings, naive ISO datetime strings or naive Python
 `end` uses the caller machine&#39;s current local date. `start` is required.
 
 Read `time` together with `time_zone`. An `unknown` zone supplies no basis for UTC
-conversion. `to_utc(result)` requires established zones for every row and raises
-otherwise, including for the USGS daily result above. Its returned `time` remains
+conversion. The function `to_utc(result)` requires established zones for every row and
+raises an error otherwise, including for the USGS daily result above. Its returned `time` remains
 naive, paired with `time_zone=&#34;+00:00&#34;`. Converting labels does not establish a
 daily aggregation definition. Equal units do not establish equal day definitions,
 a water-level datum or scientific comparability. Source quality judgements remain
-uninterpreted; provider quality flags are not added to the observation table.
+uninterpreted.
 
 ### Issues
 
@@ -2032,7 +2032,7 @@ print(status.exists)
 
 Reuse is decided separately for each station and access route. A covered route can
 be reused while another is fetched. Coverage needs both the matching series inventory
-and successful retrieval for the requested interval. Cached Consistido data alone
+and successful retrieval for the requested interval. Cached `consistido` data alone
 cannot answer a request for both Brazilian versions. An uncovered route fetches its
 full requested scope with normal source padding, not only the missing dates.
 
@@ -2165,10 +2165,10 @@ with the optional `map` extra. Catalogue descriptions are available offline thro
 
 <h1 id="usage">Usage</h1>
 <p><a href="../">Documentation index</a> · <a href="../reference/">API reference</a></p>
-<p>Find source series by physical facts, retrieve observations, then inspect both values
-and retrieval outcomes. Run these examples in order in one Python session. Searches
-work offline; downloads need network access. The displayed observations come from
-recorded source responses, which can differ from a current live response.</p>
+<p>Search for series by what they measure, download their data, and check the results.
+Run these examples in order in one Python session. Searches work offline, but
+downloads need network access. The displayed observations come from recorded source
+responses, which can differ from a current live response.</p>
 <h2 id="find-stations">Find stations</h2>
 <p>A <strong>provider</strong> publishes observations. A <strong>station</strong> identifies a monitoring site
 within that provider. Keep station identifiers as strings so leading zeros survive.
@@ -2217,10 +2217,10 @@ does not choose a preferred series or infer a quality ranking.</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">source_attributes</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">chosen_gauges</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>The station table contains names and coordinates with their CRS, plus lists of
-water-body, drainage-area and elevation fields. When a gauge has no name or
-several different names, the summary name is null. The source view preserves names
-and separate drainage-area fields with exact values, units where established, and
-explicit absence states. Both views work offline. The
+water-body, drainage-area and elevation fields. When the provider gives a gauge no
+name, or several different names, the summary name is null. The source view
+preserves names and separate drainage-area fields with exact values, units where
+established, and explicit absence states. Both views work offline. The
 <a href="../station-metadata/#columns-at-a-glance">column table</a> lists what to expect, and
 <a href="../station-metadata/">station metadata</a> explains how to interpret it.</p>
 <h3 id="save-a-selection">Save a selection</h3>
@@ -2253,7 +2253,7 @@ lossless export; <code>from_frame</code> refuses bare frames.</p>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># ()</span>
 </span></code></pre></div>
 <h3 id="series-inspection-and-result-views">Series inspection and result views</h3>
-<p><code>result.data</code> is a Polars table. Discharge uses m³/s, stage metres and water
+<p><code>result.data</code> is a Polars table. Discharge uses cubic meters per second, stage metres and water
 temperature degrees Celsius. The original unit remains in <code>source_unit</code>.
 Inspect the source facts and outcomes as well as the numeric values:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;source_unit&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
@@ -2305,8 +2305,8 @@ Save the complete result when that context matters:</p>
 <code>fetch_by_provider</code> returns separate results keyed by provider.
 See the <a href="../reference/">API reference</a> for returned fields and export methods.</p>
 <h3 id="when-an-agency-publishes-more-than-one-version">When an agency publishes more than one version</h3>
-<p>Brazil's ANA publishes Bruto (raw) and Consistido (quality-checked) daily records.
-ANA performs that checking, not RivRetrieve. These labels do not determine which
+<p>Brazil's ANA publishes <code>bruto</code> (raw) and <code>consistido</code> (quality-checked) daily records.
+ANA performs that checking, not RivRetrieve. RivRetrieve does not determine which
 record suits a study. Inspect both, then optionally narrow the selection:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">brazil</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;br_ana&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;15400000&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
@@ -2345,12 +2345,12 @@ are included. Use ISO date strings, naive ISO datetime strings or naive Python
 <code>datetime</code> objects. A date-only end includes the date's final instant. Omitting
 <code>end</code> uses the caller machine's current local date. <code>start</code> is required.</p>
 <p>Read <code>time</code> together with <code>time_zone</code>. An <code>unknown</code> zone supplies no basis for UTC
-conversion. <code>to_utc(result)</code> requires established zones for every row and raises
-otherwise, including for the USGS daily result above. Its returned <code>time</code> remains
+conversion. The function <code>to_utc(result)</code> requires established zones for every row and
+raises an error otherwise, including for the USGS daily result above. Its returned <code>time</code> remains
 naive, paired with <code>time_zone="+00:00"</code>. Converting labels does not establish a
 daily aggregation definition. Equal units do not establish equal day definitions,
 a water-level datum or scientific comparability. Source quality judgements remain
-uninterpreted; provider quality flags are not added to the observation table.</p>
+uninterpreted.</p>
 <h3 id="issues">Issues</h3>
 <p>Inspect <code>result.issues</code> even when rows return. Independent series can succeed while
 another fails. The default <code>on_issue="warn"</code> emits warnings and returns the result;
@@ -2394,7 +2394,7 @@ replace the requested interval with the source's current successful answer:</p>
 </span></code></pre></div>
 <p>Reuse is decided separately for each station and access route. A covered route can
 be reused while another is fetched. Coverage needs both the matching series inventory
-and successful retrieval for the requested interval. Cached Consistido data alone
+and successful retrieval for the requested interval. Cached <code>consistido</code> data alone
 cannot answer a request for both Brazilian versions. An uncovered route fetches its
 full requested scope with normal source padding, not only the missing dates.</p>
 <p>A successful empty answer can cover an interval; a failed request cannot.
