@@ -1667,6 +1667,10 @@
 
 <textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># RivRetrieve
 
+[![PyPI version](https://img.shields.io/pypi/v/rivretrieve)](https://pypi.org/project/rivretrieve/)
+[![Python ≥3.13](https://img.shields.io/badge/python-%E2%89%A53.13-blue)](https://pypi.org/project/rivretrieve/)
+[![Documentation](https://img.shields.io/badge/docs-online-blue)](https://rivretrieve.github.io/)
+
 RivRetrieve is an open-source Python package for finding and downloading river observations
 (discharge, stage and water temperature) directly from national and regional agencies around
 the world, through one consistent interface. RivRetrieve also ships a searchable
@@ -1684,7 +1688,7 @@ without learning a different Python interface for each agency. The map below sho
 providers are already implemented and countries where data are coming soon. Currently, RivRetrieve retrieves observations
 from thirteen different providers in twelve countries.
 
-![Countries with implemented providers in solid green and countries coming soon in orange stripes; implemented providers are listed in the table below.](assets/coverage-map.png)
+![Countries with implemented providers in solid green and countries coming soon in orange stripes; implemented providers are listed in the table below.](https://rivretrieve.github.io/assets/coverage-map.png)
 
 !!! tip &#34;Interactive Station Explorer&#34;
     Looking for specific gauges? Explore all 78,000+ stations worldwide on our [**Interactive Station Map**](map.md).
@@ -1696,7 +1700,7 @@ RivRetrieve focuses on time series of discharge, stage and water temperature.
 It leaves source quality judgements and study suitability to the reader. Think of RivRetrieve as
 a bridge between the original provider and the user.
 
-Some providers require credentials. See the [usage guide](usage.md#supplied-credentials)
+Some providers require credentials. See the [usage guide](https://rivretrieve.github.io/usage/#supplied-credentials)
 for how to supply them.
 
 &lt;details markdown=&#34;1&#34;&gt;
@@ -1870,11 +1874,11 @@ print(rr.series(consistido)[&#34;variant&#34;].to_list())
 
 Fetching `brazil` requests both daily mean water-level series by default. Fetching `consistido`
 requests only the quality-checked series. Not every period has observations for both.
-The [usage guide](usage.md#when-an-agency-publishes-more-than-one-version) shows the downloads
+The [usage guide](https://rivretrieve.github.io/usage/#when-an-agency-publishes-more-than-one-version) shows the downloads
 and explains how to supply ANA credentials.
 
-Next: the [usage guide](usage.md) builds on the same example and covers selections, time windows,
-issues, credentials and caching. The [CAMELS-US example](examples/camels-us.md) retrieves
+Next: the [usage guide](https://rivretrieve.github.io/usage/) builds on the same example and covers selections, time windows,
+issues, credentials and caching. The [CAMELS-US example](https://rivretrieve.github.io/examples/camels-us/) retrieves
 streamflow for several gauges at once.
 
 ## What RivRetrieve does and does not do
@@ -1895,22 +1899,22 @@ streamflow for several gauges at once.
 
 ## Documentation
 
-Start with the [documentation index](index.md).
+Start with the [documentation index](https://rivretrieve.github.io/).
 
-- [Usage](usage.md): selections, results, windows, issues, credentials, cache and receipts.
-- [Station metadata](station-metadata.md): names, coordinates, areas and elevations, and the
-  [field names each provider uses](station-metadata.md#fields-by-provider).
-- [Example: Recent streamflow for CAMELS-US gauges](examples/camels-us.md).
-- [Public API and software reference](reference.md).
-- [Architecture](architecture.md): responsibilities, a traced request and contracts.
+- [Usage](https://rivretrieve.github.io/usage/): selections, results, windows, issues, credentials, cache and receipts.
+- [Station metadata](https://rivretrieve.github.io/station-metadata/): names, coordinates, areas and elevations, and the
+  [field names each provider uses](https://rivretrieve.github.io/station-metadata/#fields-by-provider).
+- [Example: Recent streamflow for CAMELS-US gauges](https://rivretrieve.github.io/examples/camels-us/).
+- [Public API and software reference](https://rivretrieve.github.io/reference/).
+- [Architecture](https://rivretrieve.github.io/architecture/): responsibilities, a traced request and contracts.
 
 ## Data rights
 
 Data rights remain with the original providers. The MIT licence in LICENSE applies to
 RivRetrieve&#39;s code, not to provider data, including packaged catalogues, station metadata
 and downloaded observations. Follow each provider&#39;s attribution, citation and reuse
-conditions. See [station metadata rights](station-metadata.md#data-rights) and
-the [provider pages](index.md#river-data-and-where-to-find-them).
+conditions. See [station metadata rights](https://rivretrieve.github.io/station-metadata/#data-rights) and
+the [provider pages](https://rivretrieve.github.io/#river-data-and-where-to-find-them).
 
 ## Background
 
@@ -1942,6 +1946,9 @@ catalogues and daily time series from public national and regional APIs.
 </textarea>
 
 <h1 id="rivretrieve">RivRetrieve</h1>
+<p><a href="https://pypi.org/project/rivretrieve/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/rivretrieve" /></a>
+<a href="https://pypi.org/project/rivretrieve/"><img alt="Python ≥3.13" src="https://img.shields.io/badge/python-%E2%89%A53.13-blue" /></a>
+<a href="https://rivretrieve.github.io/"><img alt="Documentation" src="https://img.shields.io/badge/docs-online-blue" /></a></p>
 <p>RivRetrieve is an open-source Python package for finding and downloading river observations
 (discharge, stage and water temperature) directly from national and regional agencies around
 the world, through one consistent interface. RivRetrieve also ships a searchable
@@ -1955,7 +1962,7 @@ openly published river data, one that grows as new agencies are added.</p>
 without learning a different Python interface for each agency. The map below shows countries where
 providers are already implemented and countries where data are coming soon. Currently, RivRetrieve retrieves observations
 from thirteen different providers in twelve countries.</p>
-<p><img alt="Countries with implemented providers in solid green and countries coming soon in orange stripes; implemented providers are listed in the table below." src="assets/coverage-map.png" /></p>
+<p><img alt="Countries with implemented providers in solid green and countries coming soon in orange stripes; implemented providers are listed in the table below." src="https://rivretrieve.github.io/assets/coverage-map.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Interactive Station Explorer</p>
 <p>Looking for specific gauges? Explore all 78,000+ stations worldwide on our <a href="map/"><strong>Interactive Station Map</strong></a>.</p>
@@ -1964,7 +1971,7 @@ from thirteen different providers in twelve countries.</p>
 <p>RivRetrieve focuses on time series of discharge, stage and water temperature.
 It leaves source quality judgements and study suitability to the reader. Think of RivRetrieve as
 a bridge between the original provider and the user.</p>
-<p>Some providers require credentials. See the <a href="usage/#supplied-credentials">usage guide</a>
+<p>Some providers require credentials. See the <a href="https://rivretrieve.github.io/usage/#supplied-credentials">usage guide</a>
 for how to supply them.</p>
 <details>
 <summary>Providers and access</summary>
@@ -2198,10 +2205,10 @@ both or just one. You can inspect and select them without credentials or network
 </span></code></pre></div>
 <p>Fetching <code>brazil</code> requests both daily mean water-level series by default. Fetching <code>consistido</code>
 requests only the quality-checked series. Not every period has observations for both.
-The <a href="usage/#when-an-agency-publishes-more-than-one-version">usage guide</a> shows the downloads
+The <a href="https://rivretrieve.github.io/usage/#when-an-agency-publishes-more-than-one-version">usage guide</a> shows the downloads
 and explains how to supply ANA credentials.</p>
-<p>Next: the <a href="usage/">usage guide</a> builds on the same example and covers selections, time windows,
-issues, credentials and caching. The <a href="examples/camels-us/">CAMELS-US example</a> retrieves
+<p>Next: the <a href="https://rivretrieve.github.io/usage/">usage guide</a> builds on the same example and covers selections, time windows,
+issues, credentials and caching. The <a href="https://rivretrieve.github.io/examples/camels-us/">CAMELS-US example</a> retrieves
 streamflow for several gauges at once.</p>
 <h2 id="what-rivretrieve-does-and-does-not-do">What RivRetrieve does and does not do</h2>
 <ul>
@@ -2220,21 +2227,21 @@ streamflow for several gauges at once.</p>
   downloads. Previously cached observations can remain available.</li>
 </ul>
 <h2 id="documentation">Documentation</h2>
-<p>Start with the <a href="./">documentation index</a>.</p>
+<p>Start with the <a href="https://rivretrieve.github.io/">documentation index</a>.</p>
 <ul>
-<li><a href="usage/">Usage</a>: selections, results, windows, issues, credentials, cache and receipts.</li>
-<li><a href="station-metadata/">Station metadata</a>: names, coordinates, areas and elevations, and the
-  <a href="station-metadata/#fields-by-provider">field names each provider uses</a>.</li>
-<li><a href="examples/camels-us/">Example: Recent streamflow for CAMELS-US gauges</a>.</li>
-<li><a href="reference/">Public API and software reference</a>.</li>
-<li><a href="architecture/">Architecture</a>: responsibilities, a traced request and contracts.</li>
+<li><a href="https://rivretrieve.github.io/usage/">Usage</a>: selections, results, windows, issues, credentials, cache and receipts.</li>
+<li><a href="https://rivretrieve.github.io/station-metadata/">Station metadata</a>: names, coordinates, areas and elevations, and the
+  <a href="https://rivretrieve.github.io/station-metadata/#fields-by-provider">field names each provider uses</a>.</li>
+<li><a href="https://rivretrieve.github.io/examples/camels-us/">Example: Recent streamflow for CAMELS-US gauges</a>.</li>
+<li><a href="https://rivretrieve.github.io/reference/">Public API and software reference</a>.</li>
+<li><a href="https://rivretrieve.github.io/architecture/">Architecture</a>: responsibilities, a traced request and contracts.</li>
 </ul>
 <h2 id="data-rights">Data rights</h2>
 <p>Data rights remain with the original providers. The MIT licence in LICENSE applies to
 RivRetrieve's code, not to provider data, including packaged catalogues, station metadata
 and downloaded observations. Follow each provider's attribution, citation and reuse
-conditions. See <a href="station-metadata/#data-rights">station metadata rights</a> and
-the <a href="./#river-data-and-where-to-find-them">provider pages</a>.</p>
+conditions. See <a href="https://rivretrieve.github.io/station-metadata/#data-rights">station metadata rights</a> and
+the <a href="https://rivretrieve.github.io/#river-data-and-where-to-find-them">provider pages</a>.</p>
 <h2 id="background">Background</h2>
 <p>RivRetrieve is under active development. Breaking changes should be expected between release
 versions. See the <a href="https://github.com/RivRetrieve/RivRetrieve/issues">issues</a> for what is being
