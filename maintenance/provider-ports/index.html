@@ -1,0 +1,1971 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/maintenance/provider-ports/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Provider ports - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#provider-ports" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Provider ports
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../station-metadata/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Metadata
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../providers/ba_fhmzbih/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/camels-us/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worked Example
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development-conventions/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ba_fhmzbih/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bosnia and Herzegovina (AVP Sava)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/br_ana/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brazil (ANA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ca_eccc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canada (ECCC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/cz_chmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (Hub'Eau)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (HydroPortail)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Japan (MLIT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/lt_lhmt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lithuania (LHMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/no_nve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/pl_imgw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poland (IMGW-PIB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Switzerland (FOEN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/th_thaiwater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thailand (ThaiWater)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/usgs_nwis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    United States (USGS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing Useful Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Stores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verification Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#progress-through-evidence-backed-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Progress through evidence-backed steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keep-one-continuing-research-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keep one continuing research record
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resolve-or-expose-missing-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolve or expose missing information
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finish-with-a-defensible-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finish with a defensible result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provider-steps-and-their-code-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider steps and their code targets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Provider steps and their code targets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-source-scope-and-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Source, scope and access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-station-catalogue-and-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Station catalogue and metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-series-identity-and-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Series identity and physical meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-retrieval-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Retrieval behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-provider-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Provider integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-user-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. User documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Provider ports
+
+Turn a source publication into a faithful RivRetrieve integration. Use the code
+requirements to guide research: the catalogue supports selection, provider code
+requests and reads source data, and the shared engine performs common operations.
+
+Start from the relevant provider issue and current repository state. Treat earlier
+research and third-party adapters as leads to recheck, not authority for source
+meaning or current access. Identify the intended scope and the next unresolved
+step before investigating. Use the [steps below](#provider-steps-and-their-code-targets) for concrete outcomes
+and code references; read the references needed for the current work.
+
+## Progress through evidence-backed steps
+
+1. Establish source, scope and access.
+2. Establish the station catalogue and metadata.
+3. Establish series identity and physical meaning.
+4. Establish retrieval behavior.
+5. Integrate the supported scope with the shared engine.
+6. Verify the complete integration against genuine source evidence.
+7. Document supported behavior and limitations for users.
+
+These steps organize progressive research and meaningful delivery outcomes. When
+planning a Program, use them as candidate Effort boundaries, adapting them to the
+actual provider rather than inventing work. Do not research or implement the whole
+port simply because this guide was read. Follow the user&#39;s requested scope and
+existing discovery, planning and review workflows. Reading this guide does not
+publish issues, contact an agency or authorize implementation.
+
+Research thoroughly enough to defend each adopted claim. Recheck documentation,
+representative responses and relevant exceptions. Validate apparent inconsistencies
+before escalating them. Later findings can reopen an earlier conclusion. Evidence
+retention, tests and documentation develop throughout, not only in the final steps.
+
+## Keep one continuing research record
+
+Use the private [verification-evidence repository](https://github.com/RivRetrieve/verification-evidence)
+for the provider&#39;s continuing research document and evidence. Find an existing
+record before creating another. Keep established findings, dated checks, supporting
+references, corrections, correspondence and open questions together across Efforts.
+For each material unknown, explain which implementation or user claim it affects.
+
+Use the archive&#39;s existing intake and verification process for original material.
+The research document connects evidence; it does not replace original responses or
+certify a claim by recording it. Public issues carry safe summaries and handoffs.
+Keep private material and correspondence out of public code, issues and artifacts.
+Private storage does not establish permission to retain or disclose source material.
+
+## Resolve or expose missing information
+
+Investigate material gaps and prepare focused questions for the institution. Record
+what was checked, what was asked and any answer. Obtain authorization before sending
+correspondence. Do not treat silence as confirmation or require an answer to every
+question before any independent capability can proceed.
+
+- Proceed when required facts are established.
+- Preserve unknown facts when the engine can represent them honestly.
+- Pause an affected capability when proceeding would require guessing, such as
+  assigning an unestablished quantity or unit, or claiming incomplete data is complete.
+- Distinguish a missing source fact from a limitation in the shared engine.
+
+When investigation and correspondence cannot resolve a material blocker, present
+its consequences to the maintainer. The maintainer decides whether to narrow the
+scope, deliver a truthful limited capability, defer it or abandon it. Documentation
+cannot make an unsafe interpretation acceptable.
+
+## Finish with a defensible result
+
+Account for the supported scope, evidence behind material claims, completed checks
+and remaining limitations. Use the existing [testing guide](testing.md)
+and [evidence guide](evidence.md), not a new verification
+system. Missing mandatory evidence blocks acceptance; it is not a passing check.
+Keep user documentation consistent with the delivered behavior. Stop at the requested
+handoff or review boundary.
+
+## Provider steps and their code targets
+
+Paths below lead to the shared contracts and representative implementations. Inspect
+current code before copying a pattern. A working adapter is not evidence that its
+source interpretations apply to another publication.
+
+### 1. Source, scope and access
+
+**Build toward:** a provider declaration with the appropriate access kind,
+credentials and publication identity.
+
+Establish who measures and publishes the data, relevant products and geographical
+scope, available routes, access conditions, terms and attribution. Obtain small
+genuine examples of metadata and observations. Distinguish unavailable access from
+an empty response and from evidence that has not yet been collected.
+
+[`ProviderDeclaration`](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/registration.py)
+selects `LiveStages` for on-demand acquisition, `BulkStore` for explicit download
+and compilation, or `CatalogueOnly` for discovery without observation retrieval.
+“Live” includes historical service requests; it does not mean only current readings.
+
+**Outcome:** a justified source and integration scope, with access and terms questions
+recorded. Reachability alone does not establish permission or physical meaning.
+
+### 2. Station catalogue and metadata
+
+**Build toward:** a reproducible catalogue builder and approved packaged artifacts
+that support offline discovery.
+
+Establish station identifiers and their connection to observations, coordinates and
+reference systems, supported descriptive metadata and station-product associations.
+Check whether a field describes a station, sensor or series. Do not infer observation
+availability from a station listing or turn unknown coverage into a promise.
+
+Use the [catalogue schemas](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/catalogues/schemas.py)
+and [publication path](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/catalogues/publication.py).
+The [Lithuania builder](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/generate_catalogue.py)
+illustrates provider, product, station and station-product tables. Descriptive station
+metadata and its supporting evidence are also published through the shared path.
+
+**Outcome:** supported field mappings, catalogue coverage limits and original inputs
+needed to reproduce and verify the build. Missing optional metadata need not block
+retrieval; an unresolved station-to-observation relationship can.
+
+### 3. Series identity and physical meaning
+
+**Build toward:** definitions that connect source fields and published identities to
+RivRetrieve&#39;s physical facts without collapsing separate records.
+
+Establish quantities, native units, distinct series, frequency, statistic, time
+information, vertical references, missing-value encodings and source statuses.
+Look for parallel series and real exceptions to proposed mappings. Do not interpret
+quality codes as a ranking or infer a daily mean from cadence or a field name alone.
+
+[`SourceIdentity`, `PhysicalFacts` and admission](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/source_series.py)
+keep identity and physical interpretation separate.
+[`SeriesMapping`](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/provider_series.py)
+can share supported mappings between catalogue publication and parsing; it is not
+a substitute for response-specific identities when the source requires them.
+
+**Outcome:** each adopted fact has supporting evidence, and remaining unknowns are
+explicit. Admission requires established quantity, source unit and valid conversion.
+Unknown time zone, temporal support or datum need not prohibit retrieval, but cannot
+satisfy filters or claims requiring those facts.
+
+### 4. Retrieval behavior
+
+**Build toward:** request rules and source acquisition that do not silently lose data.
+
+Establish selectors, date boundaries, pagination, response caps, request limits,
+empty-response meanings, errors, rolling retention and revisions. Check that a
+successful response actually supports the claimed coverage. Preserve differences
+between published nulls, absent rows, empty answers and failed requests.
+
+Providers declare windows through [engine types](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/engine.py).
+The [shared planner](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/window_planning.py)
+prepares bounds; providers consume those bounds without shifting them.
+[Provider stages](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/driver.py) exchange bytes,
+source-call origins, rows, identities, inventories, outcomes and issues.
+The [Lithuania fetcher](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/fetch.py)
+is a concrete example, not a universal source policy.
+
+**Outcome:** a defensible acquisition contract, including failure and completeness
+limits. Identify necessary shared-engine changes rather than hiding them in source code.
+
+### 5. Provider integration
+
+**Build toward:** the agreed scope working through the public discovery and retrieval APIs.
+
+Connect catalogue artifacts, configuration, request declarations, fetch/parse stages
+or bulk download/compile operations, and the provider declaration. Start with a
+representative end-to-end path and extend to the agreed products and real source
+differences. Develop focused tests alongside implementation. Return to research when
+code would otherwise encode an unsupported assumption.
+
+The [declaration example](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/declaration.py)
+and [manifest](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/provider_manifest.py) show
+registration. The [parser example](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/parse.py)
+shows native parsing connected to source-series mappings.
+[Canada&#39;s declaration](https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/ca_eccc/declaration.py)
+shows the bulk alternative. Reuse shared conversion, clipping, assembly and storage.
+
+**Outcome:** working provider behavior, including supported source failures alongside
+independent successful results. Registration alone is not a completed provider.
+
+### 6. Verification
+
+**Build toward:** evidence that both the code behavior and the adopted source meanings
+are correct within the stated scope.
+
+Extend shared contracts and the [all-provider catalogue rebuild](https://github.com/RivRetrieve/RivRetrieve/blob/main/tests/test_catalogue_origin_certification.py).
+Use genuine retained responses for distinct supported routes and independently
+established expected results. Check identities, timestamps and values together.
+Verify relevant cache/store behavior, catalogue lineage and distribution contents.
+
+Follow the [testing](testing.md) and
+[evidence](evidence.md) guides. The private archive
+owns intake, retained inputs and source-certification tooling. Review exact code
+revisions before execution with private evidence. Synthetic tests, replay, derived
+rebuilds and live checks establish different things; none silently replaces another.
+
+**Outcome:** an account of completed checks, exact supporting evidence and remaining
+limits. Missing mandatory genuine inputs block acceptance.
+
+### 7. User documentation
+
+**Build toward:** a provider page that explains the delivered capability with a
+verified practical example.
+
+Explain who publishes the data, what users can retrieve, access requirements, source
+series distinctions, time and units, availability limits, terms and unresolved facts
+that affect interpretation. State consequences clearly rather than publishing the
+whole investigation. Keep detailed research and correspondence in the private record.
+
+Follow [documentation guidance](../AGENTS.md) and use existing
+[provider pages](../providers) for scope. Link general usage rather
+than repeat it. Do not present a successful example as proof of continuous coverage.
+
+**Outcome:** users can understand the result and its limits without reconstructing
+the investigation. Documentation and implemented behavior agree.
+</textarea>
+
+<h1 id="provider-ports">Provider ports</h1>
+<p>Turn a source publication into a faithful RivRetrieve integration. Use the code
+requirements to guide research: the catalogue supports selection, provider code
+requests and reads source data, and the shared engine performs common operations.</p>
+<p>Start from the relevant provider issue and current repository state. Treat earlier
+research and third-party adapters as leads to recheck, not authority for source
+meaning or current access. Identify the intended scope and the next unresolved
+step before investigating. Use the <a href="#provider-steps-and-their-code-targets">steps below</a> for concrete outcomes
+and code references; read the references needed for the current work.</p>
+<h2 id="progress-through-evidence-backed-steps">Progress through evidence-backed steps</h2>
+<ol>
+<li>Establish source, scope and access.</li>
+<li>Establish the station catalogue and metadata.</li>
+<li>Establish series identity and physical meaning.</li>
+<li>Establish retrieval behavior.</li>
+<li>Integrate the supported scope with the shared engine.</li>
+<li>Verify the complete integration against genuine source evidence.</li>
+<li>Document supported behavior and limitations for users.</li>
+</ol>
+<p>These steps organize progressive research and meaningful delivery outcomes. When
+planning a Program, use them as candidate Effort boundaries, adapting them to the
+actual provider rather than inventing work. Do not research or implement the whole
+port simply because this guide was read. Follow the user's requested scope and
+existing discovery, planning and review workflows. Reading this guide does not
+publish issues, contact an agency or authorize implementation.</p>
+<p>Research thoroughly enough to defend each adopted claim. Recheck documentation,
+representative responses and relevant exceptions. Validate apparent inconsistencies
+before escalating them. Later findings can reopen an earlier conclusion. Evidence
+retention, tests and documentation develop throughout, not only in the final steps.</p>
+<h2 id="keep-one-continuing-research-record">Keep one continuing research record</h2>
+<p>Use the private <a href="https://github.com/RivRetrieve/verification-evidence">verification-evidence repository</a>
+for the provider's continuing research document and evidence. Find an existing
+record before creating another. Keep established findings, dated checks, supporting
+references, corrections, correspondence and open questions together across Efforts.
+For each material unknown, explain which implementation or user claim it affects.</p>
+<p>Use the archive's existing intake and verification process for original material.
+The research document connects evidence; it does not replace original responses or
+certify a claim by recording it. Public issues carry safe summaries and handoffs.
+Keep private material and correspondence out of public code, issues and artifacts.
+Private storage does not establish permission to retain or disclose source material.</p>
+<h2 id="resolve-or-expose-missing-information">Resolve or expose missing information</h2>
+<p>Investigate material gaps and prepare focused questions for the institution. Record
+what was checked, what was asked and any answer. Obtain authorization before sending
+correspondence. Do not treat silence as confirmation or require an answer to every
+question before any independent capability can proceed.</p>
+<ul>
+<li>Proceed when required facts are established.</li>
+<li>Preserve unknown facts when the engine can represent them honestly.</li>
+<li>Pause an affected capability when proceeding would require guessing, such as
+  assigning an unestablished quantity or unit, or claiming incomplete data is complete.</li>
+<li>Distinguish a missing source fact from a limitation in the shared engine.</li>
+</ul>
+<p>When investigation and correspondence cannot resolve a material blocker, present
+its consequences to the maintainer. The maintainer decides whether to narrow the
+scope, deliver a truthful limited capability, defer it or abandon it. Documentation
+cannot make an unsafe interpretation acceptable.</p>
+<h2 id="finish-with-a-defensible-result">Finish with a defensible result</h2>
+<p>Account for the supported scope, evidence behind material claims, completed checks
+and remaining limitations. Use the existing <a href="../testing/">testing guide</a>
+and <a href="../evidence/">evidence guide</a>, not a new verification
+system. Missing mandatory evidence blocks acceptance; it is not a passing check.
+Keep user documentation consistent with the delivered behavior. Stop at the requested
+handoff or review boundary.</p>
+<h2 id="provider-steps-and-their-code-targets">Provider steps and their code targets</h2>
+<p>Paths below lead to the shared contracts and representative implementations. Inspect
+current code before copying a pattern. A working adapter is not evidence that its
+source interpretations apply to another publication.</p>
+<h3 id="1-source-scope-and-access">1. Source, scope and access</h3>
+<p><strong>Build toward:</strong> a provider declaration with the appropriate access kind,
+credentials and publication identity.</p>
+<p>Establish who measures and publishes the data, relevant products and geographical
+scope, available routes, access conditions, terms and attribution. Obtain small
+genuine examples of metadata and observations. Distinguish unavailable access from
+an empty response and from evidence that has not yet been collected.</p>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/registration.py"><code>ProviderDeclaration</code></a>
+selects <code>LiveStages</code> for on-demand acquisition, <code>BulkStore</code> for explicit download
+and compilation, or <code>CatalogueOnly</code> for discovery without observation retrieval.
+“Live” includes historical service requests; it does not mean only current readings.</p>
+<p><strong>Outcome:</strong> a justified source and integration scope, with access and terms questions
+recorded. Reachability alone does not establish permission or physical meaning.</p>
+<h3 id="2-station-catalogue-and-metadata">2. Station catalogue and metadata</h3>
+<p><strong>Build toward:</strong> a reproducible catalogue builder and approved packaged artifacts
+that support offline discovery.</p>
+<p>Establish station identifiers and their connection to observations, coordinates and
+reference systems, supported descriptive metadata and station-product associations.
+Check whether a field describes a station, sensor or series. Do not infer observation
+availability from a station listing or turn unknown coverage into a promise.</p>
+<p>Use the <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/catalogues/schemas.py">catalogue schemas</a>
+and <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/catalogues/publication.py">publication path</a>.
+The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/generate_catalogue.py">Lithuania builder</a>
+illustrates provider, product, station and station-product tables. Descriptive station
+metadata and its supporting evidence are also published through the shared path.</p>
+<p><strong>Outcome:</strong> supported field mappings, catalogue coverage limits and original inputs
+needed to reproduce and verify the build. Missing optional metadata need not block
+retrieval; an unresolved station-to-observation relationship can.</p>
+<h3 id="3-series-identity-and-physical-meaning">3. Series identity and physical meaning</h3>
+<p><strong>Build toward:</strong> definitions that connect source fields and published identities to
+RivRetrieve's physical facts without collapsing separate records.</p>
+<p>Establish quantities, native units, distinct series, frequency, statistic, time
+information, vertical references, missing-value encodings and source statuses.
+Look for parallel series and real exceptions to proposed mappings. Do not interpret
+quality codes as a ranking or infer a daily mean from cadence or a field name alone.</p>
+<p><a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/source_series.py"><code>SourceIdentity</code>, <code>PhysicalFacts</code> and admission</a>
+keep identity and physical interpretation separate.
+<a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/provider_series.py"><code>SeriesMapping</code></a>
+can share supported mappings between catalogue publication and parsing; it is not
+a substitute for response-specific identities when the source requires them.</p>
+<p><strong>Outcome:</strong> each adopted fact has supporting evidence, and remaining unknowns are
+explicit. Admission requires established quantity, source unit and valid conversion.
+Unknown time zone, temporal support or datum need not prohibit retrieval, but cannot
+satisfy filters or claims requiring those facts.</p>
+<h3 id="4-retrieval-behavior">4. Retrieval behavior</h3>
+<p><strong>Build toward:</strong> request rules and source acquisition that do not silently lose data.</p>
+<p>Establish selectors, date boundaries, pagination, response caps, request limits,
+empty-response meanings, errors, rolling retention and revisions. Check that a
+successful response actually supports the claimed coverage. Preserve differences
+between published nulls, absent rows, empty answers and failed requests.</p>
+<p>Providers declare windows through <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/engine.py">engine types</a>.
+The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/window_planning.py">shared planner</a>
+prepares bounds; providers consume those bounds without shifting them.
+<a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/driver.py">Provider stages</a> exchange bytes,
+source-call origins, rows, identities, inventories, outcomes and issues.
+The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/fetch.py">Lithuania fetcher</a>
+is a concrete example, not a universal source policy.</p>
+<p><strong>Outcome:</strong> a defensible acquisition contract, including failure and completeness
+limits. Identify necessary shared-engine changes rather than hiding them in source code.</p>
+<h3 id="5-provider-integration">5. Provider integration</h3>
+<p><strong>Build toward:</strong> the agreed scope working through the public discovery and retrieval APIs.</p>
+<p>Connect catalogue artifacts, configuration, request declarations, fetch/parse stages
+or bulk download/compile operations, and the provider declaration. Start with a
+representative end-to-end path and extend to the agreed products and real source
+differences. Develop focused tests alongside implementation. Return to research when
+code would otherwise encode an unsupported assumption.</p>
+<p>The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/declaration.py">declaration example</a>
+and <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/provider_manifest.py">manifest</a> show
+registration. The <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/lt_lhmt/parse.py">parser example</a>
+shows native parsing connected to source-series mappings.
+<a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/src/rivretrieve/_internal/providers/ca_eccc/declaration.py">Canada's declaration</a>
+shows the bulk alternative. Reuse shared conversion, clipping, assembly and storage.</p>
+<p><strong>Outcome:</strong> working provider behavior, including supported source failures alongside
+independent successful results. Registration alone is not a completed provider.</p>
+<h3 id="6-verification">6. Verification</h3>
+<p><strong>Build toward:</strong> evidence that both the code behavior and the adopted source meanings
+are correct within the stated scope.</p>
+<p>Extend shared contracts and the <a href="https://github.com/RivRetrieve/RivRetrieve/blob/main/tests/test_catalogue_origin_certification.py">all-provider catalogue rebuild</a>.
+Use genuine retained responses for distinct supported routes and independently
+established expected results. Check identities, timestamps and values together.
+Verify relevant cache/store behavior, catalogue lineage and distribution contents.</p>
+<p>Follow the <a href="../testing/">testing</a> and
+<a href="../evidence/">evidence</a> guides. The private archive
+owns intake, retained inputs and source-certification tooling. Review exact code
+revisions before execution with private evidence. Synthetic tests, replay, derived
+rebuilds and live checks establish different things; none silently replaces another.</p>
+<p><strong>Outcome:</strong> an account of completed checks, exact supporting evidence and remaining
+limits. Missing mandatory genuine inputs block acceptance.</p>
+<h3 id="7-user-documentation">7. User documentation</h3>
+<p><strong>Build toward:</strong> a provider page that explains the delivered capability with a
+verified practical example.</p>
+<p>Explain who publishes the data, what users can retrieve, access requirements, source
+series distinctions, time and units, availability limits, terms and unresolved facts
+that affect interpretation. State consequences clearly rather than publishing the
+whole investigation. Keep detailed research and correspondence in the private record.</p>
+<p>Follow <a href="../../AGENTS/">documentation guidance</a> and use existing
+<a href="../providers">provider pages</a> for scope. Link general usage rather
+than repeat it. Do not present a successful example as proof of continuous coverage.</p>
+<p><strong>Outcome:</strong> users can understand the result and its limits without reconstructing
+the investigation. Documentation and implemented behavior agree.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

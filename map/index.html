@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#interactive-station-map" class="md-skip">
+        <a href="#station-map" class="md-skip">
           Skip to content
         </a>
       
@@ -567,24 +567,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Station Map
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -601,36 +583,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#supported-providers-on-the-map" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported Providers on the Map
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -1420,25 +1372,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#supported-providers-on-the-map" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported Providers on the Map
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1457,171 +1390,13 @@
   <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
 </button>
 
-<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Interactive Station Map
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Station Map
 
-Explore **78,175** river-gauge catalogue entries across 14 providers and 13 countries in RivRetrieve.
-
-Use the controls on the top-right to:
-
-- **Filter by provider / country**: Toggle specific agencies and networks on and off.
-- **Search by gauge ID**: Instantly filter stations matching your gauge identifier.
-- **Inspect stations**: Click any pin or circle to view its coordinates, CRS status, and copy a Python selection snippet for [`rivretrieve.find()`](reference.md#find).
-
-&lt;iframe src=&#34;../assets/stations_map.html&#34; width=&#34;100%&#34; height=&#34;720px&#34; style=&#34;border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-top: 1rem; margin-bottom: 1.5rem;&#34;&gt;&lt;/iframe&gt;
-
-!!! tip &#34;Full Window View&#34;
-    Want more screen real estate? You can also open the [interactive map in a full browser tab](assets/stations_map.html){:target=&#34;_blank&#34;}.
-
----
-
-## Supported Providers on the Map
-
-| Country | Agency | Provider ID | Catalogued Stations |
-|---|---|---|---:|
-| United States | U.S. Geological Survey (USGS) | `usgs_nwis` | 26,258 |
-| Brazil | Agência Nacional de Águas e Saneamento Básico (ANA) | `br_ana` | 17,914 |
-| Canada | Environment and Climate Change Canada (ECCC) | `ca_eccc` | 8,057 |
-| France | Hub&#39;Eau | `fr_hubeau` | 7,347 |
-| France | HydroPortail | `fr_hydroportail` | 6,409 |
-| Norway | Norwegian Water Resources and Energy Directorate (NVE) | `no_nve` | 4,902 |
-| Poland | Institute of Meteorology and Water Management (IMGW) | `pl_imgw` | 1,301 |
-| Japan | Ministry of Land, Infrastructure, Transport and Tourism (MLIT) | `jp_mlit` | 1,023 |
-| Czechia | Czech Hydrometeorological Institute (CHMI) | `cz_chmi` | 831 |
-| Thailand | Hydro-Informatics Institute (HII), ThaiWater | `th_thaiwater` | 825 |
-| Switzerland | Federal Office for the Environment (FOEN) | `ch_foen` | 246 |
-| Lithuania | Lithuanian Hydrometeorological Service (LHMT) | `lt_lhmt` | 97 |
-| Bosnia and Herzegovina | Agencija za vodno područje rijeke Save (AVP Sava) | `ba_fhmzbih` | 60 |
-| South Africa | Department of Water and Sanitation (DWS) | `za_dws` | 2,905 |
-
-Station counts describe packaged catalogue entries, not continuous data coverage or
-unique physical sites across providers. South Africa supports catalogue discovery
-only. A station on the map need not have observations for a requested quantity or
-period. See [provider capabilities](reference.md#shipped-software-capabilities).
-
-Markers use catalogue coordinates. Unknown-CRS coordinates are displayed as if they
-used EPSG:4326; that display assumption does not establish their reference system.
-Use the map for exploration, not coordinate certification.
+&lt;iframe id=&#34;station-explorer&#34; title=&#34;Station catalogue and Python request builder&#34; src=&#34;../assets/station-explorer/index.html&#34;&gt;&lt;/iframe&gt;
 </textarea>
 
-<h1 id="interactive-station-map">Interactive Station Map</h1>
-<p>Explore <strong>78,175</strong> river-gauge catalogue entries across 14 providers and 13 countries in RivRetrieve.</p>
-<p>Use the controls on the top-right to:</p>
-<ul>
-<li><strong>Filter by provider / country</strong>: Toggle specific agencies and networks on and off.</li>
-<li><strong>Search by gauge ID</strong>: Instantly filter stations matching your gauge identifier.</li>
-<li><strong>Inspect stations</strong>: Click any pin or circle to view its coordinates, CRS status, and copy a Python selection snippet for <a href="../reference/#find"><code>rivretrieve.find()</code></a>.</li>
-</ul>
-<iframe src="../assets/stations_map.html" width="100%" height="720px" style="border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-top: 1rem; margin-bottom: 1.5rem;"></iframe>
-
-<div class="admonition tip">
-<p class="admonition-title">Full Window View</p>
-<p>Want more screen real estate? You can also open the <a href="../assets/stations_map.html" target="_blank">interactive map in a full browser tab</a>.</p>
-</div>
-<hr />
-<h2 id="supported-providers-on-the-map">Supported Providers on the Map</h2>
-<table>
-<thead>
-<tr>
-<th>Country</th>
-<th>Agency</th>
-<th>Provider ID</th>
-<th style="text-align: right;">Catalogued Stations</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>United States</td>
-<td>U.S. Geological Survey (USGS)</td>
-<td><code>usgs_nwis</code></td>
-<td style="text-align: right;">26,258</td>
-</tr>
-<tr>
-<td>Brazil</td>
-<td>Agência Nacional de Águas e Saneamento Básico (ANA)</td>
-<td><code>br_ana</code></td>
-<td style="text-align: right;">17,914</td>
-</tr>
-<tr>
-<td>Canada</td>
-<td>Environment and Climate Change Canada (ECCC)</td>
-<td><code>ca_eccc</code></td>
-<td style="text-align: right;">8,057</td>
-</tr>
-<tr>
-<td>France</td>
-<td>Hub'Eau</td>
-<td><code>fr_hubeau</code></td>
-<td style="text-align: right;">7,347</td>
-</tr>
-<tr>
-<td>France</td>
-<td>HydroPortail</td>
-<td><code>fr_hydroportail</code></td>
-<td style="text-align: right;">6,409</td>
-</tr>
-<tr>
-<td>Norway</td>
-<td>Norwegian Water Resources and Energy Directorate (NVE)</td>
-<td><code>no_nve</code></td>
-<td style="text-align: right;">4,902</td>
-</tr>
-<tr>
-<td>Poland</td>
-<td>Institute of Meteorology and Water Management (IMGW)</td>
-<td><code>pl_imgw</code></td>
-<td style="text-align: right;">1,301</td>
-</tr>
-<tr>
-<td>Japan</td>
-<td>Ministry of Land, Infrastructure, Transport and Tourism (MLIT)</td>
-<td><code>jp_mlit</code></td>
-<td style="text-align: right;">1,023</td>
-</tr>
-<tr>
-<td>Czechia</td>
-<td>Czech Hydrometeorological Institute (CHMI)</td>
-<td><code>cz_chmi</code></td>
-<td style="text-align: right;">831</td>
-</tr>
-<tr>
-<td>Thailand</td>
-<td>Hydro-Informatics Institute (HII), ThaiWater</td>
-<td><code>th_thaiwater</code></td>
-<td style="text-align: right;">825</td>
-</tr>
-<tr>
-<td>Switzerland</td>
-<td>Federal Office for the Environment (FOEN)</td>
-<td><code>ch_foen</code></td>
-<td style="text-align: right;">246</td>
-</tr>
-<tr>
-<td>Lithuania</td>
-<td>Lithuanian Hydrometeorological Service (LHMT)</td>
-<td><code>lt_lhmt</code></td>
-<td style="text-align: right;">97</td>
-</tr>
-<tr>
-<td>Bosnia and Herzegovina</td>
-<td>Agencija za vodno područje rijeke Save (AVP Sava)</td>
-<td><code>ba_fhmzbih</code></td>
-<td style="text-align: right;">60</td>
-</tr>
-<tr>
-<td>South Africa</td>
-<td>Department of Water and Sanitation (DWS)</td>
-<td><code>za_dws</code></td>
-<td style="text-align: right;">2,905</td>
-</tr>
-</tbody>
-</table>
-<p>Station counts describe packaged catalogue entries, not continuous data coverage or
-unique physical sites across providers. South Africa supports catalogue discovery
-only. A station on the map need not have observations for a requested quantity or
-period. See <a href="../reference/#shipped-software-capabilities">provider capabilities</a>.</p>
-<p>Markers use catalogue coordinates. Unknown-CRS coordinates are displayed as if they
-used EPSG:4326; that display assumption does not establish their reference system.
-Use the map for exploration, not coordinate certification.</p>
+<h1 id="station-map">Station Map</h1>
+<iframe id="station-explorer" title="Station catalogue and Python request builder" src="../assets/station-explorer/index.html"></iframe>
 
 
 
