@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -726,6 +782,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -734,6 +818,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -874,6 +1014,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1580,11 +1748,18 @@
 | Country | United States, 50 states and District of Columbia |
 | Published by | U.S. Geological Survey, through Water Data for the Nation |
 | Quantities | Discharge and stage |
-| Selectable stations | 26,201 in the packaged catalogue. Availability depends on quantity and period |
+| Selectable stations | 29,387 in the packaged catalogue. Availability depends on quantity and period |
 | Station metadata | Station name, drainage area and elevation. See [Fields by provider](../station-metadata.md#fields-by-provider) |
 | Credentials | No personal credentials required for modest public requests; optional `USGS_API_KEY` |
 | Terms stated by USGS | USGS-produced data are in the U.S. Public Domain |
 | Agency documentation | [Water Data APIs](https://api.waterdata.usgs.gov/), [Water Data for the Nation](https://waterdata.usgs.gov/) |
+
+The catalogue includes supported daily and continuous series across site types,
+including non-stream sites and stations with only continuous series. It also
+preserves previously registered stations, including 11
+Canadian stations with daily discharge. Series retained from historical metadata
+keep their published IDs; their presence does not establish current observations.
+Stations without coordinates remain selectable by ID but do not appear on maps.
 
 Retrieve one week of published daily mean discharge at station `07374000`,
 Mississippi River at Baton Rouge, Louisiana:
@@ -1647,7 +1822,7 @@ RivRetrieve reads the daily and continuous collections of the
 
 ## What you can retrieve
 
-| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+| Quantity filter | Source collection | Frequency | Statistic | Source unit | Returned unit |
 |---|---|---|---|---|---|
 | `discharge` | Daily values | Daily | Mean | ft³/s | m³/s |
 | `stage` | Daily values | Daily | Mean, maximum or minimum | ft | m |
@@ -1662,11 +1837,20 @@ level without an established reference.
 For daily values, use `frequency=&#34;daily&#34;` and `statistic=&#34;mean&#34;`, `&#34;max&#34;` or
 `&#34;min&#34;` as applicable. For established instantaneous observations, use
 `statistic=&#34;instantaneous&#34;` without a frequency filter. Continuous publication
-does not establish a fixed sampling frequency. Some continuous series have unknown statistic and do not match
-that instantaneous filter. Water temperature is outside this provider&#39;s supported quantities.
+does not establish a fixed sampling interval. Some continuous series have unknown
+statistic and do not match that instantaneous filter. Water temperature is outside
+this provider&#39;s supported quantities.
 
 A listed station does not guarantee data for every quantity or requested period.
 The catalogue is a recorded snapshot, not a live census of operating gauges.
+
+For example, USGS lists [Discovery Farms Waterway Number 2 near Cleveland,
+Wisconsin](https://waterdata.usgs.gov/monitoring-location/USGS-435444087462300/)
+(station `435444087462300`) as “Field, Pasture, Orchard, or Nursery”. This
+agricultural-monitoring site publishes daily mean discharge and is selectable
+through RivRetrieve. Published discharge is not necessarily river streamflow or
+suitable for a particular study; consider the monitoring setting when choosing
+stations.
 
 ## Published time series
 
@@ -1676,9 +1860,9 @@ retrieval. These IDs identify individual published time series. They are not a
 provider-wide menu of processing categories or measurement methods.
 
 Most stations have one matching series for a given quantity, frequency and
-statistic. In the packaged catalogue, 575 of 26,201 selectable stations (about
-2.2%) have multiple matching series for at least one such combination. For daily
-mean discharge, this occurs at 134 of 24,495 stations (about 0.55%). These counts
+statistic. In the packaged catalogue, 717 of 29,387 selectable stations (about
+2.4%) have multiple matching series for at least one such combination. For daily
+mean discharge, this occurs at 147 of 25,343 stations (about 0.58%). These counts
 do not establish overlapping observations or current availability. A populated
 `variant` field alone does not mean that alternatives exist.
 
@@ -1761,13 +1945,47 @@ A source timestamp ending in `Z` has `time_zone=&#34;+00:00&#34;`. Daily dates h
 `time_zone=&#34;unknown&#34;`, as in the first example. RivRetrieve does not infer a
 station&#39;s zone or the bounds of a daily mean from metadata dates.
 
+RivRetrieve splits continuous requests into partitions of at most 365 days. This
+is request planning, not a retention limit or a proven maximum window accepted
+by USGS. See [Usage](../usage.md#time-labels-and-request-windows) for request-window behavior.
+
 USGS&#39;s [Provisional Data Statement](https://waterdata.usgs.gov/provisional-data-statement/)
 warns that provisional information is subject to revision, including substantial
-changes after field inspections and measurements. RivRetrieve does not attach
-source approval or qualifier fields to the returned observation table and does
-not assign a quality judgement. Successful retrieval does not mean values are
-approved. Retain source material with [receipts](../usage.md#receipts-optional)
-when those source fields matter.
+changes after field inspections and measurements. RivRetrieve does not assign a
+quality judgement or filter observations by approval status. Successful retrieval
+does not mean values are approved.
+
+RivRetrieve preserves source approval and qualifier fields as attached
+observation annotations so you can inspect them alongside `result.data`:
+
+- `usgs_nwis.daily`: `approval_status` (`String`) and `qualifier` (`List(String)`).
+- `usgs_nwis.continuous`: `approval_status` (`String`), `qualifier`
+  (`List(String)`), and `method_category` (`String`).
+
+Inspect the field catalog on `result` and project those columns onto the daily
+discharge rows fetched above:
+
+```python
+print(rr.annotations(result).select(&#34;schema&#34;, &#34;name&#34;, &#34;dtype&#34;).rows())
+
+annotated = result.to_polars(annotations=True)
+print(annotated.select(&#34;approval_status&#34;, &#34;qualifier&#34;).head(2).rows())
+```
+
+Output:
+
+```text
+[(&#39;usgs_nwis.daily&#39;, &#39;approval_status&#39;, &#39;String&#39;), (&#39;usgs_nwis.daily&#39;, &#39;qualifier&#39;, &#39;List(String)&#39;)]
+[(&#39;Approved&#39;, [&#39;ESTIMATED&#39;]), (&#39;Approved&#39;, [&#39;ESTIMATED&#39;])]
+```
+
+Pass `annotations=&#34;approval_status&#34;` to `result.to_polars(...)` or
+`result.to_pandas(...)` when you only want specific columns, or call
+`rr.annotations(result, schema=&#34;usgs_nwis.daily&#34;)` for the native schema table.
+Series descriptions (`web_description`) remain in `rr.series(...)[&#34;description&#34;]`.
+Volatile response metadata such as feature `id` and `last_modified` are omitted
+from annotations; retain full response bytes with
+[receipts](../usage.md#receipts-optional) when raw payload records matter.
 
 A source observation with a null value remains a row with `value=null`.
 An absent observation remains absent; RivRetrieve does not fill gaps.
@@ -1796,8 +2014,9 @@ form, with the bracketed dates replaced for the data used:
 
 ## Sources
 
-Source checks and example retrievals: 2026-09-22. Counts describe the packaged
-catalogue. The [private verification archive](https://github.com/RivRetrieve/verification-evidence#readme)
+Example source recordings: 2026-09-22. Catalogue counts and documentation
+checks: 2026-11-06. Counts describe the packaged catalogue. The
+[private verification archive](https://github.com/RivRetrieve/verification-evidence#readme)
 retains the evidence, execution details and limits.
 </textarea>
 
@@ -1829,7 +2048,7 @@ retains the evidence, execution details and limits.
 </tr>
 <tr>
 <td>Selectable stations</td>
-<td>26,201 in the packaged catalogue. Availability depends on quantity and period</td>
+<td>29,387 in the packaged catalogue. Availability depends on quantity and period</td>
 </tr>
 <tr>
 <td>Station metadata</td>
@@ -1849,6 +2068,12 @@ retains the evidence, execution details and limits.
 </tr>
 </tbody>
 </table>
+<p>The catalogue includes supported daily and continuous series across site types,
+including non-stream sites and stations with only continuous series. It also
+preserves previously registered stations, including 11
+Canadian stations with daily discharge. Series retained from historical metadata
+keep their published IDs; their presence does not establish current observations.
+Stations without coordinates remain selectable by ID but do not appear on maps.</p>
 <p>Retrieve one week of published daily mean discharge at station <code>07374000</code>,
 Mississippi River at Baton Rouge, Louisiana:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
@@ -1902,7 +2127,7 @@ USGS remains the publisher of the data RivRetrieve retrieves.</p>
 <thead>
 <tr>
 <th>Quantity filter</th>
-<th>Source field / <code>variant</code></th>
+<th>Source collection</th>
 <th>Frequency</th>
 <th>Statistic</th>
 <th>Source unit</th>
@@ -1951,19 +2176,27 @@ level without an established reference.</p>
 <p>For daily values, use <code>frequency="daily"</code> and <code>statistic="mean"</code>, <code>"max"</code> or
 <code>"min"</code> as applicable. For established instantaneous observations, use
 <code>statistic="instantaneous"</code> without a frequency filter. Continuous publication
-does not establish a fixed sampling frequency. Some continuous series have unknown statistic and do not match
-that instantaneous filter. Water temperature is outside this provider's supported quantities.</p>
+does not establish a fixed sampling interval. Some continuous series have unknown
+statistic and do not match that instantaneous filter. Water temperature is outside
+this provider's supported quantities.</p>
 <p>A listed station does not guarantee data for every quantity or requested period.
 The catalogue is a recorded snapshot, not a live census of operating gauges.</p>
+<p>For example, USGS lists <a href="https://waterdata.usgs.gov/monitoring-location/USGS-435444087462300/">Discovery Farms Waterway Number 2 near Cleveland,
+Wisconsin</a>
+(station <code>435444087462300</code>) as “Field, Pasture, Orchard, or Nursery”. This
+agricultural-monitoring site publishes daily mean discharge and is selectable
+through RivRetrieve. Published discharge is not necessarily river streamflow or
+suitable for a particular study; consider the monitoring setting when choosing
+stations.</p>
 <h2 id="published-time-series">Published time series</h2>
 <p>Each published USGS time series has its own USGS time-series ID. RivRetrieve
 exposes it as <code>variant</code>, which can be passed to <code>rr.pick(..., variant=...)</code> before
 retrieval. These IDs identify individual published time series. They are not a
 provider-wide menu of processing categories or measurement methods.</p>
 <p>Most stations have one matching series for a given quantity, frequency and
-statistic. In the packaged catalogue, 575 of 26,201 selectable stations (about
-2.2%) have multiple matching series for at least one such combination. For daily
-mean discharge, this occurs at 134 of 24,495 stations (about 0.55%). These counts
+statistic. In the packaged catalogue, 717 of 29,387 selectable stations (about
+2.4%) have multiple matching series for at least one such combination. For daily
+mean discharge, this occurs at 147 of 25,343 stations (about 0.58%). These counts
 do not establish overlapping observations or current availability. A populated
 <code>variant</code> field alone does not mean that alternatives exist.</p>
 <p>Station <code>02196000</code> illustrates the less common case: two published daily mean
@@ -2041,13 +2274,39 @@ offsets. Returned <code>time</code> is timezone-naive; read it together with <co
 A source timestamp ending in <code>Z</code> has <code>time_zone="+00:00"</code>. Daily dates have
 <code>time_zone="unknown"</code>, as in the first example. RivRetrieve does not infer a
 station's zone or the bounds of a daily mean from metadata dates.</p>
+<p>RivRetrieve splits continuous requests into partitions of at most 365 days. This
+is request planning, not a retention limit or a proven maximum window accepted
+by USGS. See <a href="../../usage/#time-labels-and-request-windows">Usage</a> for request-window behavior.</p>
 <p>USGS's <a href="https://waterdata.usgs.gov/provisional-data-statement/">Provisional Data Statement</a>
 warns that provisional information is subject to revision, including substantial
-changes after field inspections and measurements. RivRetrieve does not attach
-source approval or qualifier fields to the returned observation table and does
-not assign a quality judgement. Successful retrieval does not mean values are
-approved. Retain source material with <a href="../../usage/#receipts-optional">receipts</a>
-when those source fields matter.</p>
+changes after field inspections and measurements. RivRetrieve does not assign a
+quality judgement or filter observations by approval status. Successful retrieval
+does not mean values are approved.</p>
+<p>RivRetrieve preserves source approval and qualifier fields as attached
+observation annotations so you can inspect them alongside <code>result.data</code>:</p>
+<ul>
+<li><code>usgs_nwis.daily</code>: <code>approval_status</code> (<code>String</code>) and <code>qualifier</code> (<code>List(String)</code>).</li>
+<li><code>usgs_nwis.continuous</code>: <code>approval_status</code> (<code>String</code>), <code>qualifier</code>
+  (<code>List(String)</code>), and <code>method_category</code> (<code>String</code>).</li>
+</ul>
+<p>Inspect the field catalog on <code>result</code> and project those columns onto the daily
+discharge rows fetched above:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">annotated</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">annotated</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;approval_status&quot;</span><span class="p">,</span> <span class="s2">&quot;qualifier&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[(&#39;usgs_nwis.daily&#39;, &#39;approval_status&#39;, &#39;String&#39;), (&#39;usgs_nwis.daily&#39;, &#39;qualifier&#39;, &#39;List(String)&#39;)]
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>[(&#39;Approved&#39;, [&#39;ESTIMATED&#39;]), (&#39;Approved&#39;, [&#39;ESTIMATED&#39;])]
+</span></code></pre></div>
+<p>Pass <code>annotations="approval_status"</code> to <code>result.to_polars(...)</code> or
+<code>result.to_pandas(...)</code> when you only want specific columns, or call
+<code>rr.annotations(result, schema="usgs_nwis.daily")</code> for the native schema table.
+Series descriptions (<code>web_description</code>) remain in <code>rr.series(...)["description"]</code>.
+Volatile response metadata such as feature <code>id</code> and <code>last_modified</code> are omitted
+from annotations; retain full response bytes with
+<a href="../../usage/#receipts-optional">receipts</a> when raw payload records matter.</p>
 <p>A source observation with a null value remains a row with <code>value=null</code>.
 An absent observation remains absent; RivRetrieve does not fill gaps.
 A failed request is reported separately in issues and can accompany successful
@@ -2071,8 +2330,9 @@ form, with the bracketed dates replaced for the data used:</p>
 <p>U.S. Geological Survey, [2024], USGS Water Data for the Nation: U.S. Geological Survey National Water Information System database, accessed [April 8, 2024], at https://doi.org/10.5066/F7P55KJN.</p>
 </blockquote>
 <h2 id="sources">Sources</h2>
-<p>Source checks and example retrievals: 2026-09-22. Counts describe the packaged
-catalogue. The <a href="https://github.com/RivRetrieve/verification-evidence#readme">private verification archive</a>
+<p>Example source recordings: 2026-09-22. Catalogue counts and documentation
+checks: 2026-11-06. Counts describe the packaged catalogue. The
+<a href="https://github.com/RivRetrieve/verification-evidence#readme">private verification archive</a>
 retains the evidence, execution details and limits.</p>
 
 

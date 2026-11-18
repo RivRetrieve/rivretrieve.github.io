@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -850,6 +906,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -858,6 +942,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -998,6 +1138,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1632,6 +1800,11 @@ print(preview.write_csv(), end=&#34;&#34;)
 
 print(result.data.height)
 print(sorted({(issue.severity, issue.code) for issue in result.issues}))
+print(
+    result.to_polars(annotations=True)
+    .select(&#34;Vazao_Status&#34;, &#34;Metodo_Obtencao_Vazoes&#34;)
+    .rows()
+)
 ```
 
 Output:
@@ -1642,16 +1815,17 @@ time,time_zone,value,unit
 2020-01-11T00:00:00.000000,unknown,31789.021,m3/s
 2020-01-12T00:00:00.000000,unknown,31553.52,m3/s
 3
-[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;info&#39;, &#39;source_status&#39;)]
+[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;)]
+[(&#39;1&#39;, &#39;1&#39;), (&#39;1&#39;, &#39;1&#39;), (&#39;1&#39;, &#39;1&#39;)]
 ```
 
-The three rows contain source-published daily means in m³/s. Both endpoint dates
-are included. RivRetrieve does not calculate these means.
-`cache=&#34;bypass&#34;` requests the source rather than cached observations. The example
-prints each distinct issue severity and code, rather than repeating the daily
-status notices. `source_status` reports ANA&#39;s source metadata without a quality
-judgement. The other notice means that RivRetrieve has not established a standard
-citation. Neither notice means that this observation request failed.
+The three rows contain source-published daily means in m³/s, and each row
+carries `Vazao_Status=&#39;1&#39;` and `Metodo_Obtencao_Vazoes=&#39;1&#39;` from
+`br_ana.daily_vazao`. Both endpoint dates are included. RivRetrieve does not
+calculate these means.
+`cache=&#34;bypass&#34;` requests the source rather than cached observations. The
+citation issue means that RivRetrieve has not established a standard citation,
+rather than indicating a failed observation request.
 
 The time zone is `unknown`; midnight labels do not establish the hours covered by
 each mean. Source values can change, so a later request may not reproduce this output
@@ -1781,7 +1955,7 @@ Output:
 ```text
 [(&#39;bruto&#39;,), (&#39;consistido&#39;,)]
 3 1
-[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;info&#39;, &#39;source_status&#39;), (&#39;warning&#39;, &#39;source.unresolved_inventory&#39;)]
+[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;warning&#39;, &#39;source.unresolved_inventory&#39;)]
 ```
 
 The second line shows 3 rows from 1 series: the response supplied three
@@ -1805,12 +1979,19 @@ Read those columns together. RivRetrieve has not established the source time zon
 or the interval covered by a daily mean. It does not infer either from station
 location or the midnight representation of a daily date.
 
-ANA also supplies status fields for observations. RivRetrieve retains their source
-values in informational `source_status` issues without interpreting them as a
-quality judgement. These statuses are distinct from the selectable daily consistency
-levels. Status notices can refer to the full monthly response, including dates
-outside the requested period. They are not per-row quality flags in the returned
-observation table.
+ANA also supplies verbatim status and method fields for observations. RivRetrieve
+attaches them in four observation-grain annotation schemas (`String`) without
+interpreting them as a quality ranking:
+
+- `br_ana.daily_cotas`: `Cota_Status` and `Tipo_Medicao_Cotas`.
+- `br_ana.daily_vazao`: `Vazao_Status` and `Metodo_Obtencao_Vazoes`.
+- `br_ana.telemetry_cota`: `Cota_Adotada_Status`.
+- `br_ana.telemetry_vazao`: `Vazao_Adotada_Status`.
+
+These attached fields are distinct from the selectable daily consistency levels.
+Use `rr.annotations(result)` to inspect attached schemas and
+`result.to_polars(annotations=True)` or `result.to_pandas(annotations=True)` to
+project them onto returned rows; see [Usage](../usage.md#source-annotations).
 
 A blank or null daily value remains a row with `value=null`. An absent source
 record remains absent, and a failed request is reported separately in issues.
@@ -1919,6 +2100,11 @@ discharge at station <code>15400000</code>, choosing ANA's <code>consistido</cod
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">}))</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nb">print</span><span class="p">(</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;Vazao_Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Metodo_Obtencao_Vazoes&quot;</span><span class="p">)</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="o">.</span><span class="n">rows</span><span class="p">()</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="p">)</span>
 </span></code></pre></div>
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
@@ -1926,15 +2112,16 @@ discharge at station <code>15400000</code>, choosing ANA's <code>consistido</cod
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2020-01-11T00:00:00.000000,unknown,31789.021,m3/s
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2020-01-12T00:00:00.000000,unknown,31553.52,m3/s
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>3
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;info&#39;, &#39;source_status&#39;)]
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;)]
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[(&#39;1&#39;, &#39;1&#39;), (&#39;1&#39;, &#39;1&#39;), (&#39;1&#39;, &#39;1&#39;)]
 </span></code></pre></div>
-<p>The three rows contain source-published daily means in m³/s. Both endpoint dates
-are included. RivRetrieve does not calculate these means.
-<code>cache="bypass"</code> requests the source rather than cached observations. The example
-prints each distinct issue severity and code, rather than repeating the daily
-status notices. <code>source_status</code> reports ANA's source metadata without a quality
-judgement. The other notice means that RivRetrieve has not established a standard
-citation. Neither notice means that this observation request failed.</p>
+<p>The three rows contain source-published daily means in m³/s, and each row
+carries <code>Vazao_Status='1'</code> and <code>Metodo_Obtencao_Vazoes='1'</code> from
+<code>br_ana.daily_vazao</code>. Both endpoint dates are included. RivRetrieve does not
+calculate these means.
+<code>cache="bypass"</code> requests the source rather than cached observations. The
+citation issue means that RivRetrieve has not established a standard citation,
+rather than indicating a failed observation request.</p>
 <p>The time zone is <code>unknown</code>; midnight labels do not establish the hours covered by
 each mean. Source values can change, so a later request may not reproduce this output
 exactly. Run the following examples in the same session. See
@@ -2070,7 +2257,7 @@ without narrowing it requests both and keeps their source identities separate:</
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[(&#39;bruto&#39;,), (&#39;consistido&#39;,)]
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>3 1
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;info&#39;, &#39;source_status&#39;), (&#39;warning&#39;, &#39;source.unresolved_inventory&#39;)]
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;), (&#39;warning&#39;, &#39;source.unresolved_inventory&#39;)]
 </span></code></pre></div>
 <p>The second line shows 3 rows from 1 series: the response supplied three
 <code>consistido</code> observations and no <code>bruto</code> observations.
@@ -2089,12 +2276,19 @@ and an issue reports that limitation rather than substituting observations.</p>
 Read those columns together. RivRetrieve has not established the source time zone
 or the interval covered by a daily mean. It does not infer either from station
 location or the midnight representation of a daily date.</p>
-<p>ANA also supplies status fields for observations. RivRetrieve retains their source
-values in informational <code>source_status</code> issues without interpreting them as a
-quality judgement. These statuses are distinct from the selectable daily consistency
-levels. Status notices can refer to the full monthly response, including dates
-outside the requested period. They are not per-row quality flags in the returned
-observation table.</p>
+<p>ANA also supplies verbatim status and method fields for observations. RivRetrieve
+attaches them in four observation-grain annotation schemas (<code>String</code>) without
+interpreting them as a quality ranking:</p>
+<ul>
+<li><code>br_ana.daily_cotas</code>: <code>Cota_Status</code> and <code>Tipo_Medicao_Cotas</code>.</li>
+<li><code>br_ana.daily_vazao</code>: <code>Vazao_Status</code> and <code>Metodo_Obtencao_Vazoes</code>.</li>
+<li><code>br_ana.telemetry_cota</code>: <code>Cota_Adotada_Status</code>.</li>
+<li><code>br_ana.telemetry_vazao</code>: <code>Vazao_Adotada_Status</code>.</li>
+</ul>
+<p>These attached fields are distinct from the selectable daily consistency levels.
+Use <code>rr.annotations(result)</code> to inspect attached schemas and
+<code>result.to_polars(annotations=True)</code> or <code>result.to_pandas(annotations=True)</code> to
+project them onto returned rows; see <a href="../../usage/#source-annotations">Usage</a>.</p>
 <p>A blank or null daily value remains a row with <code>value=null</code>. An absent source
 record remains absent, and a failed request is reported separately in issues.
 RivRetrieve does not fill gaps. Check <a href="../../usage/#issues">issues</a> before interpreting

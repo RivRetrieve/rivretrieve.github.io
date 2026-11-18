@@ -16,7 +16,7 @@
         <link rel="prev" href="../lt_lhmt/">
       
       
-        <link rel="next" href="../pl_imgw/">
+        <link rel="next" href="../pe_senamhi/">
       
       
         
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -726,6 +782,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -734,6 +818,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -1006,6 +1146,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1630,8 +1798,8 @@ preview = result.data.select(&#34;time&#34;, &#34;time_zone&#34;, &#34;value&#34
 print(preview.write_csv(float_precision=3), end=&#34;&#34;)
 
 print(result.data.height)
-for issue in result.issues:
-    print(f&#34;{issue.severity}: {issue.message}&#34;)
+print(rr.annotations(result).select(&#34;schema&#34;, &#34;name&#34;, &#34;dtype&#34;).rows())
+print(result.to_polars(annotations=True).select(&#34;quality&#34;, &#34;correction&#34;).head(3).rows())
 ```
 
 Output:
@@ -1642,17 +1810,18 @@ time,time_zone,value,unit
 2024-01-02T11:00:00.000000,+00:00,415.396,m3/s
 2024-01-03T11:00:00.000000,+00:00,444.500,m3/s
 7
-info: no_nve published source quality code 2 without RivRetrieve interpretation
-info: no_nve published source correction code 0 without RivRetrieve interpretation
+[(&#39;no_nve.observations&#39;, &#39;quality&#39;, &#39;Int64&#39;), (&#39;no_nve.observations&#39;, &#39;correction&#39;, &#39;Int64&#39;)]
+[(2, 0), (2, 0), (2, 0)]
 ```
 
 The request returned seven daily means in m³/s. The preview shows three values
 rounded to three decimal places. Both endpoint dates are included. RivRetrieve
 reads the published means; it does not calculate them from more frequent observations.
-The two informational messages report source metadata, not retrieval problems.
-NVE calls quality code `2` **PrimaryControlled** and correction code `0` **No changes**.
-These are NVE’s descriptions of the observations, not a RivRetrieve quality
-judgement. They are separate from the series version, which is `1` in this example.
+The annotation columns preserve HydAPI&#39;s per-observation integers verbatim: NVE
+calls quality code `2` **PrimaryControlled** and correction code `0` **No
+changes**. These are NVE’s descriptions of the observations, not a RivRetrieve
+quality judgement. They are separate from the series version, which is `1` in
+this example.
 
 `cache=&#34;bypass&#34;` requests HydAPI rather than a local cache. This output was checked
 on 2026-09-23. NVE can revise historical observations, so later retrievals may
@@ -1795,13 +1964,15 @@ at 11:00 UTC. That clock label does not establish the averaging interval or its
 start and end. NVE&#39;s documentation gives conflicting wording for the daily time
 basis; RivRetrieve leaves exact daily boundaries and interval anchors unknown.
 
-HydAPI observations carry `quality` and `correction` codes. RivRetrieve does not
-filter observations by those codes, interpret them as a quality ranking, or add
-per-row quality columns to `result.data`. Informational issues summarize the
-published codes, their counts and first and last source timestamps. Those summaries
-can include the extra dates requested around the selected period, so their counts
-need not equal the returned row count. Optional [receipts](../usage.md#receipts-optional)
-retain the observation response bytes when the original per-row codes are needed.
+HydAPI observations carry integer `quality` and `correction` codes. RivRetrieve
+preserves both columns verbatim in the `no_nve.observations` annotation schema
+without filtering observations, ranking codes, or modifying default `result.data`
+columns. Call `result.to_polars(annotations=True)` or
+`result.to_pandas(annotations=True)` to join `quality` and `correction` onto
+observations, or `rr.annotations(result)` to inspect schema metadata. See
+[Source annotations](../usage.md#source-annotations) for general options, or
+[optional receipts](../usage.md#receipts-optional) when raw response bytes are
+needed.
 
 A published null remains a row with `value=null`. An absent observation supplies
 no row. A failed request remains an issue and an identified outcome alongside
@@ -1917,8 +2088,8 @@ daily mean discharge at station <code>2.605.0</code>:</p>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">preview</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(</span><span class="n">float_precision</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">:</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">issue</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;quality&quot;</span><span class="p">,</span> <span class="s2">&quot;correction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
 </span></code></pre></div>
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
@@ -1926,16 +2097,17 @@ daily mean discharge at station <code>2.605.0</code>:</p>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2024-01-02T11:00:00.000000,+00:00,415.396,m3/s
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2024-01-03T11:00:00.000000,+00:00,444.500,m3/s
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>7
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>info: no_nve published source quality code 2 without RivRetrieve interpretation
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>info: no_nve published source correction code 0 without RivRetrieve interpretation
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[(&#39;no_nve.observations&#39;, &#39;quality&#39;, &#39;Int64&#39;), (&#39;no_nve.observations&#39;, &#39;correction&#39;, &#39;Int64&#39;)]
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[(2, 0), (2, 0), (2, 0)]
 </span></code></pre></div>
 <p>The request returned seven daily means in m³/s. The preview shows three values
 rounded to three decimal places. Both endpoint dates are included. RivRetrieve
 reads the published means; it does not calculate them from more frequent observations.
-The two informational messages report source metadata, not retrieval problems.
-NVE calls quality code <code>2</code> <strong>PrimaryControlled</strong> and correction code <code>0</code> <strong>No changes</strong>.
-These are NVE’s descriptions of the observations, not a RivRetrieve quality
-judgement. They are separate from the series version, which is <code>1</code> in this example.</p>
+The annotation columns preserve HydAPI's per-observation integers verbatim: NVE
+calls quality code <code>2</code> <strong>PrimaryControlled</strong> and correction code <code>0</code> <strong>No
+changes</strong>. These are NVE’s descriptions of the observations, not a RivRetrieve
+quality judgement. They are separate from the series version, which is <code>1</code> in
+this example.</p>
 <p><code>cache="bypass"</code> requests HydAPI rather than a local cache. This output was checked
 on 2026-09-23. NVE can revise historical observations, so later retrievals may
 return different values. Run the examples in order in the same Python session.
@@ -2154,13 +2326,15 @@ the datetime column itself is timezone-naive. The daily values above are labelle
 at 11:00 UTC. That clock label does not establish the averaging interval or its
 start and end. NVE's documentation gives conflicting wording for the daily time
 basis; RivRetrieve leaves exact daily boundaries and interval anchors unknown.</p>
-<p>HydAPI observations carry <code>quality</code> and <code>correction</code> codes. RivRetrieve does not
-filter observations by those codes, interpret them as a quality ranking, or add
-per-row quality columns to <code>result.data</code>. Informational issues summarize the
-published codes, their counts and first and last source timestamps. Those summaries
-can include the extra dates requested around the selected period, so their counts
-need not equal the returned row count. Optional <a href="../../usage/#receipts-optional">receipts</a>
-retain the observation response bytes when the original per-row codes are needed.</p>
+<p>HydAPI observations carry integer <code>quality</code> and <code>correction</code> codes. RivRetrieve
+preserves both columns verbatim in the <code>no_nve.observations</code> annotation schema
+without filtering observations, ranking codes, or modifying default <code>result.data</code>
+columns. Call <code>result.to_polars(annotations=True)</code> or
+<code>result.to_pandas(annotations=True)</code> to join <code>quality</code> and <code>correction</code> onto
+observations, or <code>rr.annotations(result)</code> to inspect schema metadata. See
+<a href="../../usage/#source-annotations">Source annotations</a> for general options, or
+<a href="../../usage/#receipts-optional">optional receipts</a> when raw response bytes are
+needed.</p>
 <p>A published null remains a row with <code>value=null</code>. An absent observation supplies
 no row. A failed request remains an issue and an identified outcome alongside
 independent successful records. Check <a href="../../usage/#issues">issues</a> before interpreting

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://rivretrieve.github.io/providers/fr_hubeau/">
       
       
-        <link rel="prev" href="../cz_chmi/">
+        <link rel="prev" href="../fi_syke/">
       
       
         <link rel="next" href="../fr_hydroportail/">
@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -726,6 +782,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -734,6 +818,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -998,6 +1138,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1628,6 +1796,7 @@ print(preview.write_csv(float_precision=3), end=&#34;&#34;)
 
 print(result.data.height)
 print(result.issues)
+print(rr.annotations(result).select(&#34;name&#34;, &#34;dtype&#34;).rows())
 ```
 
 Output:
@@ -1639,9 +1808,11 @@ time,time_zone,value,unit
 2024-01-03T00:00:00.000000,unknown,1.159,m3/s
 7
 ()
+[(&#39;code_statut&#39;, &#39;Int64&#39;), (&#39;libelle_statut&#39;, &#39;String&#39;), (&#39;code_qualification&#39;, &#39;Int64&#39;), (&#39;libelle_qualification&#39;, &#39;String&#39;), (&#39;code_methode&#39;, &#39;Int64&#39;), (&#39;libelle_methode&#39;, &#39;String&#39;)]
 ```
 
-The request returned seven daily values and no retrieval issues (the empty tuple `()`).
+The request returned seven daily values, the six `fr_hubeau.obs_elab` annotation
+fields, and no retrieval issues (the empty tuple `()`).
 An empty issue tuple does not mean the source has approved the quality of the values.
 The values are source-published daily means, returned in m³/s. RivRetrieve does not
 calculate them from instantaneous observations. Bare dates include the whole first
@@ -1718,11 +1889,26 @@ instant or an interval, or what sampling or averaging period applies.
 
 ## Data status
 
-The source publishes qualification and method metadata alongside hydrometric values.
-RivRetrieve does not turn those fields into a quality ranking or add observation
-quality flags to the returned table. A returned value alone does not establish
-its validation status. See [Usage](../usage.md#receipts-optional) to retain source
-material when that metadata matters to the analysis.
+Hub&#39;Eau publishes qualification, status, and method fields alongside observations.
+RivRetrieve retains those verbatim fields in two observation-grain schemas without
+turning them into a quality ranking:
+
+- `fr_hubeau.obs_elab` (hydrometry daily/monthly series): `code_statut` (`Int64`),
+  `libelle_statut` (`String`), `code_qualification` (`Int64`),
+  `libelle_qualification` (`String`), `code_methode` (`Int64`), and
+  `libelle_methode` (`String`).
+- `fr_hubeau.temperature_chronique` (continuous temperature series):
+  `code_qualification` (`String`) and `libelle_qualification` (`String`).
+
+Use `rr.annotations(result)` to list attached fields and
+`result.to_polars(annotations=True)` or `result.to_pandas(annotations=True)` to
+project them onto returned rows. Because `code_qualification` has type `Int64` in
+`fr_hubeau.obs_elab` and `String` in `fr_hubeau.temperature_chronique`, narrow
+a mixed hydrometry-and-temperature result with `rr.pick(...)` before calling
+`to_polars(annotations=True)`, or read each table directly with
+`rr.annotations(result, schema=...)`. See [Usage](../usage.md#source-annotations)
+for details on inspecting and exporting source annotations, and
+[receipts](../usage.md#receipts-optional) to retain raw publisher bytes.
 
 ## Terms and citation
 
@@ -1829,6 +2015,7 @@ retrieved on 2026-09-21.
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
 </span></code></pre></div>
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
@@ -1837,8 +2024,10 @@ retrieved on 2026-09-21.
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2024-01-03T00:00:00.000000,unknown,1.159,m3/s
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>7
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>()
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[(&#39;code_statut&#39;, &#39;Int64&#39;), (&#39;libelle_statut&#39;, &#39;String&#39;), (&#39;code_qualification&#39;, &#39;Int64&#39;), (&#39;libelle_qualification&#39;, &#39;String&#39;), (&#39;code_methode&#39;, &#39;Int64&#39;), (&#39;libelle_methode&#39;, &#39;String&#39;)]
 </span></code></pre></div>
-<p>The request returned seven daily values and no retrieval issues (the empty tuple <code>()</code>).
+<p>The request returned seven daily values, the six <code>fr_hubeau.obs_elab</code> annotation
+fields, and no retrieval issues (the empty tuple <code>()</code>).
 An empty issue tuple does not mean the source has approved the quality of the values.
 The values are source-published daily means, returned in m³/s. RivRetrieve does not
 calculate them from instantaneous observations. Bare dates include the whole first
@@ -1935,11 +2124,26 @@ but that statement alone does not establish which 24 hours a daily value covers.
 is also <code>unknown</code>. RivRetrieve has not established whether each value represents an
 instant or an interval, or what sampling or averaging period applies.</p>
 <h2 id="data-status">Data status</h2>
-<p>The source publishes qualification and method metadata alongside hydrometric values.
-RivRetrieve does not turn those fields into a quality ranking or add observation
-quality flags to the returned table. A returned value alone does not establish
-its validation status. See <a href="../../usage/#receipts-optional">Usage</a> to retain source
-material when that metadata matters to the analysis.</p>
+<p>Hub'Eau publishes qualification, status, and method fields alongside observations.
+RivRetrieve retains those verbatim fields in two observation-grain schemas without
+turning them into a quality ranking:</p>
+<ul>
+<li><code>fr_hubeau.obs_elab</code> (hydrometry daily/monthly series): <code>code_statut</code> (<code>Int64</code>),
+  <code>libelle_statut</code> (<code>String</code>), <code>code_qualification</code> (<code>Int64</code>),
+  <code>libelle_qualification</code> (<code>String</code>), <code>code_methode</code> (<code>Int64</code>), and
+  <code>libelle_methode</code> (<code>String</code>).</li>
+<li><code>fr_hubeau.temperature_chronique</code> (continuous temperature series):
+  <code>code_qualification</code> (<code>String</code>) and <code>libelle_qualification</code> (<code>String</code>).</li>
+</ul>
+<p>Use <code>rr.annotations(result)</code> to list attached fields and
+<code>result.to_polars(annotations=True)</code> or <code>result.to_pandas(annotations=True)</code> to
+project them onto returned rows. Because <code>code_qualification</code> has type <code>Int64</code> in
+<code>fr_hubeau.obs_elab</code> and <code>String</code> in <code>fr_hubeau.temperature_chronique</code>, narrow
+a mixed hydrometry-and-temperature result with <code>rr.pick(...)</code> before calling
+<code>to_polars(annotations=True)</code>, or read each table directly with
+<code>rr.annotations(result, schema=...)</code>. See <a href="../../usage/#source-annotations">Usage</a>
+for details on inspecting and exporting source annotations, and
+<a href="../../usage/#receipts-optional">receipts</a> to retain raw publisher bytes.</p>
 <h2 id="terms-and-citation">Terms and citation</h2>
 <p>Hub'Eau's terms of use, section 5.1.3, state:</p>
 <blockquote>

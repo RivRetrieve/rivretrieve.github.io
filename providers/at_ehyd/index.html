@@ -1,0 +1,2659 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/providers/at_ehyd/">
+      
+      
+        <link rel="prev" href="../ar_ina/">
+      
+      
+        <link rel="next" href="../ba_fhmzbih/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Austria (eHYD) - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#austria-ehyd" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Austria (eHYD)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../station-metadata/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Metadata
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ar_ina/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/camels-us/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worked Example
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development-conventions/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-measures-and-who-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who measures, and who publishes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can retrieve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-references-and-moving-gauge-zeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage references and moving gauge zeros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive-vintage-and-recent-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Archive vintage and recent coverage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-and-data-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time and data status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terms-and-citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terms and citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ba_fhmzbih/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bosnia and Herzegovina (AVP Sava)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../br_ana/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brazil (ANA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ca_eccc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canada (ECCC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cz_chmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (Hub'Eau)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (HydroPortail)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Japan (MLIT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lt_lhmt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lithuania (LHMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../no_nve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pl_imgw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poland (IMGW-PIB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Switzerland (FOEN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../th_thaiwater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thailand (ThaiWater)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usgs_nwis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    United States (USGS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../maintenance/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing Useful Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Stores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../maintenance/evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verification Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-measures-and-who-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who measures, and who publishes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can retrieve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-references-and-moving-gauge-zeros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage references and moving gauge zeros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#archive-vintage-and-recent-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Archive vintage and recent coverage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-and-data-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time and data status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terms-and-citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terms and citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Austria: eHYD
+
+[Documentation index](../index.md) · [Usage](../usage.md)
+
+| | |
+|---|---|
+| Provider | `at_ehyd` |
+| Country | Austria |
+| Published by | Federal Ministry of Agriculture and Forestry, Climate and Environmental Protection, Regions and Water Management (BMLUK), Department I/3 Water Balance (HZB), with provincial hydrographic services |
+| Read from | Official eHYD web services (`ehyd.gv.at`) |
+| Quantities | Discharge, stage, water temperature |
+| Stations in the catalogue | 746 river gauges (744 with selectable series). Availability depends on station, quantity, product and period |
+| Station metadata | Station name, water-body name and drainage area. See [Fields by provider](../station-metadata.md#fields-by-provider) |
+| Credentials | None |
+| Licence stated by BMLUK | Creative Commons Attribution 4.0 (CC BY 4.0); source attribution required (`Datenquelle: ehyd.gv.at`) |
+| Agency documentation | [eHYD portal](https://ehyd.gv.at/), [General guide](https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf), [Current telemetry guide](https://ehyd.gv.at/assets/documents/Aktuelle_Daten.pdf) |
+
+Retrieve one week of validated daily mean discharge at station `209486`,
+Böheimkirchen on the Perschling:
+
+```python
+import rivretrieve as rr
+
+selection = rr.find(
+    provider=&#34;at_ehyd&#34;,
+    station=&#34;209486&#34;,
+    quantity=&#34;discharge&#34;,
+    frequency=&#34;daily&#34;,
+    statistic=&#34;mean&#34;,
+)
+
+result = rr.fetch(selection, start=&#34;2023-01-01&#34;, end=&#34;2023-01-07&#34;, cache=&#34;bypass&#34;)
+
+preview = result.data.select(&#34;time&#34;, &#34;time_zone&#34;, &#34;value&#34;, &#34;unit&#34;).head(3)
+print(preview.write_csv(), end=&#34;&#34;)
+
+print(result.data.height)
+print(result.issues)
+print(rr.series(result, annotations=True)[&#34;data_quality&#34;].to_list())
+```
+
+Output:
+
+```text
+time,time_zone,value,unit
+2023-01-01T00:00:00.000000,unknown,0.112,m3/s
+2023-01-02T00:00:00.000000,unknown,0.107,m3/s
+2023-01-03T00:00:00.000000,unknown,0.109,m3/s
+7
+()
+[&#39;Geprüfte Daten&#39;]
+```
+
+The request returned seven published daily means in m³/s from eHYD&#39;s validated
+historical archive (`owf_abfl_tagesmittel`). The preview shows the first three
+days, and `rr.series(result, annotations=True)` shows the archive&#39;s
+`Geprüfte Daten` label from `at_ehyd.series`. `time_zone` is `unknown` because
+the exported CSV files do not state a UTC offset; see
+[Time and data status](#time-and-data-status). The empty tuple `()`
+means this retrieval reported no transport, parsing, or gap-marker issues.
+Attribution is still required when using the data; see
+[Terms and citation](#terms-and-citation).
+
+`cache=&#34;bypass&#34;`, the default for live `rr.fetch` calls, requests eHYD directly
+without reading or writing a local cache. Passing `cache=&#34;reuse&#34;` stores the
+station&#39;s downloaded archive series locally so later historical queries for the
+same gauge and product reuse the cached series without downloading the full CSV
+file again. This output was checked live on 2026-11-03. Published values can
+change across hydrographic yearbook revisions. See [Usage](../usage.md) for
+selection options and result handling.
+
+## Who measures, and who publishes
+
+Austria&#39;s Federal Ministry of Agriculture and Forestry, Climate and
+Environmental Protection, Regions and Water Management (Bundesministerium für
+Land- und Forstwirtschaft, Klima- und Umweltschutz, Regionen und
+Wasserwirtschaft, BMLUK), Department I/3 Water Balance (*Wasserhaushalt*,
+formerly the Hydrographic Central Office, HZB), publishes national hydrographic
+data through [eHYD](https://ehyd.gv.at/). Measurements are collected and
+validated in cooperation with the nine provincial hydrographic services
+(*Hydrographische Landesdienste*), the waterway operator `viadonau` on the
+Danube, and municipal water services. Appearance on eHYD does not mean that
+BMLUK operates every station itself.
+
+No API key or account is required. RivRetrieve searches the packaged station and
+series catalogue offline; `rr.fetch` then requests data directly from eHYD&#39;s
+public web services. Station identifiers are six-digit HZB numbers (`hzbnr`),
+kept as strings such as `&#34;209486&#34;`.
+
+The packaged `at_ehyd` catalogue covers flowing surface waters only: `746` river
+gauges in `EPSG:4326`, of which `744` expose at least one selectable discharge,
+stage, or water temperature series (`2` river gauges, `207480` and `230102`,
+publish only sediment series). Standing-water lake gauges (*Seepegel*, `59`
+stations in eHYD&#39;s surface-water layer on lakes such as Bodensee, Neusiedler
+See, and Attersee), subsurface spring gauges (*Quellen*), groundwater wells, and
+precipitation or evaporation stations are excluded. Validated daily suspended
+sediment load (*Schwebstoff-Tagesfracht*) and daily bedload transport
+(*Geschiebe-Tagesfracht*) published at a subset of river gauges are also outside
+RivRetrieve&#39;s current quantity scope.
+
+## What you can retrieve
+
+eHYD publishes river observations through two separate streams:
+
+1. **Validated historical archive (*Geprüfte Daten*):** Quality-checked CSV
+   series reviewed for Austria&#39;s Hydrographic Yearbook (*Hydrographisches
+   Jahrbuch*).
+2. **Operational telemetry (*Pegel Aktuell*):** Unchecked near-real-time
+   sub-hourly telemetry (`variant=&#34;data&#34;`) and current-year daily comparison
+   series (`variant=&#34;current_value&#34;`) published at telemetered gauges.
+
+**Validated historical archive (*Geprüfte Daten*):**
+
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `owf_abfl_tagesmittel` (`Q-Tagesmittel`) | Daily | Mean | m³/s | m³/s |
+| `discharge` | `owf_abfl_monatsminima` (`Q-Monatsminima`) | Monthly | Minimum | m³/s | m³/s |
+| `discharge` | `owf_abfl_monatsmaxima` (`Q-Monatsmaxima`) | Monthly | Maximum | m³/s | m³/s |
+| `stage` | `owf_wasserst_tagesmittel` (`W-Tagesmittel`) | Daily | Mean | cm | m |
+| `stage` | `owf_wasserst_monatsminima` (`W-Monatsminima`) | Monthly (Unknown at `207340`) | Minimum | cm | m |
+| `stage` | `owf_wasserst_monatsmaxima` (`W-Monatsmaxima`) | Monthly | Maximum | cm | m |
+| `temperature` | `owf_wassertemp_monatsmittel` (`WT-Monatsmittel`) | Monthly | Mean | °C | °C |
+
+**Operational telemetry (*Pegel Aktuell*):**
+
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `data` (sub-hourly telemetry) | Unknown | Unknown | m³/s | m³/s |
+| `stage` | `data` (sub-hourly telemetry) | Unknown | Unknown | cm, m ü.A | m |
+| `discharge` | `current_value` (current-year daily) | Daily | Unknown | m³/s | m³/s |
+| `stage` | `current_value` (current-year daily) | Daily | Unknown | cm, m ü.A | m |
+
+A station may publish only a subset of these eleven series. Federal eHYD
+publishes validated river water temperature only as monthly means
+(`owf_wassertemp_monatsmittel`); daily and near-real-time river water
+temperature are not published on this federal service.
+
+In the validated archive, monthly minimum and maximum series report the lowest
+or highest instantaneous measurement recorded within each calendar month,
+stamped with its exact occurrence date and time, rather than the lowest or
+highest daily mean.
+
+RivRetrieve keeps validated archive series and operational telemetry strictly
+separate. It does not append unchecked telemetry onto validated yearbook records
+or calculate daily means from sub-hourly readings. Inspect all candidate series
+and station metadata at a gauge offline before fetching:
+
+```python
+all_discharge = rr.find(provider=&#34;at_ehyd&#34;, station=&#34;209486&#34;, quantity=&#34;discharge&#34;)
+candidates = rr.series(all_discharge)
+metadata = rr.metadata(all_discharge)
+```
+
+Filtering with `frequency=&#34;daily&#34;` and `statistic=&#34;mean&#34;` selects only the
+validated daily-mean archive series (`owf_abfl_tagesmittel`) because the
+current-year daily comparison series (`variant=&#34;current_value&#34;`) has no
+established statistic and the sub-hourly telemetry series (`variant=&#34;data&#34;`) has
+no established frequency or statistic. Select either operational telemetry
+stream directly with `variant`:
+
+- Sub-hourly telemetry (*Pegel Aktuell*): `rr.pick(all_discharge, variant=&#34;data&#34;)`
+  (or `rr.pick(all_discharge, time_zone=&#34;UTC+01:00&#34;)`)
+- Current-year daily comparison (*Pegel Aktuell*):
+  `rr.pick(all_discharge, variant=&#34;current_value&#34;)`
+
+You can also pass a specific `series_id` from `candidates` to `rr.pick(...)`
+when targeting an individual series row.
+
+In sub-hourly telemetry (*Pegel Aktuell*, `variant=&#34;data&#34;`) responses,
+RivRetrieve reads only the `data` observation series and omits static
+warning-level lines (*Niedrigwasser*, *Mittelwasser*, and *Hochwasser*
+thresholds). In current-year daily comparison (*Pegel Aktuell*,
+`variant=&#34;current_value&#34;`) responses, RivRetrieve reads only the current
+calendar year&#39;s `current_value` series; it omits the prior-year overlay
+(`last_year_value`, which is aligned onto the current year&#39;s 365- or 366-day
+axis without its own calendar dates) and the 30-year climatological summary
+curves (`min_data`, `max_data`, `mit_data`, `p5_data`, `p95_data`).
+
+## Stage references and moving gauge zeros
+
+River stage (*Wasserstand*) in both *Geprüfte Daten* and *Pegel Aktuell* is
+published in centimetres relative to the station&#39;s local gauge zero
+(*Pegelnullpunkt*). RivRetrieve multiplies `cm` values by `0.01` to return
+metres (`m`), keeps `&#34;cm&#34;` in `source_unit`, and sets
+`vertical_reference=&#34;gauge_zero&#34;` on the series. Genuine water levels below
+gauge zero remain negative (for example down to `-2.27 m` at Danube station
+`207068`, Linz), and published negative values in water-temperature exports
+(down to `-2.8 °C` in `owf_wassertemp_monatsmittel` at `200352`, Unterhochsteg)
+are likewise preserved without clamping.
+
+Use care when interpreting multi-year stage records or comparing water levels
+across periods. At most Austrian river gauges (`543` of `739` historical river
+gauges in the packaged snapshot, `537` with more than one distinct height), the
+local gauge zero has been reset or resurveyed over time. eHYD&#39;s station master
+sheets (*Stammdaten*) and stage CSV preambles list dated *Pegelnullpunkt*
+heights in metres above the Adriatic datum (`m ü.A.`, *Meter über Adria*),
+without stating whether historical stage observations prior to a reset were
+adjusted to the latest datum or left relative to the datum active at the time of
+measurement.
+
+Because no single scalar elevation applies across a station&#39;s full history,
+the `elevation_*` columns are `null` in `rr.metadata(selection)`
+(`state=&#34;no_metadata&#34;` in `rr.metadata(selection, view=&#34;source&#34;)`) and
+`vertical_datum` remains unknown on stage series. Do not add a single
+*Pegelnullpunkt* height to a long stage record without checking the station&#39;s
+dated datum table on eHYD. Where an eHYD stage response declares `m ü.A` or
+`m ü.A.` (*Meter über Adria*, water-surface elevation above sea level),
+RivRetrieve returns metres (`m`) without scaling, with
+`vertical_reference=&#34;above_sea_level&#34;` and `vertical_datum` unknown; all river
+stage series in the packaged snapshot currently publish `cm` above gauge zero.
+
+Station metadata exposes station names (`name` from the historical registry and
+`messstelle` from *Pegel Aktuell*), water-body names (`gewaesser` and
+`gewasser`), and orographic catchment area (`orogr.Einzugsgebiet [km²]` with
+unit `km²` for gauges in the historical registry). When `name` and `messstelle`
+spell a gauge&#39;s name differently (`51` overlapping gauges), summary
+`station_name` is `null` and both spellings remain visible in
+`rr.metadata(selection, view=&#34;source&#34;)`. Catchment areas retain eHYD&#39;s German
+decimal comma as JSON text, such as `&#39;&#34;55,3&#34;&#39;` at station `209486`; see
+[Station metadata](../station-metadata.md) for decoding details.
+
+## Archive vintage and recent coverage
+
+The three series streams cover separate periods and leave an unpublished gap
+between the latest yearbook and the current calendar year:
+
+- **Validated historical archive (*Geprüfte Daten*):** Covers multi-decade
+  histories up to the close of the latest published Hydrographic Yearbook. In
+  the catalogue snapshot (2026-10-31) and live checks on 2026-11-03, validated
+  river exports end at `2023-12-31` (marked by a closing boundary at
+  `2024-01-01 00:00`). Start years vary widely by gauge and quantity, and
+  decommissioned gauges end earlier.
+- **Current-year daily comparison (*Pegel Aktuell*, `variant=&#34;current_value&#34;`):**
+  Covers only the current calendar year (`2026` during 2026) up to the latest
+  reported day. Trailing `null` padding for future dates later in the year is
+  trimmed. The service ignores query parameters requesting earlier calendar
+  years.
+- **Near-real-time sub-hourly telemetry (*Pegel Aktuell*, `variant=&#34;data&#34;`):**
+  Covers a rolling window of roughly seven to eight days at variable sub-hourly
+  intervals (commonly 5, 10, 15, or 30 minutes, sometimes varying within a
+  single week). Older readings age out as new telemetry arrives. Local caching
+  (`cache=&#34;reuse&#34;`) accumulates readings already fetched across repeated runs,
+  while readings that left the rolling window before being fetched cannot be
+  recovered from this service.
+
+Because the validated archive ends at the latest published yearbook (`2023`) and
+the current-year daily comparison stream (`variant=&#34;current_value&#34;`) serves only
+the current calendar year, intermediate post-yearbook years (such as `2024` and
+`2025` before their yearbook release) are not yet available through federal
+`ehyd.gv.at` downloads. A validated archive request for dates after `2023-12-31`
+returns no rows for those unpublished years because the yearbook export has not
+yet reached them, rather than because no river measurements were taken.
+
+## Time and data status
+
+Time-zone handling differs between sub-hourly telemetry and the daily or monthly
+series:
+
+- **Sub-hourly telemetry (*Pegel Aktuell*, `variant=&#34;data&#34;`):** eHYD documents
+  these timestamps as fixed Central European Time (*Mitteleuropäische Zeit*,
+  `MEZ`, `UTC+01:00` throughout the year without daylight-saving transitions).
+  `rr.fetch` preserves the published `MEZ` wall-clock timestamps with
+  `time_zone=&#34;+01:00&#34;` (`time_zone=&#34;UTC+01:00&#34;` in `rr.series(...)`), and
+  `rr.to_utc(result)` shifts them to UTC (`time_zone=&#34;+00:00&#34;`). Whether each
+  sub-hourly value represents an instantaneous reading or a short interval
+  average is not established.
+- **Validated archive (*Geprüfte Daten*) and current-year daily comparison
+  (*Pegel Aktuell*, `variant=&#34;current_value&#34;`):** Neither format states an
+  explicit UTC offset in its machine-readable header or payload. Although
+  BMLUK&#39;s [*Pegelordnung
+  2014*](https://data.hydrographie.gv.at/Vorschriften_und_Anleitungen/30b%20Pegelordnung-2014.pdf)
+  recommends `MEZ` (`UTC+01:00`), it also notes historical `SOZ/MEZ` summer-time
+  practices, and older epochs in validated archive CSV files contain daily
+  timestamps at `07:00` or `01:00` before shifting to `00:00` (at historical
+  manual staff gauges, *Lattenpegel*, a scheduled morning reading counted as the
+  daily value). RivRetrieve therefore keeps `time_zone=&#34;unknown&#34;` and leaves
+  `day_definition` unknown on both streams; `rr.to_utc()` refuses `unknown` time
+  zones rather than assuming `UTC+01:00` across all historical years.
+
+On validated interval-mean archive series (`owf_abfl_tagesmittel`,
+`owf_wasserst_tagesmittel`, and `owf_wassertemp_monatsmittel`), each timestamp
+marks the start of its validity interval (`timestamp_anchor=&#34;start&#34;`), in
+accordance with the CSV preamble rule (*&#34;Der Intervallwert gilt bis zum
+nächsten Zeitpunkt mit einem Wert oder Lücke&#34;*). At Danube station `207340`
+(Wilhering), the `W-Monatsminima` CSV file declares and contains daily (`T,1`)
+stage minima rather than monthly minima; RivRetrieve withholds
+`frequency=&#34;monthly&#34;` on that station&#39;s `owf_wasserst_monatsminima` series so
+monthly filters do not return daily rows.
+
+eHYD labels its historical CSV downloads *Geprüfte Daten* (checked data) and
+displays `&#34;ungeprüfte Rohdaten!&#34;` (unchecked raw data) on *Pegel Aktuell*
+exports, noting that live telemetry can contain sensor faults, ice or weed
+effects, backwater, or transmission gaps. Neither stream carries
+per-observation quality flags. RivRetrieve attaches the verbatim stream label in
+the series-grain annotation schema `at_ehyd.series` (`scope=&#34;series&#34;`, field
+`data_quality` of type `String`) without making a quality judgement of its own.
+Use `rr.annotations(result)` to inspect attached metadata and
+`rr.series(result, annotations=True)` to join `data_quality` to the series table;
+see [Usage](../usage.md#source-annotations).
+
+Keep missing-data representations distinct when inspecting results:
+
+- In validated archive (*Geprüfte Daten*) CSV files, missing spans are encoded
+  as timestamped `Lücke` (gap) transition lines rather than one null row per
+  missing day, and interval files end with a closing `Lücke` boundary line at
+  the end of the export window. RivRetrieve omits `Lücke` lines without
+  fabricating rows, suppresses the closing-boundary marker, and records an
+  informational `source.gap_marker` issue in `result.issues` when interior gaps
+  occur.
+- In *Pegel Aktuell* telemetry responses (`variant=&#34;data&#34;` and
+  `variant=&#34;current_value&#34;`), interior missing entries published as `null`
+  remain rows with `value=null`.
+- When a *Pegel Aktuell* gauge is currently offline and returns an empty
+  response, `rr.fetch` returns no rows (and emits a
+  `source.inventory_unresolved` warning in `result.issues` when that telemetry
+  series was requested explicitly). Empty or malformed validated archive files
+  report an error or warning in `result.issues`; check
+  [issues](../usage.md#issues) before interpreting an empty result.
+
+## Terms and citation
+
+Official INSPIRE Austria metadata records for the [hydrographic surface-water
+station network](https://data.inspire.gv.at/55e494dd-e0af-4806-95d6-86e30dde0504)
+and the [current hydrographic measurement
+service](https://geoportal.inspire.gv.at/metadatensuche/srv/api/records/6a67faa7-3ad7-4faf-91e9-17a518d10685/formatters/xml)
+state that the data are licensed for private and commercial reuse free of charge
+under [Creative Commons Attribution 4.0 International (CC BY
+4.0)](https://creativecommons.org/licenses/by/4.0/), with mandatory source
+attribution:
+
+&gt; Datenquelle: [ehyd.gv.at](https://ehyd.gv.at)
+
+In German, the INSPIRE attribution clause requires *&#34;Datenquelle: ehyd.gv.at&#34;,
+wobei &#34;ehyd.gv.at&#34; als Link auf https://ehyd.gv.at auszuführen ist* (linking
+`ehyd.gv.at` to `https://ehyd.gv.at`). Both `rr.describe(&#34;at_ehyd&#34;)` and
+`result.provenance` expose `license=&#34;CC BY 4.0&#34;` and
+`citation=&#34;Datenquelle: ehyd.gv.at&#34;`. For scientific traceability, also record
+the station HZB number, product, requested period, and retrieval date.
+
+The [eHYD portal](https://ehyd.gv.at/) notes that data are published pursuant to
+§ 55o (2) *Wasserrechtsgesetz* and § 4 (1)(2) *Umweltinformationsgesetz* without
+warranty for completeness, continuity, or accuracy, and prohibits automated
+extraction outside content expressly offered for download (both per-station
+*Geprüfte Daten* CSV files and *Pegel Aktuell* chart CSV exports are offered for
+download on the portal). An older 2022 [general user
+guide](https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf) (page 14) also
+contains an own-use and no-paid-resale statement alongside the CC BY 4.0 INSPIRE
+licence declarations. RivRetrieve paces live requests politely (at most one
+request per second) and caches downloaded archive series locally when
+`cache=&#34;reuse&#34;` is passed.
+
+## Sources
+
+Publisher documents and metadata checked on 2026-10-31 and verified reachable on
+2026-11-03:
+
+- [eHYD portal (`ehyd.gv.at`)](https://ehyd.gv.at/): national hydrographic map, station downloads, *Pegel Aktuell* telemetry charts, and portal legal notices.
+- [BMLUK: *eHYD Allgemein* (general user guide, PDF)](https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf): HZB numbering, monitoring domains, *Stammdaten* sheets, CSV exports, and usage notes.
+- [BMLUK: *Aktuelle Daten in eHYD* (current telemetry guide, PDF)](https://ehyd.gv.at/assets/documents/Aktuelle_Daten.pdf): *Pegel Aktuell* transfer intervals and unchecked raw-telemetry caveats.
+- [BMLUK: *Pegelordnung 2014* (PDF)](https://data.hydrographie.gv.at/Vorschriften_und_Anleitungen/30b%20Pegelordnung-2014.pdf): gauge-zero (*Pegelnullpunkt*) definitions, time-zone recommendations (`MEZ`), daily interval means, and monthly instantaneous extrema.
+- [LFRZ OGC API Features (`i000501`)](https://gis.lfrz.gv.at/api/geodata/i000501/ogc/features/v1/collections?f=application%2Fjson): WGS84 (`EPSG:4326`) station collections for `messstellen_owf` and `pegel_aktuell`.
+- [INSPIRE Austria metadata: hydrographic station network](https://data.inspire.gv.at/55e494dd-e0af-4806-95d6-86e30dde0504) and [*Pegel Aktuell* service](https://geoportal.inspire.gv.at/metadatensuche/srv/api/records/6a67faa7-3ad7-4faf-91e9-17a518d10685/formatters/xml): CC BY 4.0 licensing and mandatory `Datenquelle: ehyd.gv.at` attribution.
+
+The station counts describe the packaged catalogue snapshot (2026-10-31). The
+example observations were retrieved on 2026-11-03. This live example does not
+establish continuous coverage.
+</textarea>
+
+<h1 id="austria-ehyd">Austria: eHYD</h1>
+<p><a href="../../">Documentation index</a> · <a href="../../usage/">Usage</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider</td>
+<td><code>at_ehyd</code></td>
+</tr>
+<tr>
+<td>Country</td>
+<td>Austria</td>
+</tr>
+<tr>
+<td>Published by</td>
+<td>Federal Ministry of Agriculture and Forestry, Climate and Environmental Protection, Regions and Water Management (BMLUK), Department I/3 Water Balance (HZB), with provincial hydrographic services</td>
+</tr>
+<tr>
+<td>Read from</td>
+<td>Official eHYD web services (<code>ehyd.gv.at</code>)</td>
+</tr>
+<tr>
+<td>Quantities</td>
+<td>Discharge, stage, water temperature</td>
+</tr>
+<tr>
+<td>Stations in the catalogue</td>
+<td>746 river gauges (744 with selectable series). Availability depends on station, quantity, product and period</td>
+</tr>
+<tr>
+<td>Station metadata</td>
+<td>Station name, water-body name and drainage area. See <a href="../../station-metadata/#fields-by-provider">Fields by provider</a></td>
+</tr>
+<tr>
+<td>Credentials</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Licence stated by BMLUK</td>
+<td>Creative Commons Attribution 4.0 (CC BY 4.0); source attribution required (<code>Datenquelle: ehyd.gv.at</code>)</td>
+</tr>
+<tr>
+<td>Agency documentation</td>
+<td><a href="https://ehyd.gv.at/">eHYD portal</a>, <a href="https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf">General guide</a>, <a href="https://ehyd.gv.at/assets/documents/Aktuelle_Daten.pdf">Current telemetry guide</a></td>
+</tr>
+</tbody>
+</table>
+<p>Retrieve one week of validated daily mean discharge at station <code>209486</code>,
+Böheimkirchen on the Perschling:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;at_ehyd&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">station</span><span class="o">=</span><span class="s2">&quot;209486&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2023-01-07&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;bypass&quot;</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">preview</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">preview</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s2">&quot;data_quality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2023-01-01T00:00:00.000000,unknown,0.112,m3/s
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2023-01-02T00:00:00.000000,unknown,0.107,m3/s
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2023-01-03T00:00:00.000000,unknown,0.109,m3/s
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>7
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>()
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[&#39;Geprüfte Daten&#39;]
+</span></code></pre></div>
+<p>The request returned seven published daily means in m³/s from eHYD's validated
+historical archive (<code>owf_abfl_tagesmittel</code>). The preview shows the first three
+days, and <code>rr.series(result, annotations=True)</code> shows the archive's
+<code>Geprüfte Daten</code> label from <code>at_ehyd.series</code>. <code>time_zone</code> is <code>unknown</code> because
+the exported CSV files do not state a UTC offset; see
+<a href="#time-and-data-status">Time and data status</a>. The empty tuple <code>()</code>
+means this retrieval reported no transport, parsing, or gap-marker issues.
+Attribution is still required when using the data; see
+<a href="#terms-and-citation">Terms and citation</a>.</p>
+<p><code>cache="bypass"</code>, the default for live <code>rr.fetch</code> calls, requests eHYD directly
+without reading or writing a local cache. Passing <code>cache="reuse"</code> stores the
+station's downloaded archive series locally so later historical queries for the
+same gauge and product reuse the cached series without downloading the full CSV
+file again. This output was checked live on 2026-11-03. Published values can
+change across hydrographic yearbook revisions. See <a href="../../usage/">Usage</a> for
+selection options and result handling.</p>
+<h2 id="who-measures-and-who-publishes">Who measures, and who publishes</h2>
+<p>Austria's Federal Ministry of Agriculture and Forestry, Climate and
+Environmental Protection, Regions and Water Management (Bundesministerium für
+Land- und Forstwirtschaft, Klima- und Umweltschutz, Regionen und
+Wasserwirtschaft, BMLUK), Department I/3 Water Balance (<em>Wasserhaushalt</em>,
+formerly the Hydrographic Central Office, HZB), publishes national hydrographic
+data through <a href="https://ehyd.gv.at/">eHYD</a>. Measurements are collected and
+validated in cooperation with the nine provincial hydrographic services
+(<em>Hydrographische Landesdienste</em>), the waterway operator <code>viadonau</code> on the
+Danube, and municipal water services. Appearance on eHYD does not mean that
+BMLUK operates every station itself.</p>
+<p>No API key or account is required. RivRetrieve searches the packaged station and
+series catalogue offline; <code>rr.fetch</code> then requests data directly from eHYD's
+public web services. Station identifiers are six-digit HZB numbers (<code>hzbnr</code>),
+kept as strings such as <code>"209486"</code>.</p>
+<p>The packaged <code>at_ehyd</code> catalogue covers flowing surface waters only: <code>746</code> river
+gauges in <code>EPSG:4326</code>, of which <code>744</code> expose at least one selectable discharge,
+stage, or water temperature series (<code>2</code> river gauges, <code>207480</code> and <code>230102</code>,
+publish only sediment series). Standing-water lake gauges (<em>Seepegel</em>, <code>59</code>
+stations in eHYD's surface-water layer on lakes such as Bodensee, Neusiedler
+See, and Attersee), subsurface spring gauges (<em>Quellen</em>), groundwater wells, and
+precipitation or evaporation stations are excluded. Validated daily suspended
+sediment load (<em>Schwebstoff-Tagesfracht</em>) and daily bedload transport
+(<em>Geschiebe-Tagesfracht</em>) published at a subset of river gauges are also outside
+RivRetrieve's current quantity scope.</p>
+<h2 id="what-you-can-retrieve">What you can retrieve</h2>
+<p>eHYD publishes river observations through two separate streams:</p>
+<ol>
+<li><strong>Validated historical archive (<em>Geprüfte Daten</em>):</strong> Quality-checked CSV
+   series reviewed for Austria's Hydrographic Yearbook (<em>Hydrographisches
+   Jahrbuch</em>).</li>
+<li><strong>Operational telemetry (<em>Pegel Aktuell</em>):</strong> Unchecked near-real-time
+   sub-hourly telemetry (<code>variant="data"</code>) and current-year daily comparison
+   series (<code>variant="current_value"</code>) published at telemetered gauges.</li>
+</ol>
+<p><strong>Validated historical archive (<em>Geprüfte Daten</em>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Quantity filter</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>discharge</code></td>
+<td><code>owf_abfl_tagesmittel</code> (<code>Q-Tagesmittel</code>)</td>
+<td>Daily</td>
+<td>Mean</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>owf_abfl_monatsminima</code> (<code>Q-Monatsminima</code>)</td>
+<td>Monthly</td>
+<td>Minimum</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>owf_abfl_monatsmaxima</code> (<code>Q-Monatsmaxima</code>)</td>
+<td>Monthly</td>
+<td>Maximum</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>owf_wasserst_tagesmittel</code> (<code>W-Tagesmittel</code>)</td>
+<td>Daily</td>
+<td>Mean</td>
+<td>cm</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>owf_wasserst_monatsminima</code> (<code>W-Monatsminima</code>)</td>
+<td>Monthly (Unknown at <code>207340</code>)</td>
+<td>Minimum</td>
+<td>cm</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>owf_wasserst_monatsmaxima</code> (<code>W-Monatsmaxima</code>)</td>
+<td>Monthly</td>
+<td>Maximum</td>
+<td>cm</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>temperature</code></td>
+<td><code>owf_wassertemp_monatsmittel</code> (<code>WT-Monatsmittel</code>)</td>
+<td>Monthly</td>
+<td>Mean</td>
+<td>°C</td>
+<td>°C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Operational telemetry (<em>Pegel Aktuell</em>):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Quantity filter</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>discharge</code></td>
+<td><code>data</code> (sub-hourly telemetry)</td>
+<td>Unknown</td>
+<td>Unknown</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>data</code> (sub-hourly telemetry)</td>
+<td>Unknown</td>
+<td>Unknown</td>
+<td>cm, m ü.A</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>current_value</code> (current-year daily)</td>
+<td>Daily</td>
+<td>Unknown</td>
+<td>m³/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>current_value</code> (current-year daily)</td>
+<td>Daily</td>
+<td>Unknown</td>
+<td>cm, m ü.A</td>
+<td>m</td>
+</tr>
+</tbody>
+</table>
+<p>A station may publish only a subset of these eleven series. Federal eHYD
+publishes validated river water temperature only as monthly means
+(<code>owf_wassertemp_monatsmittel</code>); daily and near-real-time river water
+temperature are not published on this federal service.</p>
+<p>In the validated archive, monthly minimum and maximum series report the lowest
+or highest instantaneous measurement recorded within each calendar month,
+stamped with its exact occurrence date and time, rather than the lowest or
+highest daily mean.</p>
+<p>RivRetrieve keeps validated archive series and operational telemetry strictly
+separate. It does not append unchecked telemetry onto validated yearbook records
+or calculate daily means from sub-hourly readings. Inspect all candidate series
+and station metadata at a gauge offline before fetching:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">all_discharge</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;at_ehyd&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;209486&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">candidates</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">all_discharge</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">metadata</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">all_discharge</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Filtering with <code>frequency="daily"</code> and <code>statistic="mean"</code> selects only the
+validated daily-mean archive series (<code>owf_abfl_tagesmittel</code>) because the
+current-year daily comparison series (<code>variant="current_value"</code>) has no
+established statistic and the sub-hourly telemetry series (<code>variant="data"</code>) has
+no established frequency or statistic. Select either operational telemetry
+stream directly with <code>variant</code>:</p>
+<ul>
+<li>Sub-hourly telemetry (<em>Pegel Aktuell</em>): <code>rr.pick(all_discharge, variant="data")</code>
+  (or <code>rr.pick(all_discharge, time_zone="UTC+01:00")</code>)</li>
+<li>Current-year daily comparison (<em>Pegel Aktuell</em>):
+  <code>rr.pick(all_discharge, variant="current_value")</code></li>
+</ul>
+<p>You can also pass a specific <code>series_id</code> from <code>candidates</code> to <code>rr.pick(...)</code>
+when targeting an individual series row.</p>
+<p>In sub-hourly telemetry (<em>Pegel Aktuell</em>, <code>variant="data"</code>) responses,
+RivRetrieve reads only the <code>data</code> observation series and omits static
+warning-level lines (<em>Niedrigwasser</em>, <em>Mittelwasser</em>, and <em>Hochwasser</em>
+thresholds). In current-year daily comparison (<em>Pegel Aktuell</em>,
+<code>variant="current_value"</code>) responses, RivRetrieve reads only the current
+calendar year's <code>current_value</code> series; it omits the prior-year overlay
+(<code>last_year_value</code>, which is aligned onto the current year's 365- or 366-day
+axis without its own calendar dates) and the 30-year climatological summary
+curves (<code>min_data</code>, <code>max_data</code>, <code>mit_data</code>, <code>p5_data</code>, <code>p95_data</code>).</p>
+<h2 id="stage-references-and-moving-gauge-zeros">Stage references and moving gauge zeros</h2>
+<p>River stage (<em>Wasserstand</em>) in both <em>Geprüfte Daten</em> and <em>Pegel Aktuell</em> is
+published in centimetres relative to the station's local gauge zero
+(<em>Pegelnullpunkt</em>). RivRetrieve multiplies <code>cm</code> values by <code>0.01</code> to return
+metres (<code>m</code>), keeps <code>"cm"</code> in <code>source_unit</code>, and sets
+<code>vertical_reference="gauge_zero"</code> on the series. Genuine water levels below
+gauge zero remain negative (for example down to <code>-2.27 m</code> at Danube station
+<code>207068</code>, Linz), and published negative values in water-temperature exports
+(down to <code>-2.8 °C</code> in <code>owf_wassertemp_monatsmittel</code> at <code>200352</code>, Unterhochsteg)
+are likewise preserved without clamping.</p>
+<p>Use care when interpreting multi-year stage records or comparing water levels
+across periods. At most Austrian river gauges (<code>543</code> of <code>739</code> historical river
+gauges in the packaged snapshot, <code>537</code> with more than one distinct height), the
+local gauge zero has been reset or resurveyed over time. eHYD's station master
+sheets (<em>Stammdaten</em>) and stage CSV preambles list dated <em>Pegelnullpunkt</em>
+heights in metres above the Adriatic datum (<code>m ü.A.</code>, <em>Meter über Adria</em>),
+without stating whether historical stage observations prior to a reset were
+adjusted to the latest datum or left relative to the datum active at the time of
+measurement.</p>
+<p>Because no single scalar elevation applies across a station's full history,
+the <code>elevation_*</code> columns are <code>null</code> in <code>rr.metadata(selection)</code>
+(<code>state="no_metadata"</code> in <code>rr.metadata(selection, view="source")</code>) and
+<code>vertical_datum</code> remains unknown on stage series. Do not add a single
+<em>Pegelnullpunkt</em> height to a long stage record without checking the station's
+dated datum table on eHYD. Where an eHYD stage response declares <code>m ü.A</code> or
+<code>m ü.A.</code> (<em>Meter über Adria</em>, water-surface elevation above sea level),
+RivRetrieve returns metres (<code>m</code>) without scaling, with
+<code>vertical_reference="above_sea_level"</code> and <code>vertical_datum</code> unknown; all river
+stage series in the packaged snapshot currently publish <code>cm</code> above gauge zero.</p>
+<p>Station metadata exposes station names (<code>name</code> from the historical registry and
+<code>messstelle</code> from <em>Pegel Aktuell</em>), water-body names (<code>gewaesser</code> and
+<code>gewasser</code>), and orographic catchment area (<code>orogr.Einzugsgebiet [km²]</code> with
+unit <code>km²</code> for gauges in the historical registry). When <code>name</code> and <code>messstelle</code>
+spell a gauge's name differently (<code>51</code> overlapping gauges), summary
+<code>station_name</code> is <code>null</code> and both spellings remain visible in
+<code>rr.metadata(selection, view="source")</code>. Catchment areas retain eHYD's German
+decimal comma as JSON text, such as <code>'"55,3"'</code> at station <code>209486</code>; see
+<a href="../../station-metadata/">Station metadata</a> for decoding details.</p>
+<h2 id="archive-vintage-and-recent-coverage">Archive vintage and recent coverage</h2>
+<p>The three series streams cover separate periods and leave an unpublished gap
+between the latest yearbook and the current calendar year:</p>
+<ul>
+<li><strong>Validated historical archive (<em>Geprüfte Daten</em>):</strong> Covers multi-decade
+  histories up to the close of the latest published Hydrographic Yearbook. In
+  the catalogue snapshot (2026-10-31) and live checks on 2026-11-03, validated
+  river exports end at <code>2023-12-31</code> (marked by a closing boundary at
+  <code>2024-01-01 00:00</code>). Start years vary widely by gauge and quantity, and
+  decommissioned gauges end earlier.</li>
+<li><strong>Current-year daily comparison (<em>Pegel Aktuell</em>, <code>variant="current_value"</code>):</strong>
+  Covers only the current calendar year (<code>2026</code> during 2026) up to the latest
+  reported day. Trailing <code>null</code> padding for future dates later in the year is
+  trimmed. The service ignores query parameters requesting earlier calendar
+  years.</li>
+<li><strong>Near-real-time sub-hourly telemetry (<em>Pegel Aktuell</em>, <code>variant="data"</code>):</strong>
+  Covers a rolling window of roughly seven to eight days at variable sub-hourly
+  intervals (commonly 5, 10, 15, or 30 minutes, sometimes varying within a
+  single week). Older readings age out as new telemetry arrives. Local caching
+  (<code>cache="reuse"</code>) accumulates readings already fetched across repeated runs,
+  while readings that left the rolling window before being fetched cannot be
+  recovered from this service.</li>
+</ul>
+<p>Because the validated archive ends at the latest published yearbook (<code>2023</code>) and
+the current-year daily comparison stream (<code>variant="current_value"</code>) serves only
+the current calendar year, intermediate post-yearbook years (such as <code>2024</code> and
+<code>2025</code> before their yearbook release) are not yet available through federal
+<code>ehyd.gv.at</code> downloads. A validated archive request for dates after <code>2023-12-31</code>
+returns no rows for those unpublished years because the yearbook export has not
+yet reached them, rather than because no river measurements were taken.</p>
+<h2 id="time-and-data-status">Time and data status</h2>
+<p>Time-zone handling differs between sub-hourly telemetry and the daily or monthly
+series:</p>
+<ul>
+<li><strong>Sub-hourly telemetry (<em>Pegel Aktuell</em>, <code>variant="data"</code>):</strong> eHYD documents
+  these timestamps as fixed Central European Time (<em>Mitteleuropäische Zeit</em>,
+  <code>MEZ</code>, <code>UTC+01:00</code> throughout the year without daylight-saving transitions).
+  <code>rr.fetch</code> preserves the published <code>MEZ</code> wall-clock timestamps with
+  <code>time_zone="+01:00"</code> (<code>time_zone="UTC+01:00"</code> in <code>rr.series(...)</code>), and
+  <code>rr.to_utc(result)</code> shifts them to UTC (<code>time_zone="+00:00"</code>). Whether each
+  sub-hourly value represents an instantaneous reading or a short interval
+  average is not established.</li>
+<li><strong>Validated archive (<em>Geprüfte Daten</em>) and current-year daily comparison
+  (<em>Pegel Aktuell</em>, <code>variant="current_value"</code>):</strong> Neither format states an
+  explicit UTC offset in its machine-readable header or payload. Although
+  BMLUK's <a href="https://data.hydrographie.gv.at/Vorschriften_und_Anleitungen/30b%20Pegelordnung-2014.pdf"><em>Pegelordnung
+  2014</em></a>
+  recommends <code>MEZ</code> (<code>UTC+01:00</code>), it also notes historical <code>SOZ/MEZ</code> summer-time
+  practices, and older epochs in validated archive CSV files contain daily
+  timestamps at <code>07:00</code> or <code>01:00</code> before shifting to <code>00:00</code> (at historical
+  manual staff gauges, <em>Lattenpegel</em>, a scheduled morning reading counted as the
+  daily value). RivRetrieve therefore keeps <code>time_zone="unknown"</code> and leaves
+  <code>day_definition</code> unknown on both streams; <code>rr.to_utc()</code> refuses <code>unknown</code> time
+  zones rather than assuming <code>UTC+01:00</code> across all historical years.</li>
+</ul>
+<p>On validated interval-mean archive series (<code>owf_abfl_tagesmittel</code>,
+<code>owf_wasserst_tagesmittel</code>, and <code>owf_wassertemp_monatsmittel</code>), each timestamp
+marks the start of its validity interval (<code>timestamp_anchor="start"</code>), in
+accordance with the CSV preamble rule (<em>"Der Intervallwert gilt bis zum
+nächsten Zeitpunkt mit einem Wert oder Lücke"</em>). At Danube station <code>207340</code>
+(Wilhering), the <code>W-Monatsminima</code> CSV file declares and contains daily (<code>T,1</code>)
+stage minima rather than monthly minima; RivRetrieve withholds
+<code>frequency="monthly"</code> on that station's <code>owf_wasserst_monatsminima</code> series so
+monthly filters do not return daily rows.</p>
+<p>eHYD labels its historical CSV downloads <em>Geprüfte Daten</em> (checked data) and
+displays <code>"ungeprüfte Rohdaten!"</code> (unchecked raw data) on <em>Pegel Aktuell</em>
+exports, noting that live telemetry can contain sensor faults, ice or weed
+effects, backwater, or transmission gaps. Neither stream carries
+per-observation quality flags. RivRetrieve attaches the verbatim stream label in
+the series-grain annotation schema <code>at_ehyd.series</code> (<code>scope="series"</code>, field
+<code>data_quality</code> of type <code>String</code>) without making a quality judgement of its own.
+Use <code>rr.annotations(result)</code> to inspect attached metadata and
+<code>rr.series(result, annotations=True)</code> to join <code>data_quality</code> to the series table;
+see <a href="../../usage/#source-annotations">Usage</a>.</p>
+<p>Keep missing-data representations distinct when inspecting results:</p>
+<ul>
+<li>In validated archive (<em>Geprüfte Daten</em>) CSV files, missing spans are encoded
+  as timestamped <code>Lücke</code> (gap) transition lines rather than one null row per
+  missing day, and interval files end with a closing <code>Lücke</code> boundary line at
+  the end of the export window. RivRetrieve omits <code>Lücke</code> lines without
+  fabricating rows, suppresses the closing-boundary marker, and records an
+  informational <code>source.gap_marker</code> issue in <code>result.issues</code> when interior gaps
+  occur.</li>
+<li>In <em>Pegel Aktuell</em> telemetry responses (<code>variant="data"</code> and
+  <code>variant="current_value"</code>), interior missing entries published as <code>null</code>
+  remain rows with <code>value=null</code>.</li>
+<li>When a <em>Pegel Aktuell</em> gauge is currently offline and returns an empty
+  response, <code>rr.fetch</code> returns no rows (and emits a
+  <code>source.inventory_unresolved</code> warning in <code>result.issues</code> when that telemetry
+  series was requested explicitly). Empty or malformed validated archive files
+  report an error or warning in <code>result.issues</code>; check
+  <a href="../../usage/#issues">issues</a> before interpreting an empty result.</li>
+</ul>
+<h2 id="terms-and-citation">Terms and citation</h2>
+<p>Official INSPIRE Austria metadata records for the <a href="https://data.inspire.gv.at/55e494dd-e0af-4806-95d6-86e30dde0504">hydrographic surface-water
+station network</a>
+and the <a href="https://geoportal.inspire.gv.at/metadatensuche/srv/api/records/6a67faa7-3ad7-4faf-91e9-17a518d10685/formatters/xml">current hydrographic measurement
+service</a>
+state that the data are licensed for private and commercial reuse free of charge
+under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International (CC BY
+4.0)</a>, with mandatory source
+attribution:</p>
+<blockquote>
+<p>Datenquelle: <a href="https://ehyd.gv.at">ehyd.gv.at</a></p>
+</blockquote>
+<p>In German, the INSPIRE attribution clause requires <em>"Datenquelle: ehyd.gv.at",
+wobei "ehyd.gv.at" als Link auf https://ehyd.gv.at auszuführen ist</em> (linking
+<code>ehyd.gv.at</code> to <code>https://ehyd.gv.at</code>). Both <code>rr.describe("at_ehyd")</code> and
+<code>result.provenance</code> expose <code>license="CC BY 4.0"</code> and
+<code>citation="Datenquelle: ehyd.gv.at"</code>. For scientific traceability, also record
+the station HZB number, product, requested period, and retrieval date.</p>
+<p>The <a href="https://ehyd.gv.at/">eHYD portal</a> notes that data are published pursuant to
+§ 55o (2) <em>Wasserrechtsgesetz</em> and § 4 (1)(2) <em>Umweltinformationsgesetz</em> without
+warranty for completeness, continuity, or accuracy, and prohibits automated
+extraction outside content expressly offered for download (both per-station
+<em>Geprüfte Daten</em> CSV files and <em>Pegel Aktuell</em> chart CSV exports are offered for
+download on the portal). An older 2022 <a href="https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf">general user
+guide</a> (page 14) also
+contains an own-use and no-paid-resale statement alongside the CC BY 4.0 INSPIRE
+licence declarations. RivRetrieve paces live requests politely (at most one
+request per second) and caches downloaded archive series locally when
+<code>cache="reuse"</code> is passed.</p>
+<h2 id="sources">Sources</h2>
+<p>Publisher documents and metadata checked on 2026-10-31 and verified reachable on
+2026-11-03:</p>
+<ul>
+<li><a href="https://ehyd.gv.at/">eHYD portal (<code>ehyd.gv.at</code>)</a>: national hydrographic map, station downloads, <em>Pegel Aktuell</em> telemetry charts, and portal legal notices.</li>
+<li><a href="https://ehyd.gv.at/assets/documents/eHYD_Allgemein.pdf">BMLUK: <em>eHYD Allgemein</em> (general user guide, PDF)</a>: HZB numbering, monitoring domains, <em>Stammdaten</em> sheets, CSV exports, and usage notes.</li>
+<li><a href="https://ehyd.gv.at/assets/documents/Aktuelle_Daten.pdf">BMLUK: <em>Aktuelle Daten in eHYD</em> (current telemetry guide, PDF)</a>: <em>Pegel Aktuell</em> transfer intervals and unchecked raw-telemetry caveats.</li>
+<li><a href="https://data.hydrographie.gv.at/Vorschriften_und_Anleitungen/30b%20Pegelordnung-2014.pdf">BMLUK: <em>Pegelordnung 2014</em> (PDF)</a>: gauge-zero (<em>Pegelnullpunkt</em>) definitions, time-zone recommendations (<code>MEZ</code>), daily interval means, and monthly instantaneous extrema.</li>
+<li><a href="https://gis.lfrz.gv.at/api/geodata/i000501/ogc/features/v1/collections?f=application%2Fjson">LFRZ OGC API Features (<code>i000501</code>)</a>: WGS84 (<code>EPSG:4326</code>) station collections for <code>messstellen_owf</code> and <code>pegel_aktuell</code>.</li>
+<li><a href="https://data.inspire.gv.at/55e494dd-e0af-4806-95d6-86e30dde0504">INSPIRE Austria metadata: hydrographic station network</a> and <a href="https://geoportal.inspire.gv.at/metadatensuche/srv/api/records/6a67faa7-3ad7-4faf-91e9-17a518d10685/formatters/xml"><em>Pegel Aktuell</em> service</a>: CC BY 4.0 licensing and mandatory <code>Datenquelle: ehyd.gv.at</code> attribution.</li>
+</ul>
+<p>The station counts describe the packaged catalogue snapshot (2026-10-31). The
+example observations were retrieved on 2026-11-03. This live example does not
+establish continuous coverage.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

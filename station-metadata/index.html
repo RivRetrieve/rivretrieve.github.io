@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../providers/ba_fhmzbih/" class="md-tabs__link">
+        <a href="../providers/ar_ina/" class="md-tabs__link">
           
   
   
@@ -802,6 +802,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/ba_fhmzbih/" class="md-nav__link">
         
   
@@ -886,6 +942,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/cz_chmi/" class="md-nav__link">
         
   
@@ -894,6 +978,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -1034,6 +1174,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1725,19 +1893,25 @@ of the source view.
 &lt;!-- fields-by-provider:start --&gt;
 | Provider | Station name | Water body | Drainage area | Elevation |
 |---|---|---|---|---|
+| [`ar_ina`](providers/ar_ina.md) | `nombre` | `rio` | — | — |
+| [`at_ehyd`](providers/at_ehyd.md) | `messstelle`, `name` | `gewaesser`, `gewasser` | `orogr.Einzugsgebiet [km²]` (km²) | — |
 | [`ba_fhmzbih`](providers/ba_fhmzbih.md) | — | — | `metadata_CATCHMENT_SIZE` (km²) | — |
 | [`br_ana`](providers/br_ana.md) | `Estacao_Nome` | `Rio_Nome` | `Area_Drenagem` | `Altitude` |
 | [`ca_eccc`](providers/ca_eccc.md) | `STATION_NAME` | — | `DRAINAGE_AREA_EFFECT`, `DRAINAGE_AREA_GROSS` (km2) | — |
-| [`ch_foen`](providers/ch_foen.md) | `data-name` | `data-hydro-body` | `Catchment size` (km2) | `Station altitude` (m) |
+| [`ch_foen`](providers/ch_foen.md) | `data-name`, `name` | `data-hydro-body`, `riverName` | `Catchment size` (km2) | `Station altitude` (m) |
+| [`co_ideam`](providers/co_ideam.md) | `Nombre` | `Corriente` | — | `Altitud` |
 | [`cz_chmi`](providers/cz_chmi.md) | `STATION_NAME` | `STREAM_NAME` | `PLO_STA` (km²) | — |
+| [`dk_vanda`](providers/dk_vanda.md) | `name` | — | `catchmentAreaKm2` (km2) | — |
+| [`fi_syke`](providers/fi_syke.md) | `Nimi` | `PaaVesalNimi`, `VesalNimi` | — | — |
 | [`fr_hubeau`](providers/fr_hubeau.md) | `libelle_station` | `libelle_cours_eau`, `libelle_masse_eau` | `superficie_reelle`, `superficie_topo`; `surface_bv` (km²) | `altitude`, `altitude_site`; `altitude_ref_alti_station` (m) |
 | [`fr_hydroportail`](providers/fr_hydroportail.md) | — | — | — | — |
 | [`jp_mlit`](providers/jp_mlit.md) | `観測所名` | `河川名` | `流域面積` (km2) | `零点高` (m) |
 | [`lt_lhmt`](providers/lt_lhmt.md) | `name` | `waterBody` | — | — |
 | [`no_nve`](providers/no_nve.md) | `stationName` | `lakeName`, `reservoirName`, `riverName` | `drainageBasinArea`, `drainageBasinAreaNorway`, `transferAreaIn`, `transferAreaOut` (km2) | `masl` (m) |
+| [`pe_senamhi`](providers/pe_senamhi.md) | `name` | `waterBody` | — | `altitude` (m) |
 | [`pl_imgw`](providers/pl_imgw.md) | — | — | `area` (square kilometre) | `gauge_altitude` (m) |
 | [`th_thaiwater`](providers/th_thaiwater.md) | — | — | — | — |
-| [`usgs_nwis`](providers/usgs_nwis.md) | `station_nm` | — | `contrib_drain_area_va`, `drain_area_va` (sq mi) | `alt_va` (feet) |
+| [`usgs_nwis`](providers/usgs_nwis.md) | `monitoring_location_name` | — | `contrib_drain_area_va`, `drain_area_va` (sq mi) | `alt_va` (feet) |
 &lt;!-- fields-by-provider:end --&gt;
 
 The table lists names only. What a field means is defined by the agency: Norway&#39;s `transferAreaIn`
@@ -1952,7 +2126,8 @@ print(json.loads(altitude[&#34;elevation_value&#34;][0]))
 
 Decoding restores the string `&#34;432&#34;`, not the number `432`. The source view still
 returns `&#34;432 m a.s.l.&#34;` when decoded. Separating this suffix does not change the
-published datum association.
+published datum association. LN02 describes this station altitude; it does not
+establish a named datum for water-level observations.
 
 Elevations can describe different physical reference points. Station altitude
 can locate the station, ground level can describe the ground surface, and gauge
@@ -2043,6 +2218,8 @@ the [provider pages](index.md#river-data-and-where-to-find-them). `rr.describe(p
 packaged catalogue descriptor offline; metadata notices appear in its
 `station_metadata` record set.
 
+- [IDEAM&#39;s terms](providers/co_ideam.md#terms-and-citation) require source attribution
+  to IDEAM and apply CC BY-SA 4.0. Adaptations must follow the licence&#39;s share-alike conditions.
 - [LHMT&#39;s terms](providers/lt_lhmt.md#terms-and-citation) require source attribution
   and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence&#39;s share-alike conditions.
 - [MLIT&#39;s terms](providers/jp_mlit.md#terms-and-citation) explain PDL1.0 and its
@@ -2178,6 +2355,20 @@ of the source view.</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="../providers/ar_ina/"><code>ar_ina</code></a></td>
+<td><code>nombre</code></td>
+<td><code>rio</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/at_ehyd/"><code>at_ehyd</code></a></td>
+<td><code>messstelle</code>, <code>name</code></td>
+<td><code>gewaesser</code>, <code>gewasser</code></td>
+<td><code>orogr.Einzugsgebiet [km²]</code> (km²)</td>
+<td>—</td>
+</tr>
+<tr>
 <td><a href="../providers/ba_fhmzbih/"><code>ba_fhmzbih</code></a></td>
 <td>—</td>
 <td>—</td>
@@ -2200,16 +2391,37 @@ of the source view.</p>
 </tr>
 <tr>
 <td><a href="../providers/ch_foen/"><code>ch_foen</code></a></td>
-<td><code>data-name</code></td>
-<td><code>data-hydro-body</code></td>
+<td><code>data-name</code>, <code>name</code></td>
+<td><code>data-hydro-body</code>, <code>riverName</code></td>
 <td><code>Catchment size</code> (km2)</td>
 <td><code>Station altitude</code> (m)</td>
+</tr>
+<tr>
+<td><a href="../providers/co_ideam/"><code>co_ideam</code></a></td>
+<td><code>Nombre</code></td>
+<td><code>Corriente</code></td>
+<td>—</td>
+<td><code>Altitud</code></td>
 </tr>
 <tr>
 <td><a href="../providers/cz_chmi/"><code>cz_chmi</code></a></td>
 <td><code>STATION_NAME</code></td>
 <td><code>STREAM_NAME</code></td>
 <td><code>PLO_STA</code> (km²)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/dk_vanda/"><code>dk_vanda</code></a></td>
+<td><code>name</code></td>
+<td>—</td>
+<td><code>catchmentAreaKm2</code> (km2)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><a href="../providers/fi_syke/"><code>fi_syke</code></a></td>
+<td><code>Nimi</code></td>
+<td><code>PaaVesalNimi</code>, <code>VesalNimi</code></td>
+<td>—</td>
 <td>—</td>
 </tr>
 <tr>
@@ -2248,6 +2460,13 @@ of the source view.</p>
 <td><code>masl</code> (m)</td>
 </tr>
 <tr>
+<td><a href="../providers/pe_senamhi/"><code>pe_senamhi</code></a></td>
+<td><code>name</code></td>
+<td><code>waterBody</code></td>
+<td>—</td>
+<td><code>altitude</code> (m)</td>
+</tr>
+<tr>
 <td><a href="../providers/pl_imgw/"><code>pl_imgw</code></a></td>
 <td>—</td>
 <td>—</td>
@@ -2263,7 +2482,7 @@ of the source view.</p>
 </tr>
 <tr>
 <td><a href="../providers/usgs_nwis/"><code>usgs_nwis</code></a></td>
-<td><code>station_nm</code></td>
+<td><code>monitoring_location_name</code></td>
 <td>—</td>
 <td><code>contrib_drain_area_va</code>, <code>drain_area_va</code> (sq mi)</td>
 <td><code>alt_va</code> (feet)</td>
@@ -2461,7 +2680,8 @@ datum:</p>
 </span></code></pre></div>
 <p>Decoding restores the string <code>"432"</code>, not the number <code>432</code>. The source view still
 returns <code>"432 m a.s.l."</code> when decoded. Separating this suffix does not change the
-published datum association.</p>
+published datum association. LN02 describes this station altitude; it does not
+establish a named datum for water-level observations.</p>
 <p>Elevations can describe different physical reference points. Station altitude
 can locate the station, ground level can describe the ground surface, and gauge
 zero is the reference level from which a gauge measures water level. The agency's
@@ -2582,6 +2802,8 @@ the <a href="../#river-data-and-where-to-find-them">provider pages</a>. <code>rr
 packaged catalogue descriptor offline; metadata notices appear in its
 <code>station_metadata</code> record set.</p>
 <ul>
+<li><a href="../providers/co_ideam/#terms-and-citation">IDEAM's terms</a> require source attribution
+  to IDEAM and apply CC BY-SA 4.0. Adaptations must follow the licence's share-alike conditions.</li>
 <li><a href="../providers/lt_lhmt/#terms-and-citation">LHMT's terms</a> require source attribution
   and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence's share-alike conditions.</li>
 <li><a href="../providers/jp_mlit/#terms-and-citation">MLIT's terms</a> explain PDL1.0 and its

@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -726,6 +782,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -734,6 +818,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -998,6 +1138,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1628,7 +1796,8 @@ preview = result.data.select(&#34;time&#34;, &#34;time_zone&#34;, &#34;value&#34
 print(preview.write_csv(), end=&#34;&#34;)
 
 print(result.data.height)
-print([(issue.severity, issue.code) for issue in result.issues])
+print(rr.annotations(result).select(&#34;schema&#34;, &#34;name&#34;, &#34;dtype&#34;).rows())
+print(result.to_polars(annotations=True).select(&#34;value&#34;, &#34;unit&#34;, &#34;flag&#34;).rows())
 ```
 
 Output:
@@ -1638,12 +1807,15 @@ time,time_zone,value,unit
 2020-01-10T00:00:00.000000,unknown,34.39,m3/s
 2020-01-11T00:00:00.000000,unknown,32.14,m3/s
 2
-[(&#39;info&#39;, &#39;source_missing&#39;)]
+[(&#39;jp_mlit.observations&#39;, &#39;flag&#39;, &#39;String&#39;)]
+[(34.39, &#39;m3/s&#39;, None), (32.14, &#39;m3/s&#39;, None)]
 ```
 
-The two rows give discharge in m³/s for January 10 and 11. Both days have a value.
-The `source_missing` issue refers to other dates in the annual file that MLIT
-supplies, not to these two days. RivRetrieve returns only the requested dates.
+The two rows give discharge in m³/s for January 10 and 11. Both days have a
+measured value and no cell flag (`flag=null`). Unmeasured days elsewhere in the
+annual file remain excluded from `result.data` and outside the clipped
+`2020-01-10` to `2020-01-11` annotation table. RivRetrieve returns only the
+requested dates.
 
 The time zone is `unknown`, so these timestamps should not be read as UTC or Japan
 Standard Time. See [Time](#time) for how the source labels are represented, and
@@ -1714,23 +1886,31 @@ registered later as definitive values (shown in black), and MLIT asks users to u
 those values.
 
 MLIT marks provisional values and reasons for missing observations in its download
-files. RivRetrieve reads those markers using MLIT&#39;s stated meanings:
+files. RivRetrieve preserves those cell-level symbols in observation-grain
+annotations (`jp_mlit.observations`, field `flag`):
 
-- A number marked `*` (provisional) is returned, with a `source_tentative` issue.
-- A cell marked `$` (missing), `#` (station closed), or `-` (unregistered) produces
-  no observation row. RivRetrieve reports `source_missing`,
-  `source_closed_station`, or `source_unregistered`, respectively.
+- A measured value with no flag carries `measured=True` and `flag=null`.
+- A measured value marked `*` (provisional) carries `measured=True` and
+  `flag=&#34;*&#34;`.
+- A calendar slot marked `$` (missing), `#` (station closed), or `-`
+  (unregistered) produces no numeric observation row in `result.data` and is
+  retained as an unmeasured annotation slot (`measured=False`, `flag=&#34;$&#34;`,
+  `&#34;#&#34;`, or `&#34;-&#34;`).
 
 The hourly files define all four markers; the daily files define only `$` and `-`.
-RivRetrieve does not attach these markers to individual observations or offer them
-as selectable variants. It summarizes each marker type in `result.issues`, with a
-count and the first and last affected source labels. Those summaries cannot reliably
-identify every provisional observation for filtering.
+Use `result.to_polars(annotations=True)` or `result.to_pandas(annotations=True)`
+to join measured flags onto observation rows, or call
+`rr.annotations(result, schema=&#34;jp_mlit.observations&#34;)` to inspect both
+measured rows and unmeasured (`measured=False`) slots within the requested
+window. See [Source annotations](../usage.md#source-annotations) for general
+options.
 
 RivRetrieve makes no quality judgement of its own. A number without a marker does
-not establish that MLIT has formally verified it. Missing observations are absent
-rows, not rows containing null values; a failed request is reported separately.
-See [Usage](../usage.md#issues) for interpreting issues and empty results.
+not establish that MLIT has formally verified it. Daily month rows carry only the
+valid calendar days of each month (for example 28 days in a non-leap February),
+so non-existent dates never appear as observation or annotation slots. A failed
+request is reported separately in `result.issues`. See
+[Usage](../usage.md#issues) for interpreting issues and empty results.
 
 ## Automated access and caching
 
@@ -1754,9 +1934,8 @@ warns of slower responses during floods and directs real-time users to
 リアルタイム川の防災情報.
 
 Daily retrieval downloads annual files, and hourly retrieval downloads monthly
-files, even for a short requested period. Issues can therefore refer to dates
-outside that period. In the first example, `source_missing` summarizes 17 missing
-dates in the annual file, from April 30 to July 1, 2020.
+files, even for a short requested period. Returned rows and observation
+annotations are clipped to the requested period before return.
 
 Live retrieval defaults to `cache=&#34;bypass&#34;`, which neither reads nor writes the
 observation cache. To reuse a download, select the specific series and use
@@ -1775,22 +1954,23 @@ repeated_result = rr.fetch(
 )
 
 print(repeated_result.data.select(&#34;value&#34;, &#34;unit&#34;).rows())
-print([(issue.severity, issue.code) for issue in repeated_result.issues])
+print(repeated_result.to_polars(annotations=True).select(&#34;value&#34;, &#34;flag&#34;).rows())
 ```
 
 Output:
 
 ```text
 [(34.39, &#39;m3/s&#39;), (32.14, &#39;m3/s&#39;)]
-[(&#39;info&#39;, &#39;source_missing&#39;)]
+[(34.39, None), (32.14, None)]
 ```
 
 With an initially empty cache, the first `reuse` call retrieves and stores this
-series and period. The repeated covered request reads locally and retains the
-missing-data issue. The earlier `bypass` call did not populate the cache.
-Selecting the specific series tells RivRetrieve exactly which record to reuse.
-Repeating the broader `selection` alone can require another source request because
-RivRetrieve has not established whether other matching series exist.
+series, period, and its cell annotations. The repeated covered request reads
+locally and preserves the attached annotations. The earlier `bypass` call did not
+populate the cache. Selecting the specific series tells RivRetrieve exactly
+which record to reuse. Repeating the broader `selection` alone can require another
+source request because RivRetrieve has not established whether other matching
+series exist.
 
 The saved acquisition history includes both the HTML page and its linked DAT
 download, with their original request details and retrieval times. A local read
@@ -1920,18 +2100,22 @@ Read <a href="#automated-access-and-caching">Automated access and caching</a> be
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">preview</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="s2">&quot;flag&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
 </span></code></pre></div>
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2020-01-10T00:00:00.000000,unknown,34.39,m3/s
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2020-01-11T00:00:00.000000,unknown,32.14,m3/s
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>[(&#39;info&#39;, &#39;source_missing&#39;)]
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>[(&#39;jp_mlit.observations&#39;, &#39;flag&#39;, &#39;String&#39;)]
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[(34.39, &#39;m3/s&#39;, None), (32.14, &#39;m3/s&#39;, None)]
 </span></code></pre></div>
-<p>The two rows give discharge in m³/s for January 10 and 11. Both days have a value.
-The <code>source_missing</code> issue refers to other dates in the annual file that MLIT
-supplies, not to these two days. RivRetrieve returns only the requested dates.</p>
+<p>The two rows give discharge in m³/s for January 10 and 11. Both days have a
+measured value and no cell flag (<code>flag=null</code>). Unmeasured days elsewhere in the
+annual file remain excluded from <code>result.data</code> and outside the clipped
+<code>2020-01-10</code> to <code>2020-01-11</code> annotation table. RivRetrieve returns only the
+requested dates.</p>
 <p>The time zone is <code>unknown</code>, so these timestamps should not be read as UTC or Japan
 Standard Time. See <a href="#time">Time</a> for how the source labels are represented, and
 <a href="../../usage/">Usage</a> for general selection and result inspection.</p>
@@ -2026,22 +2210,30 @@ from equipment failure or communication problems. Formally verified data are
 registered later as definitive values (shown in black), and MLIT asks users to use
 those values.</p>
 <p>MLIT marks provisional values and reasons for missing observations in its download
-files. RivRetrieve reads those markers using MLIT's stated meanings:</p>
+files. RivRetrieve preserves those cell-level symbols in observation-grain
+annotations (<code>jp_mlit.observations</code>, field <code>flag</code>):</p>
 <ul>
-<li>A number marked <code>*</code> (provisional) is returned, with a <code>source_tentative</code> issue.</li>
-<li>A cell marked <code>$</code> (missing), <code>#</code> (station closed), or <code>-</code> (unregistered) produces
-  no observation row. RivRetrieve reports <code>source_missing</code>,
-  <code>source_closed_station</code>, or <code>source_unregistered</code>, respectively.</li>
+<li>A measured value with no flag carries <code>measured=True</code> and <code>flag=null</code>.</li>
+<li>A measured value marked <code>*</code> (provisional) carries <code>measured=True</code> and
+  <code>flag="*"</code>.</li>
+<li>A calendar slot marked <code>$</code> (missing), <code>#</code> (station closed), or <code>-</code>
+  (unregistered) produces no numeric observation row in <code>result.data</code> and is
+  retained as an unmeasured annotation slot (<code>measured=False</code>, <code>flag="$"</code>,
+  <code>"#"</code>, or <code>"-"</code>).</li>
 </ul>
 <p>The hourly files define all four markers; the daily files define only <code>$</code> and <code>-</code>.
-RivRetrieve does not attach these markers to individual observations or offer them
-as selectable variants. It summarizes each marker type in <code>result.issues</code>, with a
-count and the first and last affected source labels. Those summaries cannot reliably
-identify every provisional observation for filtering.</p>
+Use <code>result.to_polars(annotations=True)</code> or <code>result.to_pandas(annotations=True)</code>
+to join measured flags onto observation rows, or call
+<code>rr.annotations(result, schema="jp_mlit.observations")</code> to inspect both
+measured rows and unmeasured (<code>measured=False</code>) slots within the requested
+window. See <a href="../../usage/#source-annotations">Source annotations</a> for general
+options.</p>
 <p>RivRetrieve makes no quality judgement of its own. A number without a marker does
-not establish that MLIT has formally verified it. Missing observations are absent
-rows, not rows containing null values; a failed request is reported separately.
-See <a href="../../usage/#issues">Usage</a> for interpreting issues and empty results.</p>
+not establish that MLIT has formally verified it. Daily month rows carry only the
+valid calendar days of each month (for example 28 days in a non-leap February),
+so non-existent dates never appear as observation or annotation slots. A failed
+request is reported separately in <code>result.issues</code>. See
+<a href="../../usage/#issues">Usage</a> for interpreting issues and empty results.</p>
 <h2 id="automated-access-and-caching">Automated access and caching</h2>
 <p>MLIT's notes on use describe the website as intended for ordinary browser viewing:</p>
 <blockquote>
@@ -2060,9 +2252,8 @@ requests; it does not create an exemption from MLIT's access guidance. MLIT also
 warns of slower responses during floods and directs real-time users to
 リアルタイム川の防災情報.</p>
 <p>Daily retrieval downloads annual files, and hourly retrieval downloads monthly
-files, even for a short requested period. Issues can therefore refer to dates
-outside that period. In the first example, <code>source_missing</code> summarizes 17 missing
-dates in the annual file, from April 30 to July 1, 2020.</p>
+files, even for a short requested period. Returned rows and observation
+annotations are clipped to the requested period before return.</p>
 <p>Live retrieval defaults to <code>cache="bypass"</code>, which neither reads nor writes the
 observation cache. To reuse a download, select the specific series and use
 <code>cache="reuse"</code>, as below. Run this example in the same Python session as the first.</p>
@@ -2078,18 +2269,19 @@ observation cache. To reuse a download, select the specific series and use
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">)</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">repeated_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">repeated_result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">repeated_result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;flag&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
 </span></code></pre></div>
 <p>Output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[(34.39, &#39;m3/s&#39;), (32.14, &#39;m3/s&#39;)]
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[(&#39;info&#39;, &#39;source_missing&#39;)]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>[(34.39, None), (32.14, None)]
 </span></code></pre></div>
 <p>With an initially empty cache, the first <code>reuse</code> call retrieves and stores this
-series and period. The repeated covered request reads locally and retains the
-missing-data issue. The earlier <code>bypass</code> call did not populate the cache.
-Selecting the specific series tells RivRetrieve exactly which record to reuse.
-Repeating the broader <code>selection</code> alone can require another source request because
-RivRetrieve has not established whether other matching series exist.</p>
+series, period, and its cell annotations. The repeated covered request reads
+locally and preserves the attached annotations. The earlier <code>bypass</code> call did not
+populate the cache. Selecting the specific series tells RivRetrieve exactly
+which record to reuse. Repeating the broader <code>selection</code> alone can require another
+source request because RivRetrieve has not established whether other matching
+series exist.</p>
 <p>The saved acquisition history includes both the HTML page and its linked DAT
 download, with their original request details and retrieval times. A local read
 keeps this history even when receipts are disabled. When receipts are enabled,

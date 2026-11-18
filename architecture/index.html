@@ -326,7 +326,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../providers/ba_fhmzbih/" class="md-tabs__link">
+        <a href="../providers/ar_ina/" class="md-tabs__link">
           
   
   
@@ -639,6 +639,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/ba_fhmzbih/" class="md-nav__link">
         
   
@@ -723,6 +779,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/cz_chmi/" class="md-nav__link">
         
   
@@ -731,6 +815,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -871,6 +1011,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1661,6 +1829,13 @@ interpretation consistent. Compiled stores preserve declared source columns and 
 states from publisher artifacts. Accumulated stores retain parsed observations and the
 evidence needed to decide whether a later request can reuse them.
 
+Provider-scoped observation annotations and unmeasured source slots are stored alongside
+observations in native-year Parquet partitions (`annotations=&lt;schema_id&gt;/rows.parquet`),
+while non-identity series annotations are stored once in `manifest.json`. `ObservationResult.data`
+retains its ten canonical columns, while `annotations()`, `to_polars(annotations=...)`,
+`to_pandas(annotations=...)`, and `series(..., annotations=...)` expose declared source
+annotations across live retrieval, store reuse, manual refresh, `pick`, `to_utc`, and bundles.
+
 Reuse requires both knowledge of the matching series and successful interval coverage.
 The decision is made per station and access route. An uncovered route is reacquired
 while another can be served locally. Coverage is separate from observation density:
@@ -1785,6 +1960,12 @@ reads use the same conversion stage, which avoids double conversion and keeps ph
 interpretation consistent. Compiled stores preserve declared source columns and value
 states from publisher artifacts. Accumulated stores retain parsed observations and the
 evidence needed to decide whether a later request can reuse them.</p>
+<p>Provider-scoped observation annotations and unmeasured source slots are stored alongside
+observations in native-year Parquet partitions (<code>annotations=&lt;schema_id&gt;/rows.parquet</code>),
+while non-identity series annotations are stored once in <code>manifest.json</code>. <code>ObservationResult.data</code>
+retains its ten canonical columns, while <code>annotations()</code>, <code>to_polars(annotations=...)</code>,
+<code>to_pandas(annotations=...)</code>, and <code>series(..., annotations=...)</code> expose declared source
+annotations across live retrieval, store reuse, manual refresh, <code>pick</code>, <code>to_utc</code>, and bundles.</p>
 <p>Reuse requires both knowledge of the matching series and successful interval coverage.
 The decision is made per station and access route. An uncovered route is reacquired
 while another can be served locally. Coverage is separate from observation density:

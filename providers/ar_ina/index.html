@@ -1,0 +1,2676 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python package for downloading global river gauge data">
+      
+      
+      
+        <link rel="canonical" href="https://rivretrieve.github.io/providers/ar_ina/">
+      
+      
+        <link rel="prev" href="../../map/">
+      
+      
+        <link rel="next" href="../at_ehyd/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Argentina (INA) - RivRetrieve</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#argentina-ina-alerta5" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RivRetrieve" class="md-header__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RivRetrieve
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Argentina (INA)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../station-metadata/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Metadata
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../map/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Station Map
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/camels-us/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worked Example
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development-conventions/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RivRetrieve" class="md-nav__button md-logo" aria-label="RivRetrieve" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RivRetrieve
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/RivRetrieve/RivRetrieve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RivRetrieve/RivRetrieve
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Station Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-measures-and-who-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who measures, and who publishes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can retrieve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-references-and-station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage references and station metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-and-data-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time and data status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terms-and-citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terms and citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ba_fhmzbih/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bosnia and Herzegovina (AVP Sava)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../br_ana/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brazil (ANA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ca_eccc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canada (ECCC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cz_chmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hubeau/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (Hub'Eau)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fr_hydroportail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    France (HydroPortail)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jp_mlit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Japan (MLIT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lt_lhmt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lithuania (LHMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../no_nve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pl_imgw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Poland (IMGW-PIB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch_foen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Switzerland (FOEN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../th_thaiwater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thailand (ThaiWater)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usgs_nwis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    United States (USGS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/camels-us/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../maintenance/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing Useful Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/observation-store-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observation Stores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-absence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Absence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalogue-provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalogue Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../maintenance/evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verification Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-measures-and-who-publishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who measures, and who publishes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-retrieve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can retrieve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-references-and-station-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage references and station metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-and-data-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time and data status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terms-and-citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terms and citation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<button type="button" class="md-content__button md-icon" id="copy-page-btn" title="Copy page text for LLM" aria-label="Copy page text">
+  <svg id="copy-icon-idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>
+  <svg id="copy-icon-success" style="display: none; fill: #10b981;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg>
+</button>
+
+<textarea id="__raw_page_markdown__" style="display:none;" aria-hidden="true"># Argentina: INA (Alerta5)
+
+[Documentation index](../index.md) · [Usage](../usage.md)
+
+| | |
+|---|---|
+| Provider | `ar_ina` |
+| Country | Argentina (plus one binational Río Uruguay border gauge in Uruguay) |
+| Published by | Instituto Nacional del Agua (INA), Subgerencia de Sistemas de Información y Alerta Hidrológico (SIyAH), with federated national, binational, provincial and municipal networks |
+| Read from | Official INA Alerta5 REST API (`alerta.ina.gob.ar/a5`) |
+| Quantities | Discharge, stage |
+| Stations in the catalogue | 829 river gauges. Availability depends on station, quantity, series and period |
+| Station metadata | Station name and water-body name. See [Fields by provider](../station-metadata.md#fields-by-provider) |
+| Credentials | None |
+| Licence stated by Argentina.gob.ar | Creative Commons Attribution 4.0 International (`Creative Commons Atribución 4.0 Internacional`, CC BY 4.0); source attribution required |
+| Agency documentation | [INA Alerta Hidrológico](https://www.ina.gob.ar/alerta), [Alerta5 portal](https://alerta.ina.gob.ar/a5/secciones/mapa/puntual), [Alerta5 OpenAPI specification](https://alerta.ina.gob.ar/a5/yaml/apidocs_v3_1.yml), [Punctual series guide](https://alerta.ina.gob.ar/a5/contents/metadata_series_puntuales.html) |
+
+Retrieve four days of daily mean discharge at station `8`, Andresito on the
+Iguazú River:
+
+```python
+import rivretrieve as rr
+
+selection = rr.find(
+    provider=&#34;ar_ina&#34;,
+    station=&#34;8&#34;,
+    quantity=&#34;discharge&#34;,
+    frequency=&#34;daily&#34;,
+    statistic=&#34;mean&#34;,
+)
+
+result = rr.fetch(selection, start=&#34;2024-01-01&#34;, end=&#34;2024-01-04&#34;, cache=&#34;bypass&#34;)
+
+preview = result.data.select(&#34;time&#34;, &#34;time_zone&#34;, &#34;value&#34;, &#34;unit&#34;).head(3)
+print(preview.write_csv(), end=&#34;&#34;)
+
+print(result.data.height)
+print([(issue.severity, issue.code) for issue in result.issues])
+```
+
+Output:
+
+```text
+time,time_zone,value,unit
+2024-01-01T03:00:00.000000,+00:00,839.95,m3/s
+2024-01-02T03:00:00.000000,+00:00,898.63,m3/s
+2024-01-03T03:00:00.000000,+00:00,2051.27,m3/s
+4
+[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;)]
+```
+
+The request returned four published daily means in m³/s. The preview shows the
+first three days. Each Argentine calendar day since March 2009 begins at local
+midnight in `UTC-03:00`, so 1 January&#39;s daily mean is labelled
+`2024-01-01T03:00:00.000000` with `time_zone=&#34;+00:00&#34;`; see
+[Time and data status](#time-and-data-status) for historical Daylight Saving
+Time periods.
+
+The informational issue `provenance.citation_not_established` means the packaged
+provider catalogue has no fixed verbatim citation string configured. It does not
+mean retrieval failed or that attribution is optional; follow the attribution
+requirements in [Terms and citation](#terms-and-citation).
+
+`cache=&#34;bypass&#34;`, the default for live `rr.fetch` calls, requests Alerta5
+directly without reading or writing a local cache. Passing `cache=&#34;reuse&#34;`
+stores retrieved observations locally so later requests for already-covered
+dates reuse the local store. This output was checked live on 2026-11-09. Source
+records can be updated or revised over time. See [Usage](../usage.md) for
+selection options and working with returned data.
+
+## Who measures, and who publishes
+
+Argentina&#39;s National Water Institute (*Instituto Nacional del Agua*, INA),
+through its Hydrological Information and Warning Systems Sub-directorate
+(*Subgerencia de Sistemas de Información y Alerta Hidrológico*, SIyAH),
+publishes national and *Cuenca del Plata* river observations through the
+[Alerta5](https://alerta.ina.gob.ar/a5/secciones/mapa/puntual) service. Alerta5
+aggregates gauge measurements collected by several operating networks, so
+appearance on Alerta5 does not mean that INA operates every station itself. The
+829 river gauges in RivRetrieve&#39;s packaged catalogue belong to nine source
+networks:
+
+| Source network in Alerta5 | Stations |
+|---|---:|
+| Red Hidrológica Nacional, telemetric network (`sat2`, SSRH) | 479 |
+| Red Hidrológica Nacional, historical database (`alturas_bdhi`, SSRH) | 235 |
+| Prefectura Naval Argentina staff gauges (`alturas_prefe`) | 88 |
+| INA Delta and Greater Buenos Aires network (`ina_delta`) | 16 |
+| Salto Grande binational dam hydrometeorological network (`estaciones_salto_grande`) | 4 |
+| Nucleoeléctrica Argentina (`na-sa`) | 3 |
+| Municipality of Quilmes (`quilmes`) | 2 |
+| INTA Delta (`inta_delta`) | 1 |
+| Comisión Administradora del Río Uruguay (`alturas_varios`, station `1699` Nueva Palmira) | 1 |
+
+No API key or account is required. RivRetrieve searches the packaged station and
+series catalogue offline; `rr.fetch` then requests JSON observations over HTTPS
+from Alerta5. Station identifiers are integer Alerta5 station IDs kept as
+strings, such as `&#34;8&#34;` or `&#34;1967&#34;`. When the same physical river location has
+entries in more than one contributing network (for example a telemetric `sat2`
+entry alongside a historical `alturas_bdhi` entry), Alerta5 assigns each network
+entry its own station ID, and RivRetrieve keeps them separate.
+
+The packaged `ar_ina` catalogue covers physical river and inland-delta gauges
+with observed discharge or stage records:
+
+- `828` gauges carry `EPSG:4326` coordinates, and `1` river gauge (`&#34;96&#34;`,
+  Colorado on the Bermejo River) is retained with `null` latitude and longitude
+  because Alerta5 publishes its stage series without station coordinates.
+- Inland Paraná Delta and freshwater inner *Río de la Plata* gauges (such as
+  Tigre, San Fernando, Buenos Aires, and La Plata in `alturas_prefe`, and urban
+  Greater Buenos Aires stream gauges in `ina_delta`) and the shared *Río
+  Uruguay* border gauge `1699` (Nueva Palmira, Uruguay, operated by CARU) are
+  included.
+- Virtual hydrological-model nodes, model simulations, forecasts, climatologies,
+  and interpolated or derived analysis series stored in Alerta5 alongside gauge
+  measurements are excluded; RivRetrieve admits only direct measurement
+  (*medición directa*) and rating-curve (*curva de gasto*) observational
+  procedures.
+- Maritime and outer-estuary coastal tide-gauge networks (*Servicio de
+  Hidrografía Naval* `estaciones_shn` and *PVNyMM* `estaciones_pvnymm`), sparse
+  manual field discharge gaugings (*aforos*), and groundwater phreatic wells are
+  excluded.
+- Surface-water temperature has only two empty placeholder entries in Alerta5
+  with no observations, so `ar_ina` exposes discharge and stage only.
+
+Argentina&#39;s *Subsecretaría de Recursos Hídricos* (SSRH) also operates a separate
+federal hydrological portal ([SNIH](https://snih.hidricosargentina.gob.ar/))
+with additional historical discharge, stage, and water-temperature records; a
+separate provider for SNIH is tracked in
+[#729](https://github.com/RivRetrieve/RivRetrieve/issues/729).
+
+## What you can retrieve
+
+Alerta5 publishes five observational river discharge series types and eight
+observational river stage series types:
+
+| Quantity filter | Source field / `variant` | Frequency | Statistic | Source unit | Returned unit |
+|---|---|---|---|---|---|
+| `discharge` | `Qmd` (*Caudal medio diario*; per-series ID in `variant`) | Daily | Mean | m^3/s | m³/s |
+| `discharge` | `Q` (*Caudal*; per-series ID in `variant`) | Unknown | Instantaneous | m^3/s | m³/s |
+| `discharge` | `Qmm` (*Caudal medio mensual*; per-series ID in `variant`) | Monthly | Mean | m^3/s | m³/s |
+| `discharge` | `Qmmin` (*Caudal mínimo mensual*; per-series ID in `variant`) | Monthly | Minimum | m^3/s | m³/s |
+| `discharge` | `Qmmax` (*Caudal máximo mensual*; per-series ID in `variant`) | Monthly | Maximum | m^3/s | m³/s |
+| `stage` | `Hmd` (*Altura hidrométrica media diaria*; per-series ID in `variant`) | Daily | Mean | m | m |
+| `stage` | `H` (*Altura hidrométrica*; per-series ID in `variant`) | Unknown | Instantaneous | m | m |
+| `stage` | `H1h` (*Altura hidrométrica horaria*; per-series ID in `variant`) | Hourly | Unknown | m | m |
+| `stage` | `Hm4h` (*Altura hidrométrica 4-horaria*; per-series ID in `variant`) | Unknown | Unknown | m | m |
+| `stage` | `Hms` (*Altura hidrométrica media semanal*; per-series ID in `variant`) | Unknown | Mean | m | m |
+| `stage` | `Hmm` (*Altura hidrométrica media mensual*; per-series ID in `variant`) | Monthly | Mean | m | m |
+| `stage` | `Hmmin` (*Altura hidrométrica mínima mensual*; per-series ID in `variant`) | Monthly | Minimum | m | m |
+| `stage` | `Hmmax` (*Altura hidrométrica máxima mensual*; per-series ID in `variant`) | Monthly | Maximum | m | m |
+
+Discharge in `m^3/s` and stage in `m` require no numerical scaling; RivRetrieve
+normalises the discharge unit label to `m3/s` while keeping `&#34;m^3/s&#34;` in
+`source_unit`. It does not calculate daily or monthly aggregates from sub-daily
+readings or merge separate series.
+
+Availability varies substantially across stations. In the packaged catalogue
+snapshot (`2,611` witnessed station-series pairs across `829` gauges),
+instantaneous stage (`H`) is listed at `808` stations and daily mean stage
+(`Hmd`) at `756`, whereas daily mean discharge (`Qmd`) is listed at `82`
+stations, instantaneous rating-curve discharge (`Q`) at `32`, 4-hourly stage
+(`Hm4h`) at `391`, hourly stage (`H1h`) at `3`, and weekly mean stage (`Hms`) at
+`32`. A station being listed in the catalogue does not guarantee observations
+for every quantity or requested period.
+
+Each published Alerta5 time series has its own numeric Alerta5 series ID, which
+RivRetrieve exposes as `variant` (for example `variant=&#34;26605&#34;` for daily mean
+discharge at station `&#34;8&#34;`). Unlike providers with named processing levels,
+these numeric IDs belong to individual station series rather than forming a
+provider-wide menu. Within the packaged river catalogue, each station has at
+most one observational series per row in the table above.
+
+Several stage series have `Unknown` in `Frequency` or `Statistic`:
+
+- **Hourly (`H1h`) and 4-hourly (`Hm4h`) stage:** Alerta5 declares `1`-hour and
+  `4`-hour time steps with a `Continuous` data type rather than `Average`.
+  Comparing overlapping observations shows that these series place a single
+  stage reading onto each 1-hour or 4-hour slot rather than averaging readings
+  across the slot. RivRetrieve sets `frequency=&#34;hourly&#34;` on `H1h`, leaves
+  `frequency` unknown on `Hm4h` (4-hourly is not a named filter in
+  RivRetrieve&#39;s frequency vocabulary), and leaves `statistic` unknown on both so
+  mean and instantaneous filters do not select them by mistake.
+- **Weekly mean stage (`Hms`):** Summarises 7-day Monday-to-Monday intervals
+  with `statistic=&#34;mean&#34;`. Because RivRetrieve&#39;s frequency filter vocabulary has
+  `daily` and `monthly` rather than `weekly`, `frequency` remains unknown.
+- **Instantaneous discharge (`Q`) and stage (`H`):** Match
+  `statistic=&#34;instantaneous&#34;` without a `frequency` filter because telemetry and
+  staff-gauge reporting intervals vary across stations and periods (from
+  10- or 15-minute automatic transmissions to daily or sub-daily manual
+  readings).
+- **Monthly minimum and maximum series (`Qmmin`, `Qmmax`, `Hmmin`, `Hmmax`):**
+  Report the minimum or maximum of the station&#39;s underlying observations within
+  each calendar month, stamped at the start of the month.
+
+Inspect all candidate series and station metadata at a gauge offline before
+fetching, and use `rr.pick(..., variant=...)` (or `frequency=&#34;hourly&#34;` for
+`H1h`) when targeting a series whose frequency or statistic is unknown:
+
+```python
+station_52 = rr.find(provider=&#34;ar_ina&#34;, station=&#34;52&#34;, quantity=&#34;stage&#34;)
+candidates = rr.series(station_52)
+metadata = rr.metadata(station_52)
+
+hourly_stage = rr.pick(station_52, variant=&#34;31605&#34;)
+```
+
+## Stage references and station metadata
+
+River stage (*altura hidrométrica*) in Alerta5 is measured in metres relative to
+each station&#39;s local staff-gauge zero (*cero de escala*). RivRetrieve sets
+`vertical_reference=&#34;gauge_zero&#34;` and leaves `vertical_datum` unknown on all
+stage series. Water levels below local gauge zero are physically valid during
+low-water periods and remain negative (for example `-0.27 m` in monthly minimum
+stage at station `8`, Andresito). Do not compare raw stage values across
+different gauges as elevations above sea level.
+
+Station metadata from `rr.metadata(selection)` exposes two native fields from
+Alerta5:
+
+- `nombre` as `station_name` (populated for all `829` river gauges), and
+- `rio` in `water_body_name_value` (populated for `353` gauges and `null` at the
+  remaining `476` gauges where Alerta5 leaves `rio` empty).
+
+Both `drainage_area_*` and `elevation_*` columns are `null` (`state=&#34;no_metadata&#34;`
+in `rr.metadata(selection, view=&#34;source&#34;)`):
+
+- Alerta5&#39;s station inventory does not publish catchment areas, and its optional
+  basin-polygon endpoint covers fewer than 3% of river gauges while mixing total
+  drainage basins with incremental model subcatchments and zero placeholders.
+- An optional `cero_ign` attribute in Alerta5 (`73` river gauges) records the
+  height of the local staff-gauge zero relative to Argentina&#39;s *Instituto
+  Geográfico Nacional* (IGN) datum rather than ground elevation, while a sparse
+  `altitud` attribute (`10` river gauges) states neither a unit nor a vertical
+  datum. Neither field is exposed as station ground elevation.
+
+## Time and data status
+
+Alerta5 returns all observation timestamps in UTC (`...Z`). RivRetrieve
+preserves those UTC timestamps with `time_zone=&#34;+00:00&#34;` (`time_zone=&#34;UTC&#34;` in
+`rr.series(...)`), and `rr.to_utc(result)` returns them unchanged.
+
+Pay attention to local civil midnight when aligning daily, weekly, or monthly
+aggregates with calendar dates:
+
+- **March 2009 to present (`UTC-03:00`):** Argentina has observed fixed
+  `UTC-03:00` without Daylight Saving Time since March 2009. Daily, weekly, and
+  monthly intervals begin at `00:00` local time, which appears as `03:00:00` UTC
+  (for example `2024-01-01T03:00:00.000000` for 1 January 2024).
+- **Pre-2009 Daylight Saving Time transitions (`UTC-02:00` in summer):** During
+  historical Argentine summer-time periods (such as October 2008 to March 2009),
+  local midnight fell at `02:00:00` UTC (`UTC-02:00`). In Alerta5&#39;s database,
+  the spring transition day spans 23 hours (`03:00:00` UTC to the next day&#39;s
+  `02:00:00` UTC), summer days begin at `02:00:00` UTC, and the autumn
+  transition day spans 25 hours (`02:00:00` UTC to `03:00:00` UTC). Because the
+  UTC offset of local midnight shifts across historical DST years, RivRetrieve
+  leaves `day_definition` unknown rather than claiming a fixed UTC offset across
+  all decades.
+
+On daily, weekly, monthly, hourly, and 4-hourly series, `time` marks the start
+of the interval (`timestamp_anchor=&#34;start&#34;`). On instantaneous discharge (`Q`)
+and stage (`H`), `time` marks the measurement instant
+(`timestamp_anchor=&#34;measurement_time&#34;`), including exact sub-minute telemetry
+timestamps (such as `:10` seconds) where recorded by automatic loggers.
+
+Alerta5 serves operational real-time telemetry and historical gauge archives
+through the same API without per-observation quality-assurance flags. It does
+publish a series-level operational-availability code (`H`, `C`, `RT`, `NRT`,
+`S`, and the `H+S`/`C+S`/`RT+S`/`NRT+S` combinations, or `N` for no
+observations available), documented on the a5-portal-home map. RivRetrieve
+keeps the default series frame unchanged and preserves that code as a
+series-scope annotation, under schema `ar_ina.series`:
+
+| Field | Type |
+|---|---|
+| `data_availability` | `String` |
+
+Inspect it alongside the series it describes:
+
+```python
+print(rr.annotations(result).select(&#34;schema&#34;, &#34;name&#34;, &#34;dtype&#34;, &#34;row_count&#34;).write_csv(), end=&#34;&#34;)
+
+annotated = rr.series(result, annotations=True).select(&#34;series_id&#34;, &#34;variant&#34;, &#34;data_availability&#34;)
+print(annotated.write_csv(), end=&#34;&#34;)
+```
+
+Output:
+
+```text
+schema,name,dtype,row_count
+ar_ina.series,data_availability,String,1
+series_id,variant,data_availability
+820d18989de6cb74eadc27b5686a24a8d09a051623953639e98272cd22e1fc4c,26605,NRT
+```
+
+Station `8`&#39;s daily mean discharge series (`variant=&#34;26605&#34;`) carries `NRT`
+(near-real-time) as its `data_availability` code. This output was checked live
+on 2026-11-17.
+
+This describes operational feed latency, not a data validation grade, and
+RivRetrieve makes no quality judgement of its own. RivRetrieve issues a
+targeted series-lookup request to harvest it even for a station already
+established from the packaged catalogue, so it is not tied to needing that
+lookup to resolve series identity. If that request fails, or the publisher&#39;s
+response omits the code, the annotation is simply absent for that series and
+an informational `source.annotation_unavailable` issue is recorded; this
+never blocks or invalidates the observation rows themselves.
+
+Keep missing-data cases distinct when inspecting results:
+
+- Missing dates or sub-daily gaps in Alerta5 generally produce no observation
+  rows rather than `null` placeholders. RivRetrieve requests stored database
+  observations only (suppressing Alerta5&#39;s synthetic regular-grid boundary
+  nulls) and does not fill missing time steps.
+- Where Alerta5 stores an explicit database record whose value is `null`,
+  RivRetrieve omits that gap marker and records an informational
+  `source.gap_marker` issue in `result.issues`.
+- Long retrieval windows are split automatically into bounded requests (at most
+  365 days per request for sub-daily and slotted stage or instantaneous
+  discharge, and at most 3,650 days per request for daily and weekly series) and
+  assembled without boundary duplicates. Check [issues](../usage.md#issues)
+  whenever a request returns fewer rows than expected.
+
+## Terms and citation
+
+INA&#39;s [Alerta Hidrológico portal](https://www.ina.gob.ar/alerta) is published on
+Argentina&#39;s national [`argentina.gob.ar`](https://www.argentina.gob.ar/)
+platform, whose [terms and
+conditions](https://www.argentina.gob.ar/terminos-y-condiciones) license public
+content under [Creative Commons Attribution 4.0 International (CC BY
+4.0)](https://creativecommons.org/licenses/by/4.0/deed.es) (*Creative Commons
+Atribución 4.0 Internacional*) unless otherwise stated. Reuse requires
+attribution to the source.
+
+Both `rr.describe(&#34;ar_ina&#34;)` and `result.provenance` expose
+`license=&#34;Creative Commons Atribución 4.0 Internacional&#34;`, while `citation` is
+omitted from `rr.describe(&#34;ar_ina&#34;)` and `None` on `result.provenance`
+(because `argentina.gob.ar` states general CC BY 4.0 attribution obligations
+rather than prescribing a single verbatim citation string, which also produces
+the informational `provenance.citation_not_established` issue during `rr.fetch`).
+When publishing or redistributing retrieved data, credit the **Instituto
+Nacional del Agua (INA), Subgerencia de Sistemas de Información y Alerta
+Hidrológico (`https://alerta.ina.gob.ar/a5`)**, name the contributing monitoring
+network where applicable (such as *Subsecretaría de Recursos Hídricos*,
+*Prefectura Naval Argentina*, *CARU*, or *Salto Grande*), and record the station
+ID, series variant ID, requested period, and retrieval date.
+
+RivRetrieve paces live requests politely (at most two requests per second) and
+reuses locally cached observations when `cache=&#34;reuse&#34;` is passed.
+
+## Sources
+
+Publisher documents and API specifications checked on 2026-11-06 and verified
+reachable on 2026-11-09:
+
+- [INA: *Sistema de Información y Alerta Hidrológico* (`ina.gob.ar/alerta`)](https://www.ina.gob.ar/alerta): institutional overview of SIyAH hydrological monitoring and Cuenca del Plata forecasting.
+- [INA Alerta5 punctual stations map (`alerta.ina.gob.ar/a5/secciones/mapa/puntual`)](https://alerta.ina.gob.ar/a5/secciones/mapa/puntual): interactive station map, `EPSG:4326` geometry, gauge-zero (*cero de escala*) descriptions, and series availability codes.
+- [INA Alerta5 OpenAPI 3.1 specification (`apidocs_v3_1.yml`)](https://alerta.ina.gob.ar/a5/yaml/apidocs_v3_1.yml): REST endpoint schemas for `/obs/puntual/estaciones`, `/obs/puntual/series`, and `/obs/puntual/series/{series_id}/observaciones`.
+- [INA Alerta5 punctual series metadata guide (`metadata_series_puntuales.html`)](https://alerta.ina.gob.ar/a5/contents/metadata_series_puntuales.html): structure of punctual stations, variables, units, and observational versus simulated procedures.
+- [Argentina.gob.ar: *Términos y condiciones*](https://www.argentina.gob.ar/terminos-y-condiciones): *Creative Commons Atribución 4.0 Internacional* (CC BY 4.0) licensing and source-attribution requirements.
+
+The station and series counts describe the packaged catalogue snapshot
+(2026-11-06). The example observations were verified live on 2026-11-09. This
+live example does not establish continuous coverage.
+</textarea>
+
+<h1 id="argentina-ina-alerta5">Argentina: INA (Alerta5)</h1>
+<p><a href="../../">Documentation index</a> · <a href="../../usage/">Usage</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider</td>
+<td><code>ar_ina</code></td>
+</tr>
+<tr>
+<td>Country</td>
+<td>Argentina (plus one binational Río Uruguay border gauge in Uruguay)</td>
+</tr>
+<tr>
+<td>Published by</td>
+<td>Instituto Nacional del Agua (INA), Subgerencia de Sistemas de Información y Alerta Hidrológico (SIyAH), with federated national, binational, provincial and municipal networks</td>
+</tr>
+<tr>
+<td>Read from</td>
+<td>Official INA Alerta5 REST API (<code>alerta.ina.gob.ar/a5</code>)</td>
+</tr>
+<tr>
+<td>Quantities</td>
+<td>Discharge, stage</td>
+</tr>
+<tr>
+<td>Stations in the catalogue</td>
+<td>829 river gauges. Availability depends on station, quantity, series and period</td>
+</tr>
+<tr>
+<td>Station metadata</td>
+<td>Station name and water-body name. See <a href="../../station-metadata/#fields-by-provider">Fields by provider</a></td>
+</tr>
+<tr>
+<td>Credentials</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Licence stated by Argentina.gob.ar</td>
+<td>Creative Commons Attribution 4.0 International (<code>Creative Commons Atribución 4.0 Internacional</code>, CC BY 4.0); source attribution required</td>
+</tr>
+<tr>
+<td>Agency documentation</td>
+<td><a href="https://www.ina.gob.ar/alerta">INA Alerta Hidrológico</a>, <a href="https://alerta.ina.gob.ar/a5/secciones/mapa/puntual">Alerta5 portal</a>, <a href="https://alerta.ina.gob.ar/a5/yaml/apidocs_v3_1.yml">Alerta5 OpenAPI specification</a>, <a href="https://alerta.ina.gob.ar/a5/contents/metadata_series_puntuales.html">Punctual series guide</a></td>
+</tr>
+</tbody>
+</table>
+<p>Retrieve four days of daily mean discharge at station <code>8</code>, Andresito on the
+Iguazú River:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rivretrieve</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rr</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">selection</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ar_ina&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">station</span><span class="o">=</span><span class="s2">&quot;8&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;discharge&quot;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">result</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2024-01-04&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">&quot;bypass&quot;</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">preview</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_zone&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;unit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">preview</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">([(</span><span class="n">issue</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span> <span class="n">issue</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">issues</span><span class="p">])</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>time,time_zone,value,unit
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>2024-01-01T03:00:00.000000,+00:00,839.95,m3/s
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2024-01-02T03:00:00.000000,+00:00,898.63,m3/s
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2024-01-03T03:00:00.000000,+00:00,2051.27,m3/s
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>4
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[(&#39;info&#39;, &#39;provenance.citation_not_established&#39;)]
+</span></code></pre></div>
+<p>The request returned four published daily means in m³/s. The preview shows the
+first three days. Each Argentine calendar day since March 2009 begins at local
+midnight in <code>UTC-03:00</code>, so 1 January's daily mean is labelled
+<code>2024-01-01T03:00:00.000000</code> with <code>time_zone="+00:00"</code>; see
+<a href="#time-and-data-status">Time and data status</a> for historical Daylight Saving
+Time periods.</p>
+<p>The informational issue <code>provenance.citation_not_established</code> means the packaged
+provider catalogue has no fixed verbatim citation string configured. It does not
+mean retrieval failed or that attribution is optional; follow the attribution
+requirements in <a href="#terms-and-citation">Terms and citation</a>.</p>
+<p><code>cache="bypass"</code>, the default for live <code>rr.fetch</code> calls, requests Alerta5
+directly without reading or writing a local cache. Passing <code>cache="reuse"</code>
+stores retrieved observations locally so later requests for already-covered
+dates reuse the local store. This output was checked live on 2026-11-09. Source
+records can be updated or revised over time. See <a href="../../usage/">Usage</a> for
+selection options and working with returned data.</p>
+<h2 id="who-measures-and-who-publishes">Who measures, and who publishes</h2>
+<p>Argentina's National Water Institute (<em>Instituto Nacional del Agua</em>, INA),
+through its Hydrological Information and Warning Systems Sub-directorate
+(<em>Subgerencia de Sistemas de Información y Alerta Hidrológico</em>, SIyAH),
+publishes national and <em>Cuenca del Plata</em> river observations through the
+<a href="https://alerta.ina.gob.ar/a5/secciones/mapa/puntual">Alerta5</a> service. Alerta5
+aggregates gauge measurements collected by several operating networks, so
+appearance on Alerta5 does not mean that INA operates every station itself. The
+829 river gauges in RivRetrieve's packaged catalogue belong to nine source
+networks:</p>
+<table>
+<thead>
+<tr>
+<th>Source network in Alerta5</th>
+<th style="text-align: right;">Stations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Red Hidrológica Nacional, telemetric network (<code>sat2</code>, SSRH)</td>
+<td style="text-align: right;">479</td>
+</tr>
+<tr>
+<td>Red Hidrológica Nacional, historical database (<code>alturas_bdhi</code>, SSRH)</td>
+<td style="text-align: right;">235</td>
+</tr>
+<tr>
+<td>Prefectura Naval Argentina staff gauges (<code>alturas_prefe</code>)</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr>
+<td>INA Delta and Greater Buenos Aires network (<code>ina_delta</code>)</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr>
+<td>Salto Grande binational dam hydrometeorological network (<code>estaciones_salto_grande</code>)</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Nucleoeléctrica Argentina (<code>na-sa</code>)</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>Municipality of Quilmes (<code>quilmes</code>)</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>INTA Delta (<code>inta_delta</code>)</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>Comisión Administradora del Río Uruguay (<code>alturas_varios</code>, station <code>1699</code> Nueva Palmira)</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>No API key or account is required. RivRetrieve searches the packaged station and
+series catalogue offline; <code>rr.fetch</code> then requests JSON observations over HTTPS
+from Alerta5. Station identifiers are integer Alerta5 station IDs kept as
+strings, such as <code>"8"</code> or <code>"1967"</code>. When the same physical river location has
+entries in more than one contributing network (for example a telemetric <code>sat2</code>
+entry alongside a historical <code>alturas_bdhi</code> entry), Alerta5 assigns each network
+entry its own station ID, and RivRetrieve keeps them separate.</p>
+<p>The packaged <code>ar_ina</code> catalogue covers physical river and inland-delta gauges
+with observed discharge or stage records:</p>
+<ul>
+<li><code>828</code> gauges carry <code>EPSG:4326</code> coordinates, and <code>1</code> river gauge (<code>"96"</code>,
+  Colorado on the Bermejo River) is retained with <code>null</code> latitude and longitude
+  because Alerta5 publishes its stage series without station coordinates.</li>
+<li>Inland Paraná Delta and freshwater inner <em>Río de la Plata</em> gauges (such as
+  Tigre, San Fernando, Buenos Aires, and La Plata in <code>alturas_prefe</code>, and urban
+  Greater Buenos Aires stream gauges in <code>ina_delta</code>) and the shared <em>Río
+  Uruguay</em> border gauge <code>1699</code> (Nueva Palmira, Uruguay, operated by CARU) are
+  included.</li>
+<li>Virtual hydrological-model nodes, model simulations, forecasts, climatologies,
+  and interpolated or derived analysis series stored in Alerta5 alongside gauge
+  measurements are excluded; RivRetrieve admits only direct measurement
+  (<em>medición directa</em>) and rating-curve (<em>curva de gasto</em>) observational
+  procedures.</li>
+<li>Maritime and outer-estuary coastal tide-gauge networks (<em>Servicio de
+  Hidrografía Naval</em> <code>estaciones_shn</code> and <em>PVNyMM</em> <code>estaciones_pvnymm</code>), sparse
+  manual field discharge gaugings (<em>aforos</em>), and groundwater phreatic wells are
+  excluded.</li>
+<li>Surface-water temperature has only two empty placeholder entries in Alerta5
+  with no observations, so <code>ar_ina</code> exposes discharge and stage only.</li>
+</ul>
+<p>Argentina's <em>Subsecretaría de Recursos Hídricos</em> (SSRH) also operates a separate
+federal hydrological portal (<a href="https://snih.hidricosargentina.gob.ar/">SNIH</a>)
+with additional historical discharge, stage, and water-temperature records; a
+separate provider for SNIH is tracked in
+<a href="https://github.com/RivRetrieve/RivRetrieve/issues/729">#729</a>.</p>
+<h2 id="what-you-can-retrieve">What you can retrieve</h2>
+<p>Alerta5 publishes five observational river discharge series types and eight
+observational river stage series types:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity filter</th>
+<th>Source field / <code>variant</code></th>
+<th>Frequency</th>
+<th>Statistic</th>
+<th>Source unit</th>
+<th>Returned unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>discharge</code></td>
+<td><code>Qmd</code> (<em>Caudal medio diario</em>; per-series ID in <code>variant</code>)</td>
+<td>Daily</td>
+<td>Mean</td>
+<td>m^3/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>Q</code> (<em>Caudal</em>; per-series ID in <code>variant</code>)</td>
+<td>Unknown</td>
+<td>Instantaneous</td>
+<td>m^3/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>Qmm</code> (<em>Caudal medio mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Mean</td>
+<td>m^3/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>Qmmin</code> (<em>Caudal mínimo mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Minimum</td>
+<td>m^3/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>discharge</code></td>
+<td><code>Qmmax</code> (<em>Caudal máximo mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Maximum</td>
+<td>m^3/s</td>
+<td>m³/s</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hmd</code> (<em>Altura hidrométrica media diaria</em>; per-series ID in <code>variant</code>)</td>
+<td>Daily</td>
+<td>Mean</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>H</code> (<em>Altura hidrométrica</em>; per-series ID in <code>variant</code>)</td>
+<td>Unknown</td>
+<td>Instantaneous</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>H1h</code> (<em>Altura hidrométrica horaria</em>; per-series ID in <code>variant</code>)</td>
+<td>Hourly</td>
+<td>Unknown</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hm4h</code> (<em>Altura hidrométrica 4-horaria</em>; per-series ID in <code>variant</code>)</td>
+<td>Unknown</td>
+<td>Unknown</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hms</code> (<em>Altura hidrométrica media semanal</em>; per-series ID in <code>variant</code>)</td>
+<td>Unknown</td>
+<td>Mean</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hmm</code> (<em>Altura hidrométrica media mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Mean</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hmmin</code> (<em>Altura hidrométrica mínima mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Minimum</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td><code>Hmmax</code> (<em>Altura hidrométrica máxima mensual</em>; per-series ID in <code>variant</code>)</td>
+<td>Monthly</td>
+<td>Maximum</td>
+<td>m</td>
+<td>m</td>
+</tr>
+</tbody>
+</table>
+<p>Discharge in <code>m^3/s</code> and stage in <code>m</code> require no numerical scaling; RivRetrieve
+normalises the discharge unit label to <code>m3/s</code> while keeping <code>"m^3/s"</code> in
+<code>source_unit</code>. It does not calculate daily or monthly aggregates from sub-daily
+readings or merge separate series.</p>
+<p>Availability varies substantially across stations. In the packaged catalogue
+snapshot (<code>2,611</code> witnessed station-series pairs across <code>829</code> gauges),
+instantaneous stage (<code>H</code>) is listed at <code>808</code> stations and daily mean stage
+(<code>Hmd</code>) at <code>756</code>, whereas daily mean discharge (<code>Qmd</code>) is listed at <code>82</code>
+stations, instantaneous rating-curve discharge (<code>Q</code>) at <code>32</code>, 4-hourly stage
+(<code>Hm4h</code>) at <code>391</code>, hourly stage (<code>H1h</code>) at <code>3</code>, and weekly mean stage (<code>Hms</code>) at
+<code>32</code>. A station being listed in the catalogue does not guarantee observations
+for every quantity or requested period.</p>
+<p>Each published Alerta5 time series has its own numeric Alerta5 series ID, which
+RivRetrieve exposes as <code>variant</code> (for example <code>variant="26605"</code> for daily mean
+discharge at station <code>"8"</code>). Unlike providers with named processing levels,
+these numeric IDs belong to individual station series rather than forming a
+provider-wide menu. Within the packaged river catalogue, each station has at
+most one observational series per row in the table above.</p>
+<p>Several stage series have <code>Unknown</code> in <code>Frequency</code> or <code>Statistic</code>:</p>
+<ul>
+<li><strong>Hourly (<code>H1h</code>) and 4-hourly (<code>Hm4h</code>) stage:</strong> Alerta5 declares <code>1</code>-hour and
+  <code>4</code>-hour time steps with a <code>Continuous</code> data type rather than <code>Average</code>.
+  Comparing overlapping observations shows that these series place a single
+  stage reading onto each 1-hour or 4-hour slot rather than averaging readings
+  across the slot. RivRetrieve sets <code>frequency="hourly"</code> on <code>H1h</code>, leaves
+  <code>frequency</code> unknown on <code>Hm4h</code> (4-hourly is not a named filter in
+  RivRetrieve's frequency vocabulary), and leaves <code>statistic</code> unknown on both so
+  mean and instantaneous filters do not select them by mistake.</li>
+<li><strong>Weekly mean stage (<code>Hms</code>):</strong> Summarises 7-day Monday-to-Monday intervals
+  with <code>statistic="mean"</code>. Because RivRetrieve's frequency filter vocabulary has
+  <code>daily</code> and <code>monthly</code> rather than <code>weekly</code>, <code>frequency</code> remains unknown.</li>
+<li><strong>Instantaneous discharge (<code>Q</code>) and stage (<code>H</code>):</strong> Match
+  <code>statistic="instantaneous"</code> without a <code>frequency</code> filter because telemetry and
+  staff-gauge reporting intervals vary across stations and periods (from
+  10- or 15-minute automatic transmissions to daily or sub-daily manual
+  readings).</li>
+<li><strong>Monthly minimum and maximum series (<code>Qmmin</code>, <code>Qmmax</code>, <code>Hmmin</code>, <code>Hmmax</code>):</strong>
+  Report the minimum or maximum of the station's underlying observations within
+  each calendar month, stamped at the start of the month.</li>
+</ul>
+<p>Inspect all candidate series and station metadata at a gauge offline before
+fetching, and use <code>rr.pick(..., variant=...)</code> (or <code>frequency="hourly"</code> for
+<code>H1h</code>) when targeting a series whose frequency or statistic is unknown:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">station_52</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ar_ina&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;52&quot;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">candidates</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">station_52</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">metadata</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">station_52</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">hourly_stage</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">station_52</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;31605&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="stage-references-and-station-metadata">Stage references and station metadata</h2>
+<p>River stage (<em>altura hidrométrica</em>) in Alerta5 is measured in metres relative to
+each station's local staff-gauge zero (<em>cero de escala</em>). RivRetrieve sets
+<code>vertical_reference="gauge_zero"</code> and leaves <code>vertical_datum</code> unknown on all
+stage series. Water levels below local gauge zero are physically valid during
+low-water periods and remain negative (for example <code>-0.27 m</code> in monthly minimum
+stage at station <code>8</code>, Andresito). Do not compare raw stage values across
+different gauges as elevations above sea level.</p>
+<p>Station metadata from <code>rr.metadata(selection)</code> exposes two native fields from
+Alerta5:</p>
+<ul>
+<li><code>nombre</code> as <code>station_name</code> (populated for all <code>829</code> river gauges), and</li>
+<li><code>rio</code> in <code>water_body_name_value</code> (populated for <code>353</code> gauges and <code>null</code> at the
+  remaining <code>476</code> gauges where Alerta5 leaves <code>rio</code> empty).</li>
+</ul>
+<p>Both <code>drainage_area_*</code> and <code>elevation_*</code> columns are <code>null</code> (<code>state="no_metadata"</code>
+in <code>rr.metadata(selection, view="source")</code>):</p>
+<ul>
+<li>Alerta5's station inventory does not publish catchment areas, and its optional
+  basin-polygon endpoint covers fewer than 3% of river gauges while mixing total
+  drainage basins with incremental model subcatchments and zero placeholders.</li>
+<li>An optional <code>cero_ign</code> attribute in Alerta5 (<code>73</code> river gauges) records the
+  height of the local staff-gauge zero relative to Argentina's <em>Instituto
+  Geográfico Nacional</em> (IGN) datum rather than ground elevation, while a sparse
+  <code>altitud</code> attribute (<code>10</code> river gauges) states neither a unit nor a vertical
+  datum. Neither field is exposed as station ground elevation.</li>
+</ul>
+<h2 id="time-and-data-status">Time and data status</h2>
+<p>Alerta5 returns all observation timestamps in UTC (<code>...Z</code>). RivRetrieve
+preserves those UTC timestamps with <code>time_zone="+00:00"</code> (<code>time_zone="UTC"</code> in
+<code>rr.series(...)</code>), and <code>rr.to_utc(result)</code> returns them unchanged.</p>
+<p>Pay attention to local civil midnight when aligning daily, weekly, or monthly
+aggregates with calendar dates:</p>
+<ul>
+<li><strong>March 2009 to present (<code>UTC-03:00</code>):</strong> Argentina has observed fixed
+  <code>UTC-03:00</code> without Daylight Saving Time since March 2009. Daily, weekly, and
+  monthly intervals begin at <code>00:00</code> local time, which appears as <code>03:00:00</code> UTC
+  (for example <code>2024-01-01T03:00:00.000000</code> for 1 January 2024).</li>
+<li><strong>Pre-2009 Daylight Saving Time transitions (<code>UTC-02:00</code> in summer):</strong> During
+  historical Argentine summer-time periods (such as October 2008 to March 2009),
+  local midnight fell at <code>02:00:00</code> UTC (<code>UTC-02:00</code>). In Alerta5's database,
+  the spring transition day spans 23 hours (<code>03:00:00</code> UTC to the next day's
+  <code>02:00:00</code> UTC), summer days begin at <code>02:00:00</code> UTC, and the autumn
+  transition day spans 25 hours (<code>02:00:00</code> UTC to <code>03:00:00</code> UTC). Because the
+  UTC offset of local midnight shifts across historical DST years, RivRetrieve
+  leaves <code>day_definition</code> unknown rather than claiming a fixed UTC offset across
+  all decades.</li>
+</ul>
+<p>On daily, weekly, monthly, hourly, and 4-hourly series, <code>time</code> marks the start
+of the interval (<code>timestamp_anchor="start"</code>). On instantaneous discharge (<code>Q</code>)
+and stage (<code>H</code>), <code>time</code> marks the measurement instant
+(<code>timestamp_anchor="measurement_time"</code>), including exact sub-minute telemetry
+timestamps (such as <code>:10</code> seconds) where recorded by automatic loggers.</p>
+<p>Alerta5 serves operational real-time telemetry and historical gauge archives
+through the same API without per-observation quality-assurance flags. It does
+publish a series-level operational-availability code (<code>H</code>, <code>C</code>, <code>RT</code>, <code>NRT</code>,
+<code>S</code>, and the <code>H+S</code>/<code>C+S</code>/<code>RT+S</code>/<code>NRT+S</code> combinations, or <code>N</code> for no
+observations available), documented on the a5-portal-home map. RivRetrieve
+keeps the default series frame unchanged and preserves that code as a
+series-scope annotation, under schema <code>ar_ina.series</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data_availability</code></td>
+<td><code>String</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inspect it alongside the series it describes:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">,</span> <span class="s2">&quot;row_count&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">annotated</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;variant&quot;</span><span class="p">,</span> <span class="s2">&quot;data_availability&quot;</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">annotated</span><span class="o">.</span><span class="n">write_csv</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>schema,name,dtype,row_count
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ar_ina.series,data_availability,String,1
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>series_id,variant,data_availability
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>820d18989de6cb74eadc27b5686a24a8d09a051623953639e98272cd22e1fc4c,26605,NRT
+</span></code></pre></div>
+<p>Station <code>8</code>'s daily mean discharge series (<code>variant="26605"</code>) carries <code>NRT</code>
+(near-real-time) as its <code>data_availability</code> code. This output was checked live
+on 2026-11-17.</p>
+<p>This describes operational feed latency, not a data validation grade, and
+RivRetrieve makes no quality judgement of its own. RivRetrieve issues a
+targeted series-lookup request to harvest it even for a station already
+established from the packaged catalogue, so it is not tied to needing that
+lookup to resolve series identity. If that request fails, or the publisher's
+response omits the code, the annotation is simply absent for that series and
+an informational <code>source.annotation_unavailable</code> issue is recorded; this
+never blocks or invalidates the observation rows themselves.</p>
+<p>Keep missing-data cases distinct when inspecting results:</p>
+<ul>
+<li>Missing dates or sub-daily gaps in Alerta5 generally produce no observation
+  rows rather than <code>null</code> placeholders. RivRetrieve requests stored database
+  observations only (suppressing Alerta5's synthetic regular-grid boundary
+  nulls) and does not fill missing time steps.</li>
+<li>Where Alerta5 stores an explicit database record whose value is <code>null</code>,
+  RivRetrieve omits that gap marker and records an informational
+  <code>source.gap_marker</code> issue in <code>result.issues</code>.</li>
+<li>Long retrieval windows are split automatically into bounded requests (at most
+  365 days per request for sub-daily and slotted stage or instantaneous
+  discharge, and at most 3,650 days per request for daily and weekly series) and
+  assembled without boundary duplicates. Check <a href="../../usage/#issues">issues</a>
+  whenever a request returns fewer rows than expected.</li>
+</ul>
+<h2 id="terms-and-citation">Terms and citation</h2>
+<p>INA's <a href="https://www.ina.gob.ar/alerta">Alerta Hidrológico portal</a> is published on
+Argentina's national <a href="https://www.argentina.gob.ar/"><code>argentina.gob.ar</code></a>
+platform, whose <a href="https://www.argentina.gob.ar/terminos-y-condiciones">terms and
+conditions</a> license public
+content under <a href="https://creativecommons.org/licenses/by/4.0/deed.es">Creative Commons Attribution 4.0 International (CC BY
+4.0)</a> (<em>Creative Commons
+Atribución 4.0 Internacional</em>) unless otherwise stated. Reuse requires
+attribution to the source.</p>
+<p>Both <code>rr.describe("ar_ina")</code> and <code>result.provenance</code> expose
+<code>license="Creative Commons Atribución 4.0 Internacional"</code>, while <code>citation</code> is
+omitted from <code>rr.describe("ar_ina")</code> and <code>None</code> on <code>result.provenance</code>
+(because <code>argentina.gob.ar</code> states general CC BY 4.0 attribution obligations
+rather than prescribing a single verbatim citation string, which also produces
+the informational <code>provenance.citation_not_established</code> issue during <code>rr.fetch</code>).
+When publishing or redistributing retrieved data, credit the <strong>Instituto
+Nacional del Agua (INA), Subgerencia de Sistemas de Información y Alerta
+Hidrológico (<code>https://alerta.ina.gob.ar/a5</code>)</strong>, name the contributing monitoring
+network where applicable (such as <em>Subsecretaría de Recursos Hídricos</em>,
+<em>Prefectura Naval Argentina</em>, <em>CARU</em>, or <em>Salto Grande</em>), and record the station
+ID, series variant ID, requested period, and retrieval date.</p>
+<p>RivRetrieve paces live requests politely (at most two requests per second) and
+reuses locally cached observations when <code>cache="reuse"</code> is passed.</p>
+<h2 id="sources">Sources</h2>
+<p>Publisher documents and API specifications checked on 2026-11-06 and verified
+reachable on 2026-11-09:</p>
+<ul>
+<li><a href="https://www.ina.gob.ar/alerta">INA: <em>Sistema de Información y Alerta Hidrológico</em> (<code>ina.gob.ar/alerta</code>)</a>: institutional overview of SIyAH hydrological monitoring and Cuenca del Plata forecasting.</li>
+<li><a href="https://alerta.ina.gob.ar/a5/secciones/mapa/puntual">INA Alerta5 punctual stations map (<code>alerta.ina.gob.ar/a5/secciones/mapa/puntual</code>)</a>: interactive station map, <code>EPSG:4326</code> geometry, gauge-zero (<em>cero de escala</em>) descriptions, and series availability codes.</li>
+<li><a href="https://alerta.ina.gob.ar/a5/yaml/apidocs_v3_1.yml">INA Alerta5 OpenAPI 3.1 specification (<code>apidocs_v3_1.yml</code>)</a>: REST endpoint schemas for <code>/obs/puntual/estaciones</code>, <code>/obs/puntual/series</code>, and <code>/obs/puntual/series/{series_id}/observaciones</code>.</li>
+<li><a href="https://alerta.ina.gob.ar/a5/contents/metadata_series_puntuales.html">INA Alerta5 punctual series metadata guide (<code>metadata_series_puntuales.html</code>)</a>: structure of punctual stations, variables, units, and observational versus simulated procedures.</li>
+<li><a href="https://www.argentina.gob.ar/terminos-y-condiciones">Argentina.gob.ar: <em>Términos y condiciones</em></a>: <em>Creative Commons Atribución 4.0 Internacional</em> (CC BY 4.0) licensing and source-attribution requirements.</li>
+</ul>
+<p>The station and series counts describe the packaged catalogue snapshot
+(2026-11-06). The example observations were verified live on 2026-11-09. This
+live example does not establish continuous coverage.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

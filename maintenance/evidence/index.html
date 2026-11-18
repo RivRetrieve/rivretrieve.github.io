@@ -324,7 +324,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../providers/ba_fhmzbih/" class="md-tabs__link">
+        <a href="../../providers/ar_ina/" class="md-tabs__link">
           
   
   
@@ -637,6 +637,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../providers/ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../providers/ba_fhmzbih/" class="md-nav__link">
         
   
@@ -721,6 +777,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../providers/co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../providers/cz_chmi/" class="md-nav__link">
         
   
@@ -729,6 +813,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -869,6 +1009,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1429,6 +1597,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#publish-a-usgs-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish a USGS catalogue
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1520,6 +1699,17 @@
     <span class="md-ellipsis">
       
         Protect controlled material
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publish-a-usgs-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish a USGS catalogue
       
     </span>
   </a>
@@ -1742,6 +1932,35 @@ after proving archive preservation and obtaining required owner approval. New
 provider code PRs carry code and exact archive references, not source corpora or
 private attachments. See the [architecture](../architecture.md#evidence-and-verification)
 for the runtime and catalogue boundaries.
+
+## Publish a USGS catalogue
+
+USGS discovery builds from complete modern time-series metadata and explicitly
+selected monitoring-location recordings. Supply `--modern-metadata`,
+`--monitoring-locations` (the archive&#39;s `locations.json`), `--retention-manifest`
+and `--evidence-root`. The retention declaration has `schema_version: 2`,
+`historical_sources` and agency-qualified `retained_station_ids`. Each historical
+source names a `consumer_directory` relative to the evidence root and its exact
+`series_ids`. Each series must resolve in its assigned source without overlapping
+current metadata. Original source acquisitions remain distinct.
+
+Use `--native-out` to prepare the derived modern station table for archive
+adoption. It preserves modern names and WGS84 geometry; null geometry remains
+unknown. This table is a transformation of retained responses, not an original
+publisher table. Preparation and publication are separate operations.
+
+Publication uses `--out`, `--native`, `--legacy-native`, `--build-inputs`,
+`--acquisition-provenance` and `--evidence-root`, in addition to the discovery
+inputs above. The publisher verifies the adopted modern and legacy byte
+identities, then compares the rebuilt modern projection with the adopted table.
+Legacy sitefile rows enrich matching agency-qualified identities with areas and
+USGS-issued elevations. They do not determine modern station availability.
+Historical NWIS series claims remain separate from executable modern series.
+
+Library callers of `write_catalogue` supply the same reviewed graph, build inputs,
+modern `native_table` and separate `legacy_table`. They must pass verified inputs.
+Historical acquisitions and descriptors remain historical; retention does not
+assert current publication or observation availability.
 </textarea>
 
 <h1 id="verification-evidence">Verification evidence</h1>
@@ -1929,6 +2148,30 @@ after proving archive preservation and obtaining required owner approval. New
 provider code PRs carry code and exact archive references, not source corpora or
 private attachments. See the <a href="../../architecture/#evidence-and-verification">architecture</a>
 for the runtime and catalogue boundaries.</p>
+<h2 id="publish-a-usgs-catalogue">Publish a USGS catalogue</h2>
+<p>USGS discovery builds from complete modern time-series metadata and explicitly
+selected monitoring-location recordings. Supply <code>--modern-metadata</code>,
+<code>--monitoring-locations</code> (the archive's <code>locations.json</code>), <code>--retention-manifest</code>
+and <code>--evidence-root</code>. The retention declaration has <code>schema_version: 2</code>,
+<code>historical_sources</code> and agency-qualified <code>retained_station_ids</code>. Each historical
+source names a <code>consumer_directory</code> relative to the evidence root and its exact
+<code>series_ids</code>. Each series must resolve in its assigned source without overlapping
+current metadata. Original source acquisitions remain distinct.</p>
+<p>Use <code>--native-out</code> to prepare the derived modern station table for archive
+adoption. It preserves modern names and WGS84 geometry; null geometry remains
+unknown. This table is a transformation of retained responses, not an original
+publisher table. Preparation and publication are separate operations.</p>
+<p>Publication uses <code>--out</code>, <code>--native</code>, <code>--legacy-native</code>, <code>--build-inputs</code>,
+<code>--acquisition-provenance</code> and <code>--evidence-root</code>, in addition to the discovery
+inputs above. The publisher verifies the adopted modern and legacy byte
+identities, then compares the rebuilt modern projection with the adopted table.
+Legacy sitefile rows enrich matching agency-qualified identities with areas and
+USGS-issued elevations. They do not determine modern station availability.
+Historical NWIS series claims remain separate from executable modern series.</p>
+<p>Library callers of <code>write_catalogue</code> supply the same reviewed graph, build inputs,
+modern <code>native_table</code> and separate <code>legacy_table</code>. They must pass verified inputs.
+Historical acquisitions and descriptors remain historical; retention does not
+assert current publication or observation availability.</p>
 
 
 

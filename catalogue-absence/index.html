@@ -326,7 +326,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../providers/ba_fhmzbih/" class="md-tabs__link">
+        <a href="../providers/ar_ina/" class="md-tabs__link">
           
   
   
@@ -639,6 +639,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/ba_fhmzbih/" class="md-nav__link">
         
   
@@ -723,6 +779,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../providers/co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/cz_chmi/" class="md-nav__link">
         
   
@@ -731,6 +815,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -871,6 +1011,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1517,7 +1685,8 @@ about what is known, with no assessment of the source&#39;s quality or its terms
 The JSON-LD context declares `rr:absence` as `{&#34;@id&#34;: &#34;rr:absence&#34;, &#34;@type&#34;: &#34;@json&#34;}`.
 Its members form a JSON literal, rather than additional RDF vocabulary properties.
 
-For example, the Swiss FOEN station coordinate reference system is not published:
+For example, the Czech CHMI catalogue records the station coordinate reference
+system as not published:
 
 ```json
 {
@@ -1525,7 +1694,7 @@ For example, the Swiss FOEN station coordinate reference system is not published
   &#34;source&#34;: {&#34;fileObject&#34;: {&#34;@id&#34;: &#34;stations.parquet&#34;}, &#34;extract&#34;: {&#34;column&#34;: &#34;crs&#34;}},
   &#34;rr:absence&#34;: {
     &#34;kind&#34;: &#34;not_published&#34;,
-    &#34;evidence&#34;: &#34;https://api.existenz.ch/#hydro&#34;
+    &#34;evidence&#34;: &#34;https://opendata.chmi.cz/hydrology/read_me/Popis_kodu_historical.pdf&#34;
   }
 }
 ```
@@ -1608,13 +1777,14 @@ The current withholding reason is <code>no_acquisition_record_established</code>
 about what is known, with no assessment of the source's quality or its terms of use.</p>
 <p>The JSON-LD context declares <code>rr:absence</code> as <code>{"@id": "rr:absence", "@type": "@json"}</code>.
 Its members form a JSON literal, rather than additional RDF vocabulary properties.</p>
-<p>For example, the Swiss FOEN station coordinate reference system is not published:</p>
+<p>For example, the Czech CHMI catalogue records the station coordinate reference
+system as not published:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stations/crs&quot;</span><span class="p">,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;fileObject&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stations.parquet&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;extract&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;column&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;crs&quot;</span><span class="p">}},</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;rr:absence&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_published&quot;</span><span class="p">,</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">&quot;evidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.existenz.ch/#hydro&quot;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">&quot;evidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opendata.chmi.cz/hydrology/read_me/Popis_kodu_historical.pdf&quot;</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
 </span></code></pre></div>

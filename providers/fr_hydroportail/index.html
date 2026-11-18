@@ -328,7 +328,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../ba_fhmzbih/" class="md-tabs__link">
+        <a href="../ar_ina/" class="md-tabs__link">
           
   
   
@@ -642,6 +642,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ba_fhmzbih/" class="md-nav__link">
         
   
@@ -726,6 +782,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../cz_chmi/" class="md-nav__link">
         
   
@@ -734,6 +818,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -998,6 +1138,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1768,11 +1936,55 @@ Its exact selection algorithm has not been established. The combined selector
 includes pre-validated and validated records. This public route does not provide
 corrected-only or pre-validated-only histories.
 
-The selector chooses which records HydroPortail returns. Individual observations
-can also carry processing-status metadata supplied by HydroPortail. Its
-[glossary](https://hydro.eaufrance.fr/glossaire) explains the status vocabulary. See [Usage](../usage.md#series-inspection-and-result-views) to
-interpret series outcomes and issues, and [optional receipts](../usage.md#receipts-optional)
-to inspect the source metadata.
+The `variant` selector chooses which record stream HydroPortail returns. Each
+returned observation also carries HydroPortail&#39;s point-level numeric codes in the
+`fr_hydroportail.series` annotation schema (`Int64`, nullable):
+
+- `s`: processing status (*statut*, such as `4` raw, `8` corrected, `12` pre-validated, `16` validated).
+- `q`: qualification (*qualification*, such as `12` doubtful, `16` unqualified, `20` good).
+- `m`: observation method (*méthode*, such as `0` measured, `4` reconstituted, `8` calculated, `10` expert-reviewed).
+- `c`: continuity (*continuité*, such as `0` continuous, `1` discontinuous, `4` weak discontinuity, `8` strong discontinuity).
+
+The requested `variant` and per-point codes play different roles. Mixed selectors
+such as `pre_validated_and_validated` and `most_valid` can combine points with
+different statuses (for example `s=4` raw points alongside `s=16` validated points)
+within one stream, and even a `validated` stream can mark individual points
+doubtful (`q=12`). RivRetrieve preserves the published integer codes without
+ranking or filtering observations. HydroPortail&#39;s
+[glossary](https://hydro.eaufrance.fr/glossaire) defines the underlying concepts.
+
+Inspect the annotation field catalog on `result` and project those columns onto
+the validated discharge rows fetched above:
+
+```python
+print(rr.annotations(result).select(&#34;schema&#34;, &#34;name&#34;, &#34;dtype&#34;).rows())
+
+annotated = result.to_polars(annotations=True)
+print(annotated.select(&#34;s&#34;, &#34;q&#34;, &#34;m&#34;, &#34;c&#34;).head(2).rows())
+```
+
+Output:
+
+```text
+[(&#39;fr_hydroportail.series&#39;, &#39;s&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;q&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;m&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;c&#39;, &#39;Int64&#39;)]
+[(16, 12, 10, 0), (16, 12, 10, 0)]
+```
+
+The first output lists the four nullable integer fields attached to `result`. In
+the two projected discharge rows (`13.500` and `13.300` m³/s from `validated`),
+each observation carries validated status (`s=16`), doubtful qualification
+(`q=12`), expert-reviewed method (`m=10`), and continuous continuity (`c=0`).
+
+Pass `annotations=&#34;q&#34;` or `annotations=[&#34;s&#34;, &#34;q&#34;]` to `result.to_polars(...)` or
+`result.to_pandas(...)` when you only want specific columns, or call
+`rr.annotations(result, schema=&#34;fr_hydroportail.series&#34;)` for the native schema
+table. Window-level response summaries and chart overlays (such as `statistics`
+and `correctionCurves`), as well as unpopulated `md` fields, are omitted from
+observation annotations. Retain full response bytes with
+[optional receipts](../usage.md#receipts-optional) when raw payload records
+matter. See [Source annotations](../usage.md#source-annotations) and
+[Series inspection and result views](../usage.md#series-inspection-and-result-views)
+for general result and issue inspection.
 
 ## Terms and citation
 
@@ -2018,11 +2230,47 @@ when no observations are returned.</p>
 Its exact selection algorithm has not been established. The combined selector
 includes pre-validated and validated records. This public route does not provide
 corrected-only or pre-validated-only histories.</p>
-<p>The selector chooses which records HydroPortail returns. Individual observations
-can also carry processing-status metadata supplied by HydroPortail. Its
-<a href="https://hydro.eaufrance.fr/glossaire">glossary</a> explains the status vocabulary. See <a href="../../usage/#series-inspection-and-result-views">Usage</a> to
-interpret series outcomes and issues, and <a href="../../usage/#receipts-optional">optional receipts</a>
-to inspect the source metadata.</p>
+<p>The <code>variant</code> selector chooses which record stream HydroPortail returns. Each
+returned observation also carries HydroPortail's point-level numeric codes in the
+<code>fr_hydroportail.series</code> annotation schema (<code>Int64</code>, nullable):</p>
+<ul>
+<li><code>s</code>: processing status (<em>statut</em>, such as <code>4</code> raw, <code>8</code> corrected, <code>12</code> pre-validated, <code>16</code> validated).</li>
+<li><code>q</code>: qualification (<em>qualification</em>, such as <code>12</code> doubtful, <code>16</code> unqualified, <code>20</code> good).</li>
+<li><code>m</code>: observation method (<em>méthode</em>, such as <code>0</code> measured, <code>4</code> reconstituted, <code>8</code> calculated, <code>10</code> expert-reviewed).</li>
+<li><code>c</code>: continuity (<em>continuité</em>, such as <code>0</code> continuous, <code>1</code> discontinuous, <code>4</code> weak discontinuity, <code>8</code> strong discontinuity).</li>
+</ul>
+<p>The requested <code>variant</code> and per-point codes play different roles. Mixed selectors
+such as <code>pre_validated_and_validated</code> and <code>most_valid</code> can combine points with
+different statuses (for example <code>s=4</code> raw points alongside <code>s=16</code> validated points)
+within one stream, and even a <code>validated</code> stream can mark individual points
+doubtful (<code>q=12</code>). RivRetrieve preserves the published integer codes without
+ranking or filtering observations. HydroPortail's
+<a href="https://hydro.eaufrance.fr/glossaire">glossary</a> defines the underlying concepts.</p>
+<p>Inspect the annotation field catalog on <code>result</code> and project those columns onto
+the validated discharge rows fetched above:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">annotations</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">annotated</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_polars</span><span class="p">(</span><span class="n">annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">annotated</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">rows</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[(&#39;fr_hydroportail.series&#39;, &#39;s&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;q&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;m&#39;, &#39;Int64&#39;), (&#39;fr_hydroportail.series&#39;, &#39;c&#39;, &#39;Int64&#39;)]
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>[(16, 12, 10, 0), (16, 12, 10, 0)]
+</span></code></pre></div>
+<p>The first output lists the four nullable integer fields attached to <code>result</code>. In
+the two projected discharge rows (<code>13.500</code> and <code>13.300</code> m³/s from <code>validated</code>),
+each observation carries validated status (<code>s=16</code>), doubtful qualification
+(<code>q=12</code>), expert-reviewed method (<code>m=10</code>), and continuous continuity (<code>c=0</code>).</p>
+<p>Pass <code>annotations="q"</code> or <code>annotations=["s", "q"]</code> to <code>result.to_polars(...)</code> or
+<code>result.to_pandas(...)</code> when you only want specific columns, or call
+<code>rr.annotations(result, schema="fr_hydroportail.series")</code> for the native schema
+table. Window-level response summaries and chart overlays (such as <code>statistics</code>
+and <code>correctionCurves</code>), as well as unpopulated <code>md</code> fields, are omitted from
+observation annotations. Retain full response bytes with
+<a href="../../usage/#receipts-optional">optional receipts</a> when raw payload records
+matter. See <a href="../../usage/#source-annotations">Source annotations</a> and
+<a href="../../usage/#series-inspection-and-result-views">Series inspection and result views</a>
+for general result and issue inspection.</p>
 <h2 id="terms-and-citation">Terms and citation</h2>
 <p>HydroPortail provides public access without personal credentials in RivRetrieve.
 Its legal and FAQ pages do not establish a reuse licence or standard citation for

@@ -326,7 +326,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../providers/ba_fhmzbih/" class="md-tabs__link">
+        <a href="../../providers/ar_ina/" class="md-tabs__link">
           
   
   
@@ -639,6 +639,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../providers/ar_ina/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Argentina (INA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/at_ehyd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Austria (eHYD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../providers/ba_fhmzbih/" class="md-nav__link">
         
   
@@ -723,6 +779,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../providers/co_ideam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colombia (IDEAM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../providers/cz_chmi/" class="md-nav__link">
         
   
@@ -731,6 +815,62 @@
     
   
     Czechia (CHMI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/dk_vanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Denmark (VandA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/fi_syke/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Finland (Syke)
   
 
     
@@ -871,6 +1011,34 @@
     
   
     Norway (NVE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/pe_senamhi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peru (SENAMHI)
   
 
     
@@ -1635,10 +1803,11 @@ contributor&#39;s compiled store. Keep registry and monkeypatch state local to e
 test. Share expensive unchanged package inputs only through the existing detached,
 fingerprint-aware fixtures. Changed or corrupt files must still reach validation.
 
-Reuse the existing installed wheel and sdist-wheel fixtures. Their verification
-processes have separate working directories and homes. Keep planted-file exclusion
-checks: inspecting a clean package alone cannot prove that private files would be
-excluded from a build.
+Reuse the existing installed wheel and sdist-wheel fixtures. Under `pytest-xdist`,
+workers share one read-only wheel and sdist-wheel build per test run, while each
+verification process gets a separate working directory and home. Keep planted-file
+exclusion checks: inspecting a clean package alone cannot prove that private files
+would be excluded from a build.
 
 Do not add a second validator, downloader, fixture registry or test coordinator.
 A helper should remove repetition without making a parallel implementation of the
@@ -1656,6 +1825,12 @@ Run source-independent checks with:
 
 ```sh
 uv run pytest --logic-only
+```
+
+To run source-independent checks across multiple worker processes:
+
+```sh
+uv run pytest --logic-only -n auto --dist worksteal
 ```
 
 Tests that consume retained material declare exact consumer scopes and their
@@ -1777,10 +1952,11 @@ boundary, not eleven field validators.</p>
 contributor's compiled store. Keep registry and monkeypatch state local to each
 test. Share expensive unchanged package inputs only through the existing detached,
 fingerprint-aware fixtures. Changed or corrupt files must still reach validation.</p>
-<p>Reuse the existing installed wheel and sdist-wheel fixtures. Their verification
-processes have separate working directories and homes. Keep planted-file exclusion
-checks: inspecting a clean package alone cannot prove that private files would be
-excluded from a build.</p>
+<p>Reuse the existing installed wheel and sdist-wheel fixtures. Under <code>pytest-xdist</code>,
+workers share one read-only wheel and sdist-wheel build per test run, while each
+verification process gets a separate working directory and home. Keep planted-file
+exclusion checks: inspecting a clean package alone cannot prove that private files
+would be excluded from a build.</p>
 <p>Do not add a second validator, downloader, fixture registry or test coordinator.
 A helper should remove repetition without making a parallel implementation of the
 behavior it claims to test.</p>
@@ -1792,6 +1968,9 @@ including nested-package byte checks. Outer archive integrity does not replace
 checks of inner members or publisher receipts.</p>
 <p>Run source-independent checks with:</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--logic-only
+</span></code></pre></div>
+<p>To run source-independent checks across multiple worker processes:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--logic-only<span class="w"> </span>-n<span class="w"> </span>auto<span class="w"> </span>--dist<span class="w"> </span>worksteal
 </span></code></pre></div>
 <p>Tests that consume retained material declare exact consumer scopes and their
 purpose. Use the existing private coordinator to select verified inputs and run
