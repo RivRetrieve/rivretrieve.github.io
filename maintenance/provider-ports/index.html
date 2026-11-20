@@ -941,34 +941,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../providers/jp_mlit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Japan (MLIT)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../providers/lt_lhmt/" class="md-nav__link">
         
   
@@ -1874,6 +1846,10 @@ with plain Polars types, verified descriptions (never placeholders such as
 emit per-row informational quality-code issues when annotations carry those source
 fields.
 
+Distinguish stream selectors, which belong in `SourceSeries.variant`, from
+non-identity series attributes, exposed through `rr.series(result, annotations=...)`,
+and observation annotations, exposed through `result.to_polars(annotations=...)`.
+
 **Outcome:** each adopted fact has supporting evidence, and remaining unknowns are
 explicit. Admission requires established quantity, source unit and valid conversion.
 Unknown time zone, temporal support or datum need not prohibit retrieval, but cannot
@@ -2146,6 +2122,9 @@ with plain Polars types, verified descriptions (never placeholders such as
 <code>ObservationResult.data</code>, create stream variants solely for annotation changes, or
 emit per-row informational quality-code issues when annotations carry those source
 fields.</p>
+<p>Distinguish stream selectors, which belong in <code>SourceSeries.variant</code>, from
+non-identity series attributes, exposed through <code>rr.series(result, annotations=...)</code>,
+and observation annotations, exposed through <code>result.to_polars(annotations=...)</code>.</p>
 <p><strong>Outcome:</strong> each adopted fact has supporting evidence, and remaining unknowns are
 explicit. Admission requires established quantity, source unit and valid conversion.
 Unknown time zone, temporal support or datum need not prohibit retrieval, but cannot

@@ -947,34 +947,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../providers/jp_mlit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Japan (MLIT)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../providers/lt_lhmt/" class="md-nav__link">
         
   
@@ -1704,7 +1676,11 @@ changing code. Use Python 3.13 or later and [uv](https://docs.astral.sh/uv/).
 
 Run these commands from the source checkout. `uv sync --extra map` installs the
 locked project, development tools and optional map dependency. It creates the
-local environment; it does not download provider observations.
+local environment; it does not download provider observations. Pass `--frozen`
+to `uv sync` and `uv run` on workstations configured with a local package mirror
+so `uv.lock` stays on public PyPI URLs. `.github/workflows/check-lockfile.yml`
+checks lockfile consistency against public PyPI and verifies public PyPI
+package sources on pull requests and pushes to `main` and `port/**`.
 
 ```sh
 uv sync --extra map
@@ -1794,7 +1770,11 @@ changing code. Use Python 3.13 or later and <a href="https://docs.astral.sh/uv/"
 <h2 id="set-up-and-check-a-change">Set up and check a change</h2>
 <p>Run these commands from the source checkout. <code>uv sync --extra map</code> installs the
 locked project, development tools and optional map dependency. It creates the
-local environment; it does not download provider observations.</p>
+local environment; it does not download provider observations. Pass <code>--frozen</code>
+to <code>uv sync</code> and <code>uv run</code> on workstations configured with a local package mirror
+so <code>uv.lock</code> stays on public PyPI URLs. <code>.github/workflows/check-lockfile.yml</code>
+checks lockfile consistency against public PyPI and verifies public PyPI
+package sources on pull requests and pushes to <code>main</code> and <code>port/**</code>.</p>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>sync<span class="w"> </span>--extra<span class="w"> </span>map
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>--logic-only
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format<span class="w"> </span>--check

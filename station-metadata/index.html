@@ -1110,34 +1110,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../providers/jp_mlit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Japan (MLIT)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../providers/lt_lhmt/" class="md-nav__link">
         
   
@@ -1884,8 +1856,8 @@ table with one row per source attribute, described in
 
 ## Fields by provider
 
-Each agency names its metadata fields in its own way: `station_nm` at USGS, `Estacao_Nome` at
-ANA, `観測所名` at MLIT. The table shows the native field names behind each role, in the source&#39;s
+Each agency names its metadata fields in its own way: `monitoring_location_name` at USGS,
+`Estacao_Nome` at ANA, `libelle_station` at Hub&#39;Eau. The table shows the native field names behind each role, in the source&#39;s
 own spelling, with the unit the source publishes. A field without a unit has none established.
 A dash means the provider exposes no field for that role. These are the names you see in the `*_field` columns and in the `source_field` column
 of the source view.
@@ -1905,7 +1877,6 @@ of the source view.
 | [`fi_syke`](providers/fi_syke.md) | `Nimi` | `PaaVesalNimi`, `VesalNimi` | — | — |
 | [`fr_hubeau`](providers/fr_hubeau.md) | `libelle_station` | `libelle_cours_eau`, `libelle_masse_eau` | `superficie_reelle`, `superficie_topo`; `surface_bv` (km²) | `altitude`, `altitude_site`; `altitude_ref_alti_station` (m) |
 | [`fr_hydroportail`](providers/fr_hydroportail.md) | — | — | — | — |
-| [`jp_mlit`](providers/jp_mlit.md) | `観測所名` | `河川名` | `流域面積` (km2) | `零点高` (m) |
 | [`lt_lhmt`](providers/lt_lhmt.md) | `name` | `waterBody` | — | — |
 | [`no_nve`](providers/no_nve.md) | `stationName` | `lakeName`, `reservoirName`, `riverName` | `drainageBasinArea`, `drainageBasinAreaNorway`, `transferAreaIn`, `transferAreaOut` (km2) | `masl` (m) |
 | [`pe_senamhi`](providers/pe_senamhi.md) | `name` | `waterBody` | — | `altitude` (m) |
@@ -2007,30 +1978,29 @@ looks numeric remain distinguishable. `json.loads` restores that source scalar
 type. It does not turn numeric text into a number or interpret a placeholder as
 missing data.
 
-For Japan&#39;s `流域面積` and `零点高`, Bosnia&#39;s `metadata_CATCHMENT_SIZE`, and
-Switzerland&#39;s `Catchment size` and `Station altitude`, the summary separates a
-recognised numeric string from its explicit unit. It preserves numeric spelling,
-including signs, trailing zeros and thousands separators. The unit remains in
-its source spelling, such as `km2` or `km²`.
+For Bosnia&#39;s `metadata_CATCHMENT_SIZE` and Switzerland&#39;s `Catchment size` and
+`Station altitude`, the summary separates a recognised numeric string from its
+explicit unit. It preserves numeric spelling, including signs, trailing zeros
+and thousands separators. The unit remains in its source spelling, such as
+`km2` or `km²`.
 
 ```python
-japan = rr.find(provider=&#34;jp_mlit&#34;, station=&#34;301011281104010&#34;)
-area = rr.metadata(japan).row(0, named=True)
+bosnia = rr.find(provider=&#34;ba_fhmzbih&#34;, station=&#34;2010&#34;)
+area = rr.metadata(bosnia).row(0, named=True)
 
 print(area[&#34;drainage_area_value&#34;], area[&#34;drainage_area_unit&#34;])
-# [&#39;&#34;142.00&#34;&#39;] [&#39;km2&#39;]
+# [&#39;&#34;1088.00&#34;&#39;] [&#39;km²&#39;]
 
 numeric_text = json.loads(area[&#34;drainage_area_value&#34;][0])
 print(repr(numeric_text))
-# &#39;142.00&#39;
+# &#39;1088.00&#39;
 ```
 
-Numeric text still needs user parsing for arithmetic. For example, a Japanese
-value `1,719.00km2` becomes the JSON string `&#34;1,719.00&#34;`, not the number `1719.0`.
-Blanks, nulls, placeholders and qualified text such as `T.P. +1.230 m` stay
-unchanged. Japan and Bosnia receive a unit only when the individual value can be
-separated unambiguously. Existing independently supported units remain attached
-even when a value cannot be separated.
+Numeric text still needs user parsing for arithmetic. Blanks, nulls,
+placeholders and qualified text stay unchanged. Bosnia receives a unit only
+when the individual value can be separated unambiguously. Existing
+independently supported units remain attached even when a value cannot be
+separated.
 
 ### Water-body names
 
@@ -2173,8 +2143,8 @@ print(json.loads(site_name[&#34;source_value&#34;].item()))
 
 Unlike summary water-body names, source-view strings retain JSON encoding.
 Source quantity values also retain their complete original text, including any
-inline units and leading padding. For example, Japan&#39;s area above decodes to
-`142.00km2` in the source view. Source and summary units agree entry by entry.
+inline units and leading padding. For example, Bosnia&#39;s area above decodes to
+`1088.00 km²` in the source view. Source and summary units agree entry by entry.
 
 | Column | Meaning |
 | --- | --- |
@@ -2222,9 +2192,6 @@ packaged catalogue descriptor offline; metadata notices appear in its
   to IDEAM and apply CC BY-SA 4.0. Adaptations must follow the licence&#39;s share-alike conditions.
 - [LHMT&#39;s terms](providers/lt_lhmt.md#terms-and-citation) require source attribution
   and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence&#39;s share-alike conditions.
-- [MLIT&#39;s terms](providers/jp_mlit.md#terms-and-citation) explain PDL1.0 and its
-  exceptions, citation with the consultation date, and notices for processing
-  and the responsible party.
 
 See the [API reference](reference.md#metadata) for the function contract.
 </textarea>
@@ -2337,8 +2304,8 @@ explains these columns. <code>rr.metadata(selection, view="source")</code> retur
 table with one row per source attribute, described in
 <a href="#inspect-source-attributes-and-scope">Inspect source attributes and scope</a>.</p>
 <h2 id="fields-by-provider">Fields by provider</h2>
-<p>Each agency names its metadata fields in its own way: <code>station_nm</code> at USGS, <code>Estacao_Nome</code> at
-ANA, <code>観測所名</code> at MLIT. The table shows the native field names behind each role, in the source's
+<p>Each agency names its metadata fields in its own way: <code>monitoring_location_name</code> at USGS,
+<code>Estacao_Nome</code> at ANA, <code>libelle_station</code> at Hub'Eau. The table shows the native field names behind each role, in the source's
 own spelling, with the unit the source publishes. A field without a unit has none established.
 A dash means the provider exposes no field for that role. These are the names you see in the <code>*_field</code> columns and in the <code>source_field</code> column
 of the source view.</p>
@@ -2437,13 +2404,6 @@ of the source view.</p>
 <td>—</td>
 <td>—</td>
 <td>—</td>
-</tr>
-<tr>
-<td><a href="../providers/jp_mlit/"><code>jp_mlit</code></a></td>
-<td><code>観測所名</code></td>
-<td><code>河川名</code></td>
-<td><code>流域面積</code> (km2)</td>
-<td><code>零点高</code> (m)</td>
 </tr>
 <tr>
 <td><a href="../providers/lt_lhmt/"><code>lt_lhmt</code></a></td>
@@ -2586,27 +2546,26 @@ name rather than taking the first entry:</p>
 looks numeric remain distinguishable. <code>json.loads</code> restores that source scalar
 type. It does not turn numeric text into a number or interpret a placeholder as
 missing data.</p>
-<p>For Japan's <code>流域面積</code> and <code>零点高</code>, Bosnia's <code>metadata_CATCHMENT_SIZE</code>, and
-Switzerland's <code>Catchment size</code> and <code>Station altitude</code>, the summary separates a
-recognised numeric string from its explicit unit. It preserves numeric spelling,
-including signs, trailing zeros and thousands separators. The unit remains in
-its source spelling, such as <code>km2</code> or <code>km²</code>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">japan</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;jp_mlit&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;301011281104010&quot;</span><span class="p">)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">area</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">japan</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>For Bosnia's <code>metadata_CATCHMENT_SIZE</code> and Switzerland's <code>Catchment size</code> and
+<code>Station altitude</code>, the summary separates a recognised numeric string from its
+explicit unit. It preserves numeric spelling, including signs, trailing zeros
+and thousands separators. The unit remains in its source spelling, such as
+<code>km2</code> or <code>km²</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">bosnia</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ba_fhmzbih&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">=</span><span class="s2">&quot;2010&quot;</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">area</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">bosnia</span><span class="p">)</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">],</span> <span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_unit&quot;</span><span class="p">])</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># [&#39;&quot;142.00&quot;&#39;] [&#39;km2&#39;]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># [&#39;&quot;1088.00&quot;&#39;] [&#39;km²&#39;]</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">numeric_text</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">area</span><span class="p">[</span><span class="s2">&quot;drainage_area_value&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">numeric_text</span><span class="p">))</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># &#39;142.00&#39;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># &#39;1088.00&#39;</span>
 </span></code></pre></div>
-<p>Numeric text still needs user parsing for arithmetic. For example, a Japanese
-value <code>1,719.00km2</code> becomes the JSON string <code>"1,719.00"</code>, not the number <code>1719.0</code>.
-Blanks, nulls, placeholders and qualified text such as <code>T.P. +1.230 m</code> stay
-unchanged. Japan and Bosnia receive a unit only when the individual value can be
-separated unambiguously. Existing independently supported units remain attached
-even when a value cannot be separated.</p>
+<p>Numeric text still needs user parsing for arithmetic. Blanks, nulls,
+placeholders and qualified text stay unchanged. Bosnia receives a unit only
+when the individual value can be separated unambiguously. Existing
+independently supported units remain attached even when a value cannot be
+separated.</p>
 <h3 id="water-body-names">Water-body names</h3>
 <p>Water-body names are already decoded strings. Norway's lake, reservoir and river
 fields remain separate, including blanks and equal names. Selecting without a
@@ -2718,8 +2677,8 @@ This selects the site's water-body name rather than the station's separate field
 </span></code></pre></div>
 <p>Unlike summary water-body names, source-view strings retain JSON encoding.
 Source quantity values also retain their complete original text, including any
-inline units and leading padding. For example, Japan's area above decodes to
-<code>142.00km2</code> in the source view. Source and summary units agree entry by entry.</p>
+inline units and leading padding. For example, Bosnia's area above decodes to
+<code>1088.00 km²</code> in the source view. Source and summary units agree entry by entry.</p>
 <table>
 <thead>
 <tr>
@@ -2806,9 +2765,6 @@ packaged catalogue descriptor offline; metadata notices appear in its
   to IDEAM and apply CC BY-SA 4.0. Adaptations must follow the licence's share-alike conditions.</li>
 <li><a href="../providers/lt_lhmt/#terms-and-citation">LHMT's terms</a> require source attribution
   and apply CC BY-SA 4.0 unless stated otherwise. Adaptations must follow the licence's share-alike conditions.</li>
-<li><a href="../providers/jp_mlit/#terms-and-citation">MLIT's terms</a> explain PDL1.0 and its
-  exceptions, citation with the consultation date, and notices for processing
-  and the responsible party.</li>
 </ul>
 <p>See the <a href="../reference/#metadata">API reference</a> for the function contract.</p>
 

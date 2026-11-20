@@ -2149,6 +2149,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rivretrieve._internal.source_series.ClippingAxis.CALENDAR_MONTH" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CALENDAR_MONTH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rivretrieve._internal.source_series.ClippingAxis.SOURCE_TIMESTAMP" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6429,34 +6440,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../providers/jp_mlit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Japan (MLIT)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../providers/lt_lhmt/" class="md-nav__link">
         
   
@@ -8597,6 +8580,17 @@
     <span class="md-ellipsis">
       
         CALENDAR_DATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rivretrieve._internal.source_series.ClippingAxis.CALENDAR_MONTH" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CALENDAR_MONTH
       
     </span>
   </a>
@@ -12632,7 +12626,7 @@ These types are not re-exported from `rivretrieve`. Their headings identify thei
 
 ::: rivretrieve._internal.source_series.ClippingAxis
     options:
-      members: [CALENDAR_DATE, SOURCE_TIMESTAMP]
+      members: [CALENDAR_DATE, CALENDAR_MONTH, SOURCE_TIMESTAMP]
 
 ### SourceUnitCodeDefinition
 
@@ -14201,10 +14195,11 @@ preference. Identical field names from different source scopes remain
 separate entries. Water-body names are
 decoded strings. Area and elevation values remain JSON scalar text:
 json.loads distinguishes numbers from numeric-looking source strings.
-In the supported Japanese, Bosnian and Swiss quantity fields, complete
+In the supported Bosnian and Swiss quantity fields, complete
 numeric strings with explicit units keep their numeric text separately
-from the unit. For example, '"142.00km2"' becomes '"142.00"' with unit
-'km2'. Numeric spelling is preserved and still needs parsing for arithmetic.
+from the unit. For example, '"1600.00 km²"' becomes '"1600.00"' with
+unit 'km²'. Numeric spelling is preserved and still needs parsing for
+arithmetic.
 In USGS alt_va, leading spaces, tabs and nonbreaking spaces are removed
 only from complete numeric strings: '" 0.00"' becomes '"0.00"', still a
 JSON string with unchanged numeric spelling, unit and datum.
@@ -19330,7 +19325,7 @@ been established here. Both unknown states retain a null value.</p>
 
 
 
-        <p>Whether a request clips daily calendar labels or source wall-clock timestamps.</p>
+        <p>Whether a request clips calendar dates, calendar months, or source wall-clock timestamps.</p>
 
 
 
@@ -19365,6 +19360,29 @@ been established here. Both unknown states retain a null value.</p>
 
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">CALENDAR_DATE</span> <span class="o">=</span> <span class="s1">&#39;calendar_date&#39;</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="rivretrieve._internal.source_series.ClippingAxis.CALENDAR_MONTH" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">CALENDAR_MONTH</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h5>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">CALENDAR_MONTH</span> <span class="o">=</span> <span class="s1">&#39;calendar_month&#39;</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -28543,15 +28561,6 @@ compiled store with <code>download</code> or remove an accumulated store with
 <td style="text-align: right;">0</td>
 </tr>
 <tr>
-<td><code>jp_mlit</code></td>
-<td>live</td>
-<td>none</td>
-<td style="text-align: right;">1023</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4092</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
 <td><code>lt_lhmt</code></td>
 <td>live</td>
 <td>none</td>
@@ -29156,26 +29165,6 @@ compiled store with <code>download</code> or remove an accumulated store with
 <tr>
 <td><code>fr_hydroportail</code></td>
 <td><code>stage_instantaneous</code></td>
-<td><code>m</code></td>
-</tr>
-<tr>
-<td><code>jp_mlit</code></td>
-<td><code>discharge_daily</code></td>
-<td><code>m3/s</code></td>
-</tr>
-<tr>
-<td><code>jp_mlit</code></td>
-<td><code>discharge_hourly</code></td>
-<td><code>m3/s</code></td>
-</tr>
-<tr>
-<td><code>jp_mlit</code></td>
-<td><code>stage_daily</code></td>
-<td><code>m</code></td>
-</tr>
-<tr>
-<td><code>jp_mlit</code></td>
-<td><code>stage_hourly</code></td>
 <td><code>m</code></td>
 </tr>
 <tr>

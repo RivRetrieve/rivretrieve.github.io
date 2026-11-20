@@ -945,34 +945,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../providers/jp_mlit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Japan (MLIT)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../providers/lt_lhmt/" class="md-nav__link">
         
   
@@ -1839,7 +1811,7 @@ separate publisher recordings. The reconstructed database is not a complete
 publisher artifact. Run those checks with:
 
 ```sh
-uv run --isolated --locked python -B verify.py \
+uv run --isolated --frozen python -B verify.py \
   --reviewed-archive-sha &#34;$REVIEWED_ARCHIVE_SHA&#34; \
   --code-checkout /path/to/reviewed-rivretrieve \
   --reviewed-code-sha &#34;$REVIEWED_CODE_SHA&#34; \
@@ -2047,7 +2019,7 @@ for restricted storage and execution prerequisites.</p>
 <p>For example, the Canada HYDAT <code>NO_DAYS</code> checks use sparse SQLite row witnesses and
 separate publisher recordings. The reconstructed database is not a complete
 publisher artifact. Run those checks with:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>run<span class="w"> </span>--isolated<span class="w"> </span>--locked<span class="w"> </span>python<span class="w"> </span>-B<span class="w"> </span>verify.py<span class="w"> </span><span class="se">\</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>run<span class="w"> </span>--isolated<span class="w"> </span>--frozen<span class="w"> </span>python<span class="w"> </span>-B<span class="w"> </span>verify.py<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--reviewed-archive-sha<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REVIEWED_ARCHIVE_SHA</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--code-checkout<span class="w"> </span>/path/to/reviewed-rivretrieve<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--reviewed-code-sha<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REVIEWED_CODE_SHA</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
